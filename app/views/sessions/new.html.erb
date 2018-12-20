@@ -1,0 +1,19 @@
+
+<div id='new-user-container'>
+
+	<%= render "shared/errors", :target => @user %>
+	<div id='user-form'>
+
+		<%= form_tag ({controller: 'sessions', action: 'create', method: 'post'}) do %>
+
+		  <%=label_tag "username" %><br>
+		  <%= text_field_tag :username, "", required: true %><br>
+
+		  <%=label_tag "password" %><br>
+		  <%= password_field_tag :password, "", required: true %><br>
+
+		  <%= submit_tag "Sign In", class: "btn btn-primary" %>
+
+		<% end %>
+	</div>
+</div>

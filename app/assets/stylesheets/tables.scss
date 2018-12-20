@@ -1,0 +1,26 @@
+
+table {
+    margin: auto;
+    width: 100%;
+    border: solid 1px;
+    border-color: #cecece;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 1px 3px 0 rgba(0,0,0,0.19);
+}
+
+th {
+  text-transform: uppercase;
+}
+
+td, th {
+    border: 1px solid #545353;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+#job-posted-date-field {
+    margin-bottom: 23px
+}

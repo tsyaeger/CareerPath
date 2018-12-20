@@ -1,0 +1,21 @@
+
+<div id='new-user-container'>
+	<%= render "shared/errors", :target => @user %>
+	<div id='user-form'>
+
+		<%= form_for @user do |f| %>
+
+			<%= f.label :username %><br>
+			<%= f.text_field :username, required: true %><br>
+
+			<%= f.label :password %><br>
+			<%= f.password_field :password_digest, required: true %><br>
+
+			<%= f.label :email %><br>
+			<%= f.email_field :email, required: true %><br>
+
+			<%= f.submit "Create Account", class: "btn btn-primary" %>
+			
+		<% end %>
+	</div>
+</div>

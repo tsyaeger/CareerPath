@@ -1,0 +1,210 @@
+
+<div id='task-show-wrapper'>
+    <div class='user-id' data-id="<%= @task.user.id %>"></div>
+    <div class='task-id' data-id="<%= @task.id %>"></div>
+
+    <div id='top'>
+        <h1><%= @task.title %></h1>
+        <div class='details-container'>
+        	<h3><%= @task.description %></h3>
+            <div id='task-due-date'><h3>DUE DATE: <%= format_date(@task.due_date) %></h3></div>
+            <div id='task-completed-string'></div>
+            <div id='add-completed'></div>
+            <div id='completed-btn'></div>
+            <td><%= link_to "Edit", edit_user_task_path(@task.user, @task) %></td>
+            <td><%= link_to "Delete", user_task_path(@task.user, @task), :method => :delete %></td>
+        </div>
+    </div> <!-- close top -->
+
+    <div id='results'></div>
+
+    <div id='mid'>
+        <div id='docs' class='links-col'>
+            <% if @task.document != nil %>   
+                <h2 class='linked-item'>LINKED DOCUMENT</h2>
+                <h3><%= link_to @task.document.title, user_document_path(@task.user, @task.document) %></h3><br>
+                <button class='unlink-button' id='unlink-document'>Unlink Document</button>
+            <% else %>
+                <h2 class='unlinked-item'>No linked Document</h2>
+                <%= render 'documents/document_task_dropdown' %>
+            <% end %>
+        </div> <!-- close column -->
+
+        <div id='contacts' class='links-col'>
+            <% if @task.contact != nil %>   
+                <h2 class='linked-item'>LINKED CONTACT </h2>
+
+                <div id='task-contacts'>
+                    <h3><%= link_to "#{formatted_name(@task.contact)}", user_contact_path(@task.user, @task.contact) %></h3><br>
+                </div>
+                <button class='unlink-button' id='unlink-contact'>Unlink Contact</button>
+            <% else %>
+                <h2 class='unlinked-item'>No linked contact</h2>
+                <%= render 'contacts/contact_task_dropdown' %>
+            <% end %>
+        </div> <!-- close column -->
+
+
+        <div id='Jobs' class='links-col'>
+            <% if @task.job != nil %>   
+                <h2 class='linked-item'>LINKED JOB</h2>
+                <h3><%= link_to @task.job.company, user_job_path(@task.user, @task.job) %></h3><br>
+                <button class='unlink-button' id='unlink-job'>Unlink Job</button>
+            <% else %>
+                <h2 class='unlinked-item'>No linked job</h2>
+                <%= render 'jobs/job_task_dropdown' %>
+            <% end %>
+        </div> <!-- close column -->
+    </div> <!-- close mid -->
+
+</div> <!-- close wrapper -->
+
+
+
+
+<script>
+
+
+$(document).ready(function () {
+    user_id = $(".user-id").data("id")
+    task_id = $(".task-id").data("id")
+
+    $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
+        task = new Task(data, user_id)
+        displayTaskDetails(task)
+        linkTaskContact()
+        linkTaskDocument()
+        linkTaskJob()
+        buttonCompleted(task)
+        unlinkContact()
+        unlinkDocument()
+        unlinkJob()
+
+    });
+    
+})
+
+
+
+const buttonCompleted = function (task) {
+    $('#completed-btn').on('click', function() {
+        $.get(`/users/${user_id}/tasks/${task_id}/completed?q=${!task.completed}`, function(data) {
+            $('#task-completed-string').empty()
+            $('#completed-btn').empty()
+            $('#task-completed-string').append(task.completedString(!task.completed))
+            $('#completed-btn').append(task.completedButton(!task.completed))
+        })
+    })
+}
+
+
+const displayTaskDetails = function(task) {
+    $('#task-completed-string').append(task.completedString())
+    $('#completed-btn').append(task.completedButton())
+}
+
+
+
+
+
+const linkTaskContact = function() {
+    $('#btn-add-contact').on('click', function(e) {
+        e.preventDefault()
+        var form = $('#add-contact')
+
+        var action = form.attr('action')
+        var c_id = form.serialize()
+
+
+        $.ajax({url: `/users/${user_id}/tasks/${task_id}/add_contact`, 
+            data: c_id, 
+            type: "PATCH", 
+            success: function (data) {
+                alert('success') 
+                $('#task-contacts').append(`<a href="/users/2/contacts/11">Rachel  Maddow</a>`)
+            },
+            error: function (data) {
+                alert('no success') }
+
+        })
+    })
+}
+
+
+const linkTaskDocument = function() {
+    $('#btn-add-document').on('click', function(e) {
+        e.preventDefault()
+        var form = $('#add-document')
+        var action = form.attr('action') //necessary?
+        var d_id = form.serialize()
+
+        $.ajax({url: `/users/${user_id}/tasks/${task_id}/add_document`, 
+            data: d_id, 
+            type: "PATCH", 
+            success: function (data) {
+                console.log('data')
+                console.log(data)
+                alert('success') },
+            error: function (data) {
+                alert('no success') }
+        })
+    })
+}
+
+
+const linkTaskJob = function() {
+    let jobId = $('#task-job-ids')
+    $('#btn-add-job').on('click', function(e) {
+        e.preventDefault()
+        var form = $('#add-job')
+        var action = form.attr('action')
+        var j_id = form.serialize()
+
+        $.ajax({url: `/users/${user_id}/tasks/${task_id}/add_job`, 
+            data: j_id, 
+            type: "PATCH", 
+            success: function (data) {
+                console.log('data')
+                console.log(data)
+                alert('success') },
+            error: function (data) {
+                alert('no success') }
+        })
+    })
+}
+
+
+
+
+
+
+
+const unlinkContact = function (task) {
+    $('#unlink-contact').on('click', function() {
+        $.get(`/users/${user_id}/tasks/${task_id}/unlink_contact`, function(data) {
+            console.log(data)
+        })
+    })
+}
+
+
+const unlinkDocument = function (task) {
+    $('#unlink-document').on('click', function() {
+        $.get(`/users/${user_id}/tasks/${task_id}/unlink_document`, function(data) {
+            console.log(data)
+        })
+    })
+}
+
+const unlinkJob = function (task) {
+    $('#unlink-job').on('click', function() {
+        $.get(`/users/${user_id}/tasks/${task_id}/unlink_job`, function(data) {
+            console.log(data)
+        })
+    })
+}
+
+
+
+
+</script>

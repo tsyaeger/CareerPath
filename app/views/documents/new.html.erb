@@ -1,0 +1,67 @@
+
+<div id='new-document-wrapper'>
+
+	<div class='column-3'>
+		<% if @documents.length > 0 %>
+			<% groupDoctype(@documents).each do |d| %>
+				<h1 class='doctype-grp'><%= d[0].pluralize(2) %></h1>
+				<% d[1].each do |doc| %>
+					<h3><%= link_to "<li>#{doc.title}</li><br>".html_safe, user_document_path(doc.user, doc), :class => "bullet-item" %></h3>
+				<% end %> 
+			<% end %>
+		<% else %>
+			<h1>DOCUMENTS BY TYPE</h1>
+		<% end %>
+	</div> <!-- close column -->
+
+	<div class='column-3'>
+	    <h1>All Documents</h1>
+		<div id='document-list'>
+		    <%= render partial: "document", collection: @documents || "No Documents"%>
+	    </div>
+	</div> <!-- close column -->
+
+	<div class='column-3'>
+		<h1>Add Document</h1>
+		<%= render 'form' %>
+	</div> <!-- close column -->
+
+</div> <!-- close wrapper -->
+
+
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+
+
+
+$("form").on('submit', function (e) {
+
+	e.preventDefault()
+	var $form = $(this)
+	var action = $form.attr('action')
+	var params = $form.serialize()
+
+
+	$.ajax({
+		url: action,
+		data: params,
+		datatype: 'json',
+		method: 'POST', 
+	    success: function (data) {
+			alert('success') 
+			$("#document-list").append(data.html),
+			$("#new_document")[0].reset();
+		},
+		error: function (data) {
+			alert('something went wrong') }
+	})
+})
+
+
+
+
+
+</script>
