@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_10_06_035410) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "contacts", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name", null: false
@@ -20,7 +23,7 @@ ActiveRecord::Schema.define(version: 2018_10_06_035410) do
     t.string "phone"
     t.string "email"
     t.boolean "reference", default: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_contacts_on_user_id"
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 2018_10_06_035410) do
     t.string "description"
     t.string "url"
     t.string "doctype"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_documents_on_user_id"
@@ -55,11 +58,11 @@ ActiveRecord::Schema.define(version: 2018_10_06_035410) do
     t.string "company"
     t.string "position"
     t.string "url"
-    t.datetime "date_posted", default: "2018-10-06 20:04:24", null: false
+    t.datetime "date_posted", default: "2018-12-25 00:58:44", null: false
     t.string "job_desc"
     t.string "co_desc"
     t.boolean "applied", default: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_jobs_on_user_id"
@@ -73,7 +76,7 @@ ActiveRecord::Schema.define(version: 2018_10_06_035410) do
     t.integer "contact_id"
     t.integer "document_id"
     t.integer "job_id"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_tasks_on_user_id"
@@ -87,4 +90,8 @@ ActiveRecord::Schema.define(version: 2018_10_06_035410) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "contacts", "users"
+  add_foreign_key "documents", "users"
+  add_foreign_key "jobs", "users"
+  add_foreign_key "tasks", "users"
 end
