@@ -1,0 +1,10 @@
+Searching 2041 files for "assets.js_compressor"
+
+/Users/main/Desktop/Coding/Flatiron/Projects/CareerPath/CareerPath/config/environments/production.rb:
+   24  
+   25    # Compress JavaScripts and CSS.
+   26:   config.assets.js_compressor = Uglifier.new(harmony: true)
+   27    # config.assets.css_compressor = :sass
+   28  
+
+1 match in 1 file
