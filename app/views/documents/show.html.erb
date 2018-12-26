@@ -31,7 +31,7 @@
                 <% if @document.tasks.length > 0 %>
                     <%= render partial: "tasks/task", collection: @document.tasks || "No Linked Tasks" %>
                 <% else %>
-                    <h3><%= link_to '* Link This Document To A Task', user_tasks_path(@document.user) %></h3>
+                    <h3><%= link_to '* Link This Document To A Task', new_user_task_path(@document.user) %></h3>
 
                 <% end %>
             </div>
