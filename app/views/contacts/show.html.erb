@@ -1,11 +1,62 @@
 
-<div id='contact-show-container'>
-	<div class='user-id' data-id="<%= @contact.user.id %>"></div>
-	<div class='contact-id' data-id="<%= @contact.id %>"></div>
+<style>
 
-	<div id='top'>
-		<h1><%= @contact.first_name %> <%= @contact.last_name %> - <%= @contact.workplace %></h1>
-		<div class='details-container'>
+
+#contact-show-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr
+}
+
+.edit-delete {
+    float: right;
+}
+
+.contact-item-container {
+    padding: 15px;
+    border: solid black 1px;
+}
+
+.heading-container {
+    grid-column: 2/4;
+    grid-row: 1;
+    margin: 0;
+    margin-top: 30px;
+    padding: 0;
+    text-align: center;
+}
+
+
+.details-container {
+    grid-column: 2/4;
+    grid-row: 2;
+    text-align: center;
+}
+
+.link-job-container {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.link-task-container {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+</style>
+
+
+<div class='user-id' data-id="<%= @contact.user.id %>"></div>
+<div class='contact-id' data-id="<%= @contact.id %>"></div>
+
+<div id='contact-show-container'>
+
+		<div class='heading-container contact-item-container'>
+			<h1><%= @contact.first_name %> <%= @contact.last_name %> - <%= @contact.workplace %></h1>
+		</div>
+
+
+
+		<div class='details-container contact-item-container'>
 			<div><h3><%= @contact.email %></h3></div>
 			<div><h3><%= @contact.phone %></h3></div>
 			<div id='contact_reference'></div>
@@ -13,10 +64,10 @@
 		    <td><%= link_to "Edit", edit_user_contact_path(@contact.user, @contact) %></td>
 		    <td><%= link_to "Delete", user_contact_path(@contact.user, @contact), :method => :delete %></td>
 		</div>
-	</div> <!-- close top -->
 
-	<div id='bottom'>  
-	    <div id='jobs' class='links-col-50 left-col-50'>
+
+
+	    <div id='jobs' class='link-job-container contact-item-container'>
 	        <h2>LINKED JOBS</h2>
 	        <div class='linked-items'>
 	            <% if @contact.jobs.length > 0 %>
@@ -27,7 +78,9 @@
 	        </div>
 	    </div> <!-- close column -->
 
-	    <div id='tasks' class='links-col-50 right-col-50'>
+
+
+	    <div id='tasks' class='link-task-container contact-item-container'>
 	        <h2>TASKS</h2>
 	        <div class='linked-items'>
 	            <% if @contact.tasks.length > 0 %>
@@ -37,7 +90,8 @@
 	            <% end %>
 	        </div>
 	    </div> <!-- close column -->
-	</div> <!-- close bottom -->
+
+
 
 </div> <!-- close wrapper -->
 

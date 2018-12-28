@@ -1,20 +1,74 @@
 
+<style>
+
+
+#document-show-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr
+}
+
+.edit-delete {
+    float: right;
+}
+
+.document-item-container {
+    padding: 15px;
+    /*margin: 10px;*/
+    border: solid black 1px;
+}
+
+.heading-container {
+    grid-column: 2/4;
+    grid-row: 1;
+    margin: 0;
+    margin-top: 30px;
+    padding: 0;
+    text-align: center;
+}
+
+
+.details-container {
+    grid-column: 2/4;
+    grid-row: 2;
+    text-align: center;
+}
+
+.link-job-container {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+.link-task-container {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+
+</style>
+
+
+
+
 <div id='document-show-container'>
 
-    <div id='top'>
-        <h1><%= @document.title %></h1>
-        <div class='details-container'>
+        <div class='heading-container document-item-container'>
+            <h1><%= @document.title %></h1>
+        </div> <!-- close container -->
+
+
+
+        <div class='details-container document-item-container'>
             <h3><%= @document.description %></h3>
             <h3 class='link'><a href="<%= @document.url %>" target="_blank">Go to Document</a></h3>
 
         	<h3>Last update: <%= format_date(@document.updated_at) %></h3>
             <td><%= link_to "Edit", edit_user_document_path(@document.user, @document) %></td>
             <td><%= link_to "Delete", user_document_path(@document.user, @document), :method => :delete %></td>
-        </div>
-    </div> <!-- close top -->
+        </div> <!-- close container -->
 
-    <div id='bottom'>
-        <div id='jobs' class='links-col-50 left-col-50'>
+
+
+        <div id='jobs' class='link-job-container document-item-container'>
             <h2>LINKED JOBS</h2>
             <div class='linked-items'>
                 <% if @document.jobs.length > 0 %>
@@ -23,9 +77,9 @@
                     <h3><%= link_to '* Link This Document To A Job', user_jobs_path(@document.user) %></h3>
                 <% end %>
             </div>
-        </div> <!-- close column -->
+        </div> <!-- close container -->
 
-        <div id='tasks' class='links-col-50 right-col-50'>
+        <div id='tasks' class='link-task-container document-item-container'>
             <h2>LINKED TASKS</h2>
             <div class='linked-items'>
                 <% if @document.tasks.length > 0 %>
@@ -35,7 +89,6 @@
 
                 <% end %>
             </div>
-        </div> <!-- close column -->
-    </div> <!-- close bottom -->
+        </div>  <!-- close container -->
 
 </div> <!-- close wrapper -->
