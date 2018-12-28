@@ -1,11 +1,17 @@
 <style>
 
-
+textarea, select {
+    width: 320px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    margin: 0 0 20px 0;
+    font-size: 16px;
+}
 
 #job-show-wrapper {
 	display: grid;
 	grid-template-columns: 350px 1fr 1fr;
-	grid-template-rows: 90px 35px 75px 450px 450px
+	/*grid-template-rows: 90px 35px 75px 450px 450px*/
 }
 
 #heading-container {
@@ -17,6 +23,9 @@
 	text-align: center;
 }
 
+.edit-delete {
+	float: right;
+}
 
 
 .pg-btn {
@@ -30,9 +39,6 @@
 	color: #a81515;
 }
 
-/*.fa {
-    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.18), 0 1px 3px 0 rgba(0,0,0,0.17);
-}*/
 
 #dates-container {
 	grid-column: 1/4;
@@ -54,7 +60,7 @@
 #applied-container {
 	grid-column: 1/4;
 	grid-row: 3;
-	padding: 0px 680px 0px 680px;
+	padding: 0px 680px 35px 680px;
 	border-bottom: solid black 1px;
 }
 
@@ -76,6 +82,9 @@
 	padding: 0;
 }
 
+/*#switch-label {
+	padding: 14px 12px 15px 0;
+}*/
 
 input[type=checkbox]{
 	height: 0;
@@ -87,7 +96,7 @@ label {
 	cursor: pointer;
 	text-indent: -9999px;
 	width: 90px;
-	height: 18px;
+	height: 16px;
 	background: grey;
 	display: block;
 	border-radius: 100px;
@@ -99,11 +108,11 @@ label:after {
 	position: absolute;
 	top: 5px;
 	left: 5px;
-	width: 20px;
-	height: 20px;
+	width: 16px;
+	height: 16px;
 	background: #fff;
 	border-radius: 90px;
-	transition: 0.3s;
+	transition: 0.2s;
 }
 
 input:checked + label {
@@ -115,16 +124,21 @@ input:checked + label:after {
 	transform: translateX(-100%);
 }
 
-label:active:after {
-	width: 130px;
+
+
+
+/* JOB CONTENT */
+.job-content-container {
+	padding: 25px;
+	text-align: left;
+	overflow: scroll;
+
 }
 
 .job-desc-container {
 	grid-column: 2;
 	grid-row: 4; 
-	margin: 15px 15px 15px 25px;
-	padding: 10px;
-	text-align: left;
+	padding-left: 25px;
 	border-right: solid black 1px;
 	border-bottom: solid black 1px;
 }
@@ -132,19 +146,13 @@ label:active:after {
 .job-co-container {
 	grid-column: 3;
 	grid-row: 4; 
-	margin: 15px;
-	padding: 10px;
-	text-align: left;
 	border-bottom: solid black 1px;
 }
-
 
 .job-reqs-container {
 	grid-column: 2;
 	grid-row: 5; 
-	margin: 15px 15px 15px 25px;
-	padding: 10px;
-	text-align: left;
+	padding-left: 25px;
 	border-right: solid black 1px;
 	border-bottom: solid black 1px;
 }
@@ -152,30 +160,30 @@ label:active:after {
 .job-notes-container {
 	grid-column: 3;
 	grid-row: 5; 
-	margin: 15px;
-	padding: 10px;
-	text-align: left;
 	border-bottom: solid black 1px;
 }
 
+
+/* SIDEBAR */
 .linked-items {
 	grid-column: 1;
 	grid-row: 4/6; 
 	display: grid;
 	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr 1fr 1fr 1fr
+	/*grid-template-rows: 1fr 1fr 1fr 1fr 1fr*/
 	margin: 0;
 	margin-top: 20px;
 	padding: 0;
 	text-align: center;
 }
 
-/*#job-documents {
-	width: 225px;
-	margin: 0;
-	padding: 0;
-	height: 25px;
-}*/
+
+
+.link-doc-container {
+	padding: 10px 0 30px;
+	/*border-bottom: solid black 1px;*/
+	border-right: solid black 1px;
+}
 
 #btn-add-document {
 	font-size: 16px;
@@ -185,12 +193,6 @@ label:active:after {
 	padding: 0;
 }
 
-/*#job-contacts {
-	width: 225px;
-	margin: 0;
-	padding: 0;
-	height: 25px;
-}*/
 
 #btn-add-contact {
 	font-size: 16px;
@@ -200,16 +202,9 @@ label:active:after {
 	padding: 0;
 }
 
-.link-doc-container {
-	padding: 10px 0 30px;
-	border-bottom: solid black 1px;
-	border-right: solid black 1px;
-}
-
-
 .link-contact-container {
 	padding: 10px 0 30px;
-	border-bottom: solid black 1px;
+	/*border-bottom: solid black 1px;*/
 	border-right: solid black 1px;
 }
 
@@ -237,6 +232,10 @@ label:active:after {
 	margin: 0;
 }
 
+h3.create-item a{
+	color: #B50000;
+}
+
 </style>
 
 
@@ -248,6 +247,10 @@ label:active:after {
 <div id='job-show-wrapper'>
 
 	<div id='heading-container'>
+		<div class='edit-delete'>
+			<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
+		    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
+		</div>
 	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
 	    <h1 id='job-company-position' class='headline'><%= @job.company %> - <%= @job.position %></h1>
 		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
@@ -263,11 +266,11 @@ label:active:after {
 	<div id='applied-container'>
 		<div id='job-applied'></div>
 		<!-- <div id='applied-btn'></div> -->
-		<div id='applied-toggle'><input type="checkbox" id="switch" <applli/><label for="switch">Toggle</label></div>
+		<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
 	</div>
 
 		
-	<div class='job-desc-container'>
+	<div class='job-desc-container job-content-container'>
 		<% if !!@job.job_desc %>
 			<h2> Job Description </h2>
 			<h3 class='descriptions'><%= @job.job_desc %></h3>
@@ -277,7 +280,7 @@ label:active:after {
 	</div>
 
 
-	<div class='job-co-container'>
+	<div class='job-co-container job-content-container'>
 		<% if !!@job.co_desc %>
 			<h2> Company Description </h2>
 			<h3 class='descriptions'><%= @job.co_desc %></h3>
@@ -288,14 +291,14 @@ label:active:after {
 
 
 
-	<div class='job-reqs-container'>
+	<div class='job-reqs-container job-content-container'>
 		<h2>Job Requirements</h2>
 		<h3>5 years dev experience, CS or similar degree, writes DRY code.</h3>
 	</div>
 
 
 
-	<div class='job-notes-container'>
+	<div class='job-notes-container job-content-container'>
 		<h2>Job Notes</h2>
 		<h3>Remember to mention xxxx and yyyyy. Contact suggested that I practice ....</h3>
 	</div>
@@ -327,13 +330,14 @@ label:active:after {
 	    </div>
 
 	    <div class='link-task-container'>
-	    	<h2>TASKS</h2>
+	    	<h2>LINKED TASKS</h2>
 			<% if @job.tasks.length > 0%>
 				<!-- <div id='task-list'></div> -->
 		    	<%= render partial: "tasks/task", collection: @job.tasks || "No Linked Tasks" %>
 		    <% else %>
-		    	<h3>NO LINKED TASKS</h3>
+		    	<h3>You have no linked tasks</h3>
 			<% end %>
+			<h3 class='create-item'><%= link_to "*create a task*", new_user_task_path(@job.user) %></h3>
 	    </div>
 
 	</div>
@@ -342,10 +346,6 @@ label:active:after {
 
 </div> <!-- close wrapper -->
 
-	<div>
-		<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
-	    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
-	</div>
 
 
 
@@ -362,7 +362,7 @@ $( document ).on('turbolinks:load', function() {
 		job = new Job(data, user_id)
 
 	    displayAppliedDetails(job)
-		// buttonApplied(job)
+		buttonApplied(job)
 
 		getDocuments(data)
 		getContacts(data)
@@ -403,12 +403,11 @@ const getContacts = function (data) {
 
 //CHANGE APPLIED STATUS
 const buttonApplied = function (job) {
-	$('#add-applied').on('click', function() {
+	$('#switch').on('click', function() {
 	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${!job.applied}`, function(data) {
+	    	console.log('clicked')
 	    	$('#job-applied').empty()
-            $('#applied-btn').empty()
 	    	$('#job-applied').append(job.appliedString(!job.applied))
-			$('#applied-btn').append(job.appliedButton(!job.applied))
 	    })
 	})
 }

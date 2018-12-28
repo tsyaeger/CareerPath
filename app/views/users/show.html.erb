@@ -1,52 +1,89 @@
+<style>
 
+#user-show-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+
+.user-item-container {
+    border-left: solid;
+    border-width: 1px;
+    border-color: #2d2c2c;
+    text-align: left;
+    padding: 35px;
+    height: 1200px; 
+}
+
+#position-container {
+    grid-column: 1;
+}
+
+#task-container {
+    grid-column: 2;
+}
+
+#contact-container {
+    grid-column: 3;
+}
+
+#document-container {
+    grid-column: 4;
+}
+
+
+</style>
+
+
+
+
+
+<div class='user-id' data-id="<%= @user.id %>"></div>
 <div id='user-show-container'>
-    <div class="row">
-        <div class='user-id' data-id="<%= @user.id %>"></div>
 
-        <div class="column">
-            <h1><%= link_to 'Positions', new_user_job_path(@user) %></h1>
-            <div id='job-search'>
-                <div>
-                    <input type='text' id='filter-jobs' class='dash-field' placeholder='filter positions'>        
-                </div>            
-                <div id="job-list"></div>
+    <div id='position-container' class='user-item-container'>
+        <h1><%= link_to 'Positions', new_user_job_path(@user) %></h1>
+        <div id='job-search'>
+            <div>
+                <input type='text' id='filter-jobs' class='dash-field' placeholder='filter positions'>        
+            </div>            
+            <div id="job-list"></div>
+        </div>
+    </div>
+
+
+    <div id='task-container' class='user-item-container'>
+        <h1><%= link_to 'Tasks', new_user_task_path(@user) %></h1>
+        <div id='task-search'>
+            <div>
+                <input type='text' id='filter-tasks' class='dash-field' placeholder='filter tasks'> 
             </div>
-        </div><!-- close column -->
+            <div id="task-list"></div>
+        </div>
+    </div>
 
 
-        <div class="column">
-            <h1><%= link_to 'Tasks', new_user_task_path(@user) %></h1>
-            <div id='task-search'>
-                <div>
-                    <input type='text' id='filter-tasks' class='dash-field' placeholder='filter tasks'> 
-                </div>
-                <div id="task-list"></div>
+    <div id='contact-container' class='user-item-container'>
+        <h1><%= link_to 'Contacts', new_user_contact_path(@user) %></h1>
+        <div id='contact-search'>
+            <div>
+                <input type='text' id='filter-contacts' class='dash-field' placeholder='filter contacts'>
             </div>
-        </div> <!-- close column -->
+            <div id='contact-list' data-id="<%= @user.id %>"></div>
+        </div>
+    </div>
 
 
-        <div class="column">
-            <h1><%= link_to 'Contacts', new_user_contact_path(@user) %></h1>
-            <div id='contact-search'>
-                <div>
-                    <input type='text' id='filter-contacts' class='dash-field' placeholder='filter contacts'>
-                </div>
-                <div id='contact-list' data-id="<%= @user.id %>"></div>
+    <div id='document-container' class='user-item-container'>
+        <h1><%= link_to 'Documents', new_user_document_path(@user) %></h1>
+        <div id='document-search'>
+            <div>
+                <input type='text' id='filter-documents' class='dash-field' placeholder='filter documents'>
             </div>
-        </div> <!-- close column -->
+            <div id="document-list"></div>
+        </div>
+    </div>
 
-
-        <div class="column">
-            <h1><%= link_to 'Documents', new_user_document_path(@user) %></h1>
-            <div id='document-search'>
-                <div>
-                    <input type='text' id='filter-documents' class='dash-field' placeholder='filter documents'>
-                </div>
-                <div id="document-list"></div>
-            </div>
-        </div> <!-- close column -->
-
-    </div> <!-- close row -->
 </div> <!-- close page -->
 
 
