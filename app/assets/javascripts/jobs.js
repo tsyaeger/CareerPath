@@ -21,8 +21,8 @@ Job.prototype.formatJobIndex = function() {
 
 //Used in job show page
 Job.prototype.appliedString = function(applied_bool= this.applied) {
-    let appString = applied_bool.toString()
-    return `<h3 id='applied-bool'>Applied: ${appString.toUpperCase()}</h3>`
+    let text = applied_bool ? 'Yes' : 'No'
+    return `<h3 id='applied-bool'>Applied: ${text}</h3>`
 }
 
 Job.prototype.appliedButton = function(applied_bool= this.applied) {

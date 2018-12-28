@@ -1,79 +1,351 @@
+<style>
+
+
+
+#job-show-wrapper {
+	display: grid;
+	grid-template-columns: 350px 1fr 1fr;
+	grid-template-rows: 90px 35px 75px 450px 450px
+}
+
+#heading-container {
+	grid-column: 1/4;
+	grid-row: 1;
+	margin: 0;
+	margin-top: 30px;
+	padding: 0;
+	text-align: center;
+}
+
+
+
+.pg-btn {
+    margin-top: 6px;
+	margin: 6px 30px 0 30px;
+    font-size: 40px;
+    color: #4c4a4a;
+}
+
+.pg-btn:hover {
+	color: #a81515;
+}
+
+/*.fa {
+    box-shadow: 0 2px 3px 0 rgba(0,0,0,0.18), 0 1px 3px 0 rgba(0,0,0,0.17);
+}*/
+
+#dates-container {
+	grid-column: 1/4;
+	grid-row: 2;
+	margin: 0;
+	margin: 0px 515px 0px 515px;
+	padding: 0;
+	text-align: center;
+}
+
+.posted-date {
+	float: left;
+}
+
+.post-to {
+	float: right;
+}
+
+#applied-container {
+	grid-column: 1/4;
+	grid-row: 3;
+	padding: 0px 680px 0px 680px;
+	border-bottom: solid black 1px;
+}
+
+
+#job-applied {
+	float: left;
+}
+
+#applied-bool {
+	margin-top: 18px;
+}
+
+#applied-toggle {
+	float: right;
+}
+
+#switch {
+	margin: 0;
+	padding: 0;
+}
+
+
+input[type=checkbox]{
+	height: 0;
+	width: 10px;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 90px;
+	height: 18px;
+	background: grey;
+	display: block;
+	border-radius: 100px;
+	position: relative;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	border-radius: 90px;
+	transition: 0.3s;
+}
+
+input:checked + label {
+	background: #00b746;
+}
+
+input:checked + label:after {
+	left: calc(100% - 5px);
+	transform: translateX(-100%);
+}
+
+label:active:after {
+	width: 130px;
+}
+
+.job-desc-container {
+	grid-column: 2;
+	grid-row: 4; 
+	margin: 15px 15px 15px 25px;
+	padding: 10px;
+	text-align: left;
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+}
+
+.job-co-container {
+	grid-column: 3;
+	grid-row: 4; 
+	margin: 15px;
+	padding: 10px;
+	text-align: left;
+	border-bottom: solid black 1px;
+}
+
+
+.job-reqs-container {
+	grid-column: 2;
+	grid-row: 5; 
+	margin: 15px 15px 15px 25px;
+	padding: 10px;
+	text-align: left;
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+}
+
+.job-notes-container {
+	grid-column: 3;
+	grid-row: 5; 
+	margin: 15px;
+	padding: 10px;
+	text-align: left;
+	border-bottom: solid black 1px;
+}
+
+.linked-items {
+	grid-column: 1;
+	grid-row: 4/6; 
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr
+	margin: 0;
+	margin-top: 20px;
+	padding: 0;
+	text-align: center;
+}
+
+/*#job-documents {
+	width: 225px;
+	margin: 0;
+	padding: 0;
+	height: 25px;
+}*/
+
+#btn-add-document {
+	font-size: 16px;
+	height: 35px;
+	width: 225px;
+	margin: 0;
+	padding: 0;
+}
+
+/*#job-contacts {
+	width: 225px;
+	margin: 0;
+	padding: 0;
+	height: 25px;
+}*/
+
+#btn-add-contact {
+	font-size: 16px;
+	height: 35px;
+	width: 225px;
+	margin: 0;
+	padding: 0;
+}
+
+.link-doc-container {
+	padding: 10px 0 30px;
+	border-bottom: solid black 1px;
+	border-right: solid black 1px;
+}
+
+
+.link-contact-container {
+	padding: 10px 0 30px;
+	border-bottom: solid black 1px;
+	border-right: solid black 1px;
+}
+
+.link-task-container {
+	padding: 10px 0 30px;
+	border-right: solid black 1px;
+}
+
+
+#linked-docs {
+	grid-column: 1;
+	grid-row: 2;
+}
+
+#add-doc-link {
+	grid-column: 1;
+	grid-row: 3;
+}
+
+#job_document_ids {
+	margin: 0;
+}
+
+#job_contact_ids {
+	margin: 0;
+}
+
+</style>
+
+
+
+
+<div class='user-id' data-id="<%= @job.user.id %>"></div>
+<div class='job-id' data-id="<%= @job.id %>"></div>
 
 <div id='job-show-wrapper'>
-	<div class='user-id' data-id="<%= @job.user.id %>"></div>
-	<div class='job-id' data-id="<%= @job.id %>"></div>
 
-	<div id='top'>
-		<span class="headline pg-btn btn-previous"><button>Previous</button></span>
+	<div id='heading-container'>
+	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
 	    <h1 id='job-company-position' class='headline'><%= @job.company %> - <%= @job.position %></h1>
-	    <span class="headline pg-btn btn-next"><button>Next</button></span>
-		<div class='details-container'>
-			<section id='applied-container'>
-				<div><h3 class='posted-date one'>Posted Date: <%= format_date(@job.date_posted) %></h3><div>
-				<div><h3 class='link two'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
-			</section>
-			<div id='job-applied'></div>
-			<div id='applied-btn'></div>
-			<div>
-				<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
-			    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
+		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
+	</div>
+
+
+	<div id='dates-container'>
+		<div><h3 class='posted-date'>Posted Date: <%= format_date(@job.date_posted) %></h3></div>
+		<div><h3 class='post-to'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
+		<div><h3> Closing Date: xxx</h3></div>
+	</div>
+
+	<div id='applied-container'>
+		<div id='job-applied'></div>
+		<!-- <div id='applied-btn'></div> -->
+		<div id='applied-toggle'><input type="checkbox" id="switch" <applli/><label for="switch">Toggle</label></div>
+	</div>
+
+		
+	<div class='job-desc-container'>
+		<% if !!@job.job_desc %>
+			<h2> Job Description </h2>
+			<h3 class='descriptions'><%= @job.job_desc %></h3>
+		<% else %>
+			<h2>This job has no job description</h2>
+		<% end %>
+	</div>
+
+
+	<div class='job-co-container'>
+		<% if !!@job.co_desc %>
+			<h2> Company Description </h2>
+			<h3 class='descriptions'><%= @job.co_desc %></h3>
+		<% else %>
+			<h2>This job has no company description</h2>
+		<% end %>
+	</div>
+
+
+
+	<div class='job-reqs-container'>
+		<h2>Job Requirements</h2>
+		<h3>5 years dev experience, CS or similar degree, writes DRY code.</h3>
+	</div>
+
+
+
+	<div class='job-notes-container'>
+		<h2>Job Notes</h2>
+		<h3>Remember to mention xxxx and yyyyy. Contact suggested that I practice ....</h3>
+	</div>
+
+
+
+	<div class='linked-items'>
+
+		<div class='link-doc-container'>
+			<div id='linked-docs'>
+		    	<h2>LINKED DOCUMENTS</h2>
+		    	<div id='job-documents'></div>
+		    </div>
+
+		    <div id='add-doc-link'>
+	    		<%= render 'documents/document_dropdown' %>
+	    	</div>
+	    </div>
+
+	    <div class='link-contact-container'>
+	    	<div id='linked-contacts'>
+		    	<h2>LINKED CONTACTS</h2>
+		    	<div id='job-contacts'></div>
+		    </div>
+
+		    <div id='add-doc-link'>
+				<%= render 'contacts/contact_dropdown' %>
 			</div>
-		</div>
-	</div> <!-- close top -->
-	
+	    </div>
 
-	<div id='mid'>
-	    <div id='job-docs-col' class='links-col'>
-	    	<%= render 'documents/document_dropdown' %>
-	    	<h2>LINKED DOCUMENTS</h2>
-	    	<div id='job-documents'></div>
-	    </div> <!-- close column -->
-
-	    <div id='job-contacts-col' class='links-col'>
-			 <%= render 'contacts/contact_dropdown' %>
-	    	<h2>LINKED CONTACTS</h2>
-	    	<div id='job-contacts'></div>
-	    </div> <!-- close column -->
-
-	    <div id='job-tasks-col' class='links-col'>
+	    <div class='link-task-container'>
+	    	<h2>TASKS</h2>
 			<% if @job.tasks.length > 0%>
 				<!-- <div id='task-list'></div> -->
-		    	<h2>TASKS</h2>
 		    	<%= render partial: "tasks/task", collection: @job.tasks || "No Linked Tasks" %>
 		    <% else %>
-		    	<h2>NO LINKED TASKS</h2>
+		    	<h3>NO LINKED TASKS</h3>
 			<% end %>
-	    </div> <!-- close column -->
+	    </div>
 
-	</div> <!-- close mid -->
+	</div>
 
 
-	<div id='bottom'>
-		<div class='col-5'>.</div>
-
-		<div class='col-4 left-col'>
-			<% if !!@job.job_desc %>
-				<h2> View Job Description </h2>
-				<h3 class='descriptions'><%= @job.job_desc %></h3>
-			<% else %>
-				<h2>This job has no job description<h2>
-			<% end %>
-		</div>
-
-		<div class='col-4 right-col'>	
-			<% if !!@job.co_desc %>
-				<h2> View Company Description </h2>
-				<h3 class='descriptions'><%= @job.co_desc %></h3>
-			<% else %>
-				<h2>This job has no company description</h2>
-			<% end %>
-		</div>
-
-		<div class='col-5'>.</div>
-	</div> <!-- close bottom -->
 
 </div> <!-- close wrapper -->
 
+	<div>
+		<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
+	    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
+	</div>
 
 
 
@@ -90,7 +362,7 @@ $( document ).on('turbolinks:load', function() {
 		job = new Job(data, user_id)
 
 	    displayAppliedDetails(job)
-		buttonApplied(job)
+		// buttonApplied(job)
 
 		getDocuments(data)
 		getContacts(data)
@@ -129,8 +401,6 @@ const getContacts = function (data) {
 }
 
 
-
-
 //CHANGE APPLIED STATUS
 const buttonApplied = function (job) {
 	$('#add-applied').on('click', function() {
@@ -144,14 +414,11 @@ const buttonApplied = function (job) {
 }
 
 
-
 //DISPLAY APPLIED STATUS BUTTON AND TEXT
 const displayAppliedDetails = function (job) {
 	$('#job-applied').append(job.appliedString())
 	$('#applied-btn').append(job.appliedButton())
 }
-
-
 
 
 
@@ -172,10 +439,7 @@ const previousButton = function() {
 }
 
 
-
-
-
-//BUTTON LISTER, SEND PATCH W CONTACT TO CONTROLLER, 
+//BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
 const linkContact = function() {
 	$('#btn-add-contact').on('click', function(e) {
 		e.preventDefault()
