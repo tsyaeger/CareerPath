@@ -4,12 +4,10 @@
 #job-show-wrapper {
 	display: grid;
 	grid-template-columns: 350px 1fr 1fr;
-	/*grid-template-rows: 90px 35px 75px 450px 450px*/
 }
 
 .heading-container {
 	grid-column: 1/4;
-	grid-row: 1;
 	margin: 0;
 	margin-top: 30px;
 	padding: 0;
@@ -35,39 +33,36 @@
 
 #dates-container {
 	grid-column: 1/4;
-	grid-row: 2;
-	margin: 0;
-	margin: 0px 515px 0px 515px;
-	padding: 0;
-	text-align: center;
 }
 
-.posted-date {
-	float: left;
+#date-section {
+  display: flex;
+  justify-content: center;
 }
 
-.post-to {
-	float: right;
+#date-section > div {
+	margin: 0 15px;
 }
+
 
 #applied-container {
 	grid-column: 1/4;
-	grid-row: 3;
-	padding: 0px 680px 35px 680px;
+	padding-bottom: 20px;
 	border-bottom: solid black 1px;
 }
 
-
-#job-applied {
-	float: left;
+#applied-section {
+  display: flex;
+  justify-content: center;
 }
+
+#applied-section > div {
+	margin: 0 15px;
+}
+
 
 #applied-bool {
 	margin-top: 18px;
-}
-
-#applied-toggle {
-	float: right;
 }
 
 #switch {
@@ -77,6 +72,7 @@
 
 
 
+/* TOGGLE */
 input[type=checkbox]{
 	height: 0;
 	width: 10px;
@@ -156,49 +152,57 @@ input:checked + label:after {
 
 
 /* SIDEBAR */
+
+.link-field {
+	padding: 0 35px 0;
+}
+
 .linked-items {
 	grid-column: 1;
 	grid-row: 4/6; 
 	display: grid;
 	grid-template-columns: 1fr;
-	/*grid-template-rows: 1fr 1fr 1fr 1fr 1fr*/
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr
 	margin: 0;
-	margin-top: 20px;
 	padding: 0;
 	text-align: center;
 }
 
+.linked-items > div {
+	border-bottom: dotted 1px black;
+}
 
 
 .link-doc-container {
 	padding: 10px 0 30px;
 	/*border-bottom: solid black 1px;*/
 	border-right: solid black 1px;
+	display: inline-block;
+
 }
 
+
+/*CONSOLIDATE ME*/
 #btn-add-document {
 	font-size: 16px;
 	height: 35px;
-	width: 225px;
 	margin: 0;
 	padding: 0;
 }
-
-
 #btn-add-contact {
 	font-size: 16px;
 	height: 35px;
-	width: 225px;
 	margin: 0;
 	padding: 0;
 }
 
+
+/*CONSOLIDATE ME*/
 .link-contact-container {
 	padding: 10px 0 30px;
 	/*border-bottom: solid black 1px;*/
 	border-right: solid black 1px;
 }
-
 .link-task-container {
 	padding: 10px 0 30px;
 	border-right: solid black 1px;
@@ -223,6 +227,8 @@ input:checked + label:after {
 	margin: 0;
 }
 
+
+/* SHOULD BE GLOBAL FOR ALL CREATE ITEMS*/
 p.create-item a{
 	color: #B50000;
 }
@@ -249,9 +255,11 @@ p.create-item a{
 
 
 	<div id='dates-container'>
-		<div><h3 class='posted-date'>Posted Date: <%= format_date(@job.date_posted) %></h3></div>
-		<div><h3 class='post-to'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
-		<div><h3> Closing Date: xxx</h3></div>
+		<section id="date-section">
+			<div><h3 class='posted-date'>Posted Date: <%= format_date(@job.date_posted) %></h3></div>
+			<div><h3> Closing Date: xxx</h3></div>
+			<div><h3 class='post-to'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
+		</section>
 	</div>
 
 
@@ -260,8 +268,10 @@ p.create-item a{
 
 
 	<div id='applied-container'>
-		<div id='job-applied'></div>
-		<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+		<section id='applied-section'>
+			<div id='job-applied'></div>
+			<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+		</section>
 	</div>
 
 	

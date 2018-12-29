@@ -1,6 +1,6 @@
 	
 
-<%= form_for [@job.user, @job], :url => user_job_path(@job.user, @job), :html => {:id => "add-contact", :method => :post} do |f| %>
+<%= form_for [@job.user, @job], :url => user_job_path(@job.user, @job), :html => {:id => "add-contact", :class => "link-field", :method => :post} do |f| %>
 
 	<p><%= f.collection_select :contact_ids, @job.user.contacts, :id, :last_name, {:include_blank => 'choose contact'} %></p>	
 

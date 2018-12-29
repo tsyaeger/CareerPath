@@ -38,7 +38,7 @@ input[type=submit]:hover {
 
 
 textarea, select {
-    width: 320px;
+    width: 100%;
     box-sizing: border-box;
     border-radius: 4px;
     margin: 0 0 20px 0;
@@ -47,29 +47,11 @@ textarea, select {
 
 
 #job_desc, #co_desc {
-        width: 700px;
+        width: 100%;
         height: 183px;
 }
 
 
-#small-fields {
-    text-align: center;
-    float: left;
-    width: 40%;
-    padding-top: 35px;
-    border: solid 1px;
-    height: 1200px; /* Should be removed. Only for demonstration */
-}
-
-
-#large-fields {
-    text-align: center;
-    border: solid 1px;
-    float: left;
-    width: 60%;
-    padding: 35px 30px 0 0;
-    height: 1200px; /* Should be removed. Only for demonstration */
-}
 
 
 #user-form {
@@ -77,3 +59,13 @@ textarea, select {
     display: block;
     text-align: center;
 }
+
+
+
+
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 
 
 <div>
-	<%= form_for [@job.user, @job], :url => user_job_path(@job.user, @job), :html => {:id => "add-document", :method => :post} do |f| %>
+	<%= form_for [@job.user, @job], :url => user_job_path(@job.user, @job), :html => {:id => "add-document", :class => "link-field", :method => :post} do |f| %>
 
 		<p><%= f.collection_select :document_ids, @job.user.documents, :id, :title, {:include_blank => 'choose document'} %></p>	
 

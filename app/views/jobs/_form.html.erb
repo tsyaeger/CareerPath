@@ -1,37 +1,107 @@
+<style>
+
+form {
+    display: grid;
+    grid-template-columns: 1fr;
+    /*grid-template-rows: 40px 1fr;*/
+    /*height: 100%; */
+    padding: 35px 20px;
+}
+
+@media only screen and (min-width: 600px) {
+    form {
+        grid-template-columns: 1fr;
+        /*padding: 40px 35px;*/
+    }
+}
+
+@media only screen and (min-width: 750px) {
+    #new-job-form {
+        grid-template-columns: 1fr;
+        /*padding: 40px 50px;*/
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    form {
+        /*padding: 40px 50px;*/
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 60px 100px 100px repeat(3, 1fr);
+    }
+
+    .field {
+        margin: 25px;
+    }
+
+    .actions {
+        grid-column: 1;
+        /*grid-row: 1;*/
+    }
+    .co-name {
+        grid-column: 1;
+        /*grid-row: 2;*/
+    }
+    .position {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    .link {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .posted-date {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    .job-desc {
+        grid-column: 1;
+        grid-row: 4;
+    }
+
+    .co-desc {
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+
+}
+
+</style>
+
+
+
 
 <div id='new-job-form'>
 
     <%= form_for [@job.user, @job] do |f| %>
 
-        <div id="small-fields">
+            <div class="actions field">
+                <%= f.button "SAVE POSITION" %>
+            </div>
 
-            <div class="field">
+            <div class="field co-name">
                 <%= f.label :company, "Company Name" %><br>
                 <%= f.text_field :company, id: "company", :required => true  %>
             </div>
 
-            <div class="field">
+            <div class="field position">
                 <%= f.label :position %><br>
                 <%= f.text_field :position, id: "position", :required => true  %>
             </div>
 
-            <div class="field">
+            <div class="field link">
                 <%= f.label :url, "Link to Posting" %><br>
                 <%= f.text_field :url, id: "url" %>
             </div>            
 
-            <div class="field" id="job-posted-date-field">
+            <div class="field posted-date" id="job-posted-date-field">
                 <%= f.label :date_posted %><br>
                 <%= f.date_field :date_posted, id: "date_posted" %>
             </div> 
 
-            <div class="actions">
-                <%= f.submit "SAVE" %>
-            </div>
-
-        </div> <!-- close small-fields -->
-
-        <div id="large-fields">           
 
             <div class="field job-desc">
                 <%= f.label :job_desc, "Job Description" %><br>
@@ -39,12 +109,10 @@
             </div>            
 
             <div class="field co-desc">
-                <%= f.label :co_desc, "Company Notes" %><br>
+                <%= f.label :co_desc, "Company Description" %><br>
                 <%= f.text_area :co_desc, id: "co_desc" %>
             </div>
-            <br>
 
-        </div> <!-- close small-fields -->
 
     <% end %>
 

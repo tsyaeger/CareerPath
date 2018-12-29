@@ -2,15 +2,15 @@
 body {
     padding: 0;
     margin: 0;
-    -webkit-font-smoothing: antialiased;
+    /*-webkit-font-smoothing: antialiased;*/
     -moz-osx-font-smoothing: grayscale;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
     min-height: 100vh;
 }
 
 .container {
-    flex-grow: 1;
+    /*flex-grow: 10;*/
 }
 
 #user-show-container {
@@ -40,7 +40,7 @@ body {
     }
 }
 
-@media only screen and (min-width: 768px) {
+/*@media only screen and (min-width: 800px) {
     #user-show-container {
         grid-template-columns: 1fr 1fr 1fr;
     }
@@ -51,33 +51,19 @@ body {
         border-right: solid;
         border-width: 1px;
     }
-}
+}*/
 
 @media only screen and (min-width: 1000px) {
     #user-show-container {
         grid-template-columns: repeat(4, 1fr);
     }
+    .user-item-container {
+        min-height: 1200px;
+    }
     .user-item-container:nth-child(-n+3) {
         border-right: solid;
         border-width: 1px;
     }
-}
-
-
-#position-container {
-    /*grid-column: 1;*/
-}
-
-#task-container {
-    /*grid-column: 2;*/
-}
-
-#contact-container {
-    /*grid-column: 3;*/
-}
-
-#document-container {
-    /*grid-colurmn: 4;*/
 }
 
 
@@ -131,7 +117,7 @@ body {
             </div>
             <div id="document-list"></div>
         </div>
-    </div>
+    </div>/
 
 </div> <!-- close page -->
 
