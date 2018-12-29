@@ -1,34 +1,83 @@
 <style>
+body {
+    padding: 0;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex-grow: 1;
+}
 
 #user-show-container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    height: 100%;
 }
 
-
 .user-item-container {
-    border-left: solid;
+    /*border-left: solid;*/
+    border-bottom: solid;
     border-width: 1px;
     border-color: #2d2c2c;
     text-align: left;
     padding: 35px;
-    height: 1200px; 
+    /*height: 1200px; */
+
 }
 
+@media only screen and (min-width: 600px) {
+    #user-show-container {
+        grid-template-columns: 1fr 1fr;
+    }
+    .user-item-container:nth-child(odd) {
+        border-right: solid;
+        border-width: 1px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    #user-show-container {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .user-item-container:nth-child(odd) {
+        border-right: none;
+    }
+    .user-item-container:nth-child(-n+2) {
+        border-right: solid;
+        border-width: 1px;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    #user-show-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .user-item-container:nth-child(-n+3) {
+        border-right: solid;
+        border-width: 1px;
+    }
+}
+
+
 #position-container {
-    grid-column: 1;
+    /*grid-column: 1;*/
 }
 
 #task-container {
-    grid-column: 2;
+    /*grid-column: 2;*/
 }
 
 #contact-container {
-    grid-column: 3;
+    /*grid-column: 3;*/
 }
 
 #document-container {
-    grid-column: 4;
+    /*grid-colurmn: 4;*/
 }
 
 
@@ -42,7 +91,7 @@
 <div id='user-show-container'>
 
     <div id='position-container' class='user-item-container'>
-        <h1><%= link_to 'Positions', new_user_job_path(@user) %></h1>
+        <h1><%= link_to 'Positions', user_jobs_path(@user) %></h1>
         <div id='job-search'>
             <div>
                 <input type='text' id='filter-jobs' class='dash-field' placeholder='filter positions'>        
@@ -92,7 +141,7 @@
 <script type="text/javascript" charset="utf-8">
 
 
-$(function() {
+$( document ).on('turbolinks:load', function(){
     id = $(".user-id").data("id")
 
     $.get(`/users/${id}.json`, function(data) {

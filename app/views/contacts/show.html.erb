@@ -52,7 +52,7 @@
 
 		<div class='heading-container contact-item-container'>
 			<h1><%= @contact.first_name %> <%= @contact.last_name %> - <%= @contact.workplace %></h1>
-		</div>
+		</div> <!-- close container -->
 
 
 
@@ -63,7 +63,7 @@
 			<div id='reference-btn'></div>
 		    <td><%= link_to "Edit", edit_user_contact_path(@contact.user, @contact) %></td>
 		    <td><%= link_to "Delete", user_contact_path(@contact.user, @contact), :method => :delete %></td>
-		</div>
+		</div> <!-- close container -->
 
 
 
@@ -76,7 +76,7 @@
 	                <h3><%= link_to '* Link This Contact To A Job', user_jobs_path(@contact.user) %></h3>
 	            <% end %>
 	        </div>
-	    </div> <!-- close column -->
+	    </div> <!-- close container -->
 
 
 
@@ -89,9 +89,7 @@
 	                <h3><%= link_to '* Link This Contact To A Task', user_jobs_path(@contact.user) %></h3>
 	            <% end %>
 	        </div>
-	    </div> <!-- close column -->
-
-
+	    </div> <!-- close container -->
 
 </div> <!-- close wrapper -->
 
@@ -104,7 +102,7 @@
 
 
 
-$(document).ready(function () {
+$( document ).on('turbolinks:load', function() {
 	user_id = $(".user-id").data("id")
 	contact_id = $(".contact-id").data("id")
 

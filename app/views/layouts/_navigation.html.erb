@@ -1,16 +1,58 @@
- 
+ <style>
+   
+  #nav-container ul{
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: #333;
+          display: flex;
+  }
+  
+  #nav-container li.mobile-no-show {
+    display: none;
+  }
+
+  @media only screen and (min-width: 570px) {
+    #nav-container li.mobile-no-show {
+      display: block;
+    }
+  }
+
+  #nav-container li:last-of-type {
+    margin-left: auto;
+  }
+
+  #nav-container li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+  }
+
+  #nav-container li a:hover:not(.active) {
+      background-color: #111;
+  }
+
+  #nav-container .active {
+      background-color: #4CAF50;
+  }
+ </style>
+
+
 
 <div id='nav-container'>
 
   <% if logged_in? %>
     <ul>
       <li><a href="<%= user_path(current_user) %>"/>Home</a></li>
-      <li><a href="<%= user_jobs_path(current_user) %>"/>Jobs</a></li>
-      <li><a href="<%= new_user_task_path(current_user) %>"/>Tasks</a></li>
-      <li><a href="<%= new_user_contact_path(current_user) %>"/>Contacts</a></li>
-      <li><a href="<%= new_user_document_path(current_user) %>"/>Docs</a></li>
+      <li class="mobile-no-show"><a href="<%= user_jobs_path(current_user) %>"/>Jobs</a></li>
+      <li class="mobile-no-show"><a href="<%= new_user_task_path(current_user) %>"/>Tasks</a></li>
+      <li class="mobile-no-show"><a href="<%= new_user_contact_path(current_user) %>"/>Contacts</a></li>
+      <li class="mobile-no-show"><a href="<%= new_user_document_path(current_user) %>"/>Docs</a></li>
       <li><a class="navbar-brand" rel="nofollow" data-method="delete" href="/logout">Log Out</a><li>
-      <li style="float:right"><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.username %></a></li>
+      <li><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.username %></a></li>
     </ul>
   <% else %> 
     <ul>

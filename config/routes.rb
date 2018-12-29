@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 	patch '/users/:id/jobs/:id/add_contact', to: 'jobs#add_contact', as: 'add_job_contact'
 	patch '/users/:id/jobs/:id/add_document', to: 'jobs#add_document', as: 'add_job_document'
 
-	get '/users/:id/jobs/:id/unlink_contact', to: 'jobs#unlink_contact', as: 'unlink_job_contact'
+	patch '/users/:user_id/jobs/:id/unlink_contact', to: 'jobs#unlink_contact', as: 'unlink_job_contact'
 	get '/users/:id/jobs/:id/unlink_document', to: 'jobs#unlink_document', as: 'unlink_job_document'
 
 
@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 	patch '/users/:id/tasks/:id/add_contact', to: 'tasks#add_contact', as: 'add_task_contact'
 	patch '/users/:id/tasks/:id/add_document', to: 'tasks#add_document', as: 'add_task_document'
 	patch '/users/:id/tasks/:id/add_job', to: 'tasks#add_job', as: 'add_task_job'
+
 
 	get '/users/:id/tasks/:id/unlink_contact', to: 'tasks#unlink_contact', as: 'unlink_task_contact'
 	get '/users/:id/tasks/:id/unlink_document', to: 'tasks#unlink_document', as: 'unlink_task_document'

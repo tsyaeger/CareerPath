@@ -65,7 +65,7 @@
 <script>
 
 
-$(document).ready(function () {
+$( document ).on('turbolinks:load', function() {
     user_id = $(".user-id").data("id")
     task_id = $(".task-id").data("id")
 

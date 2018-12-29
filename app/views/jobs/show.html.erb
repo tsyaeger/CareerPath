@@ -1,12 +1,5 @@
 <style>
 
-textarea, select {
-    width: 320px;
-    box-sizing: border-box;
-    border-radius: 4px;
-    margin: 0 0 20px 0;
-    font-size: 16px;
-}
 
 #job-show-wrapper {
 	display: grid;
@@ -14,7 +7,7 @@ textarea, select {
 	/*grid-template-rows: 90px 35px 75px 450px 450px*/
 }
 
-#heading-container {
+.heading-container {
 	grid-column: 1/4;
 	grid-row: 1;
 	margin: 0;
@@ -82,9 +75,7 @@ textarea, select {
 	padding: 0;
 }
 
-/*#switch-label {
-	padding: 14px 12px 15px 0;
-}*/
+
 
 input[type=checkbox]{
 	height: 0;
@@ -232,7 +223,7 @@ input:checked + label:after {
 	margin: 0;
 }
 
-h3.create-item a{
+p.create-item a{
 	color: #B50000;
 }
 
@@ -246,7 +237,7 @@ h3.create-item a{
 
 <div id='job-show-wrapper'>
 
-	<div id='heading-container'>
+	<div class='heading-container'>
 		<div class='edit-delete'>
 			<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
 		    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
@@ -263,29 +254,40 @@ h3.create-item a{
 		<div><h3> Closing Date: xxx</h3></div>
 	</div>
 
+
+
+
+
+
 	<div id='applied-container'>
 		<div id='job-applied'></div>
-		<!-- <div id='applied-btn'></div> -->
 		<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
 	</div>
 
-		
+	
+
+
+
+
+
 	<div class='job-desc-container job-content-container'>
-		<% if !!@job.job_desc %>
+		<% if @job.job_desc != "" %>
 			<h2> Job Description </h2>
 			<h3 class='descriptions'><%= @job.job_desc %></h3>
 		<% else %>
 			<h2>This job has no job description</h2>
+			<p class='create-item'><%= link_to "add job description", edit_user_job_path(@job.user, @job) %></p>
 		<% end %>
 	</div>
 
 
 	<div class='job-co-container job-content-container'>
-		<% if !!@job.co_desc %>
+		<% if @job.co_desc != "" %>
 			<h2> Company Description </h2>
 			<h3 class='descriptions'><%= @job.co_desc %></h3>
 		<% else %>
 			<h2>This job has no company description</h2>
+			<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
 		<% end %>
 	</div>
 
@@ -294,6 +296,8 @@ h3.create-item a{
 	<div class='job-reqs-container job-content-container'>
 		<h2>Job Requirements</h2>
 		<h3>5 years dev experience, CS or similar degree, writes DRY code.</h3>
+		<p class='create-item'><%= link_to "add requirement", edit_user_job_path(@job.user, @job) %></p>
+
 	</div>
 
 
@@ -301,6 +305,8 @@ h3.create-item a{
 	<div class='job-notes-container job-content-container'>
 		<h2>Job Notes</h2>
 		<h3>Remember to mention xxxx and yyyyy. Contact suggested that I practice ....</h3>
+		<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
+
 	</div>
 
 
@@ -337,7 +343,7 @@ h3.create-item a{
 		    <% else %>
 		    	<h3>You have no linked tasks</h3>
 			<% end %>
-			<h3 class='create-item'><%= link_to "*create a task*", new_user_task_path(@job.user) %></h3>
+			<p class='create-item'><%= link_to "create a task", new_user_task_path(@job.user) %></p>
 	    </div>
 
 	</div>
@@ -362,7 +368,7 @@ $( document ).on('turbolinks:load', function() {
 		job = new Job(data, user_id)
 
 	    displayAppliedDetails(job)
-		buttonApplied(job)
+		toggleApplied(job)
 
 		getDocuments(data)
 		getContacts(data)
@@ -401,11 +407,23 @@ const getContacts = function (data) {
 }
 
 
+
+
+
+
+
+
+
+
+
 //CHANGE APPLIED STATUS
-const buttonApplied = function (job) {
+const toggleApplied = function (job) {
 	$('#switch').on('click', function() {
-	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${!job.applied}`, function(data) {
-	    	console.log('clicked')
+		newStatus = !job.applied
+		console.log('second' + job.applied)
+
+	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${newStatus}`, function(data) {
+	    	console.log('third' + job.applied)
 	    	$('#job-applied').empty()
 	    	$('#job-applied').append(job.appliedString(!job.applied))
 	    })
@@ -413,11 +431,16 @@ const buttonApplied = function (job) {
 }
 
 
-//DISPLAY APPLIED STATUS BUTTON AND TEXT
+
+//DISPLAY APPLIED STRING AND TOGGLE STATUS
 const displayAppliedDetails = function (job) {
 	$('#job-applied').append(job.appliedString())
-	$('#applied-btn').append(job.appliedButton())
+	let tog = document.getElementById("switch")
+	tog.checked = job.applied
 }
+
+
+
 
 
 
@@ -442,6 +465,7 @@ const previousButton = function() {
 const linkContact = function() {
 	$('#btn-add-contact').on('click', function(e) {
 		e.preventDefault()
+		console.log('add connnn', e)
 		var form = $('#add-contact')
 		var action = form.attr('action')
 		var c_id = form.serialize()
@@ -469,6 +493,8 @@ const linkDocument = function() {
 		var action = form.attr('action')
 		var d_id = form.serialize()
 
+		console.log('jdshxfjhsdfhsjdfs', d_id)
+
 		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_document`,
 		data: d_id,
 		type: "PATCH", 
@@ -485,20 +511,35 @@ const linkDocument = function() {
 
 
 
-
-//BUTTON LISTENER, REMOVE JOB CONTACT 
+//TOGGLE LISTENER, REMOVE JOB CONTACT 
 const unlinkContact = function() {
 	$('span.remove-contact').on('click', function(e) {
 		let c_id = this.id
-	    $.get(`/users/${user_id}/jobs/${job_id}/unlink_contact?q=${c_id}`, function(data) {
-	    	let id = data['id']
-	    	$("#contactItem-" + id).remove()
-	    	$("#" + id).remove()	    	
-	    	//AND REMOVE THE SPAN CHILD <BR>   	
 
-	    })
+		$.ajax({
+			url: `/users/${user_id}/jobs/${job_id}/unlink_contact`,
+			data: c_id,
+			dataType: 'json',
+			contentType : 'application/json',
+			processData: false,
+			type: "PATCH", 
+	        success: function (data) {
+	        	console.log('after succccc', data)
+				let id = data['id']
+		    	$("#contactItem-" + id).remove()
+		    	$("#" + id).remove();
+		    	//.location.reload()
+		    },
+	        error: function (data) {
+	            alert('no success') }
+	        })
+
 	})
 }
+
+
+
+
 
 
 //BUTTON LISTENER, REMOVE JOB DOCUMENT 
