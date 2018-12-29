@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+
+
+	# patch '/users/:user_id/jobs/:id/contact/id', to: 'contact#unlink_contact', as: 'unlink_job_contact'
+
+	# @job.contacts (c_id)
+	# @contact.jobs (j_id)
+
+
 	patch '/users/:id/jobs/:id/add_contact', to: 'jobs#add_contact', as: 'add_job_contact'
 	patch '/users/:id/jobs/:id/add_document', to: 'jobs#add_document', as: 'add_job_document'
 

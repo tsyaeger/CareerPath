@@ -1,0 +1,195 @@
+
+
+
+The helpers, mailers, and models directories are meant to hold tests for view helpers, 
+mailers, and 
+
+
+
+
+
+Model Testing
+$ bin/rails generate test_unit:model article title:string body:text
+
+
+
+
+CONTROLLERS
+The controllers directory is meant to hold tests for 
+controllers, routes, and views. 
+
+ bin/rails generate test_unit:scaffold article
+
+class ArticlesControllerTest < ActionDispatch::IntegrationTest
+  test "should get index" do
+    get articles_url
+    assert_response :success
+  end
+end
+
+was the web request successful?
+was the user redirected to the right page?
+was the user successfully authenticated?
+was the correct object stored in the response template?
+was the appropriate message displayed to the user in the view?
+
+In the test_should_get_index test, Rails simulates a request on the action called index, making 
+sure the request was successful and also ensuring that the right response body has been generated.
+
+The get method kicks off the web request and populates the results into the @response. It can 
+accept up to 6 arguments:
+
+The URI of the controller action you are requesting. This can be in the form of a string or a 
+route helper (e.g. articles_url).
+params: option with a hash of request parameters to pass into the action (e.g. query string parameters or article variables).
+headers: for setting the headers that will be passed with the request.
+env: for customizing the request environment as needed.
+xhr: whether the request is Ajax request or not. Can be set to true for marking the request as Ajax.
+as: for encoding the request with different content type. Supports :json by default.
+
+
+
+
+INTEGRATION
+The integration directory is meant to hold tests for 
+interactions between controllers.
+Integration tests are used to test how various parts of your application interact. They 
+are generally used to test important workflows within our application.
+
+$ bin/rails generate integration_test blog_flow
+
+require 'test_helper'
+ 
+class BlogFlowTest < ActionDispatch::IntegrationTest
+  test "can see the welcome page" do
+    get "/"
+    assert_select "h1", "Welcome#index"
+  end
+end
+
+
+
+
+SYSTEM TEST
+The system test directory holds system tests, which are used for full browser testing 
+of your application. System tests allow you to test your application the way your users 
+experience it and help you test your JavaScript as well. System tests inherit from 
+Capybara and perform in browser tests for your application.
+
+The beauty of system testing is that it is similar to integration testing in that it 
+tests the user's interaction with your controller, model, and view, but system testing 
+is much more robust and actually tests your application as if a real user were using it. 
+oing forward, you can test anything that the user themselves would do in your application 
+	uch as commenting, deleting articles, publishing draft articles, etc.
+
+
+$ bin/rails generate system_test articles
+
+test "creating an article" do
+  visit articles_path
+ 
+  click_on "New Article"
+ 
+  fill_in "Title", with: "Creating an Article"
+  fill_in "Body", with: "Created this article successfully!"
+ 
+  click_on "Create Article"
+ 
+  assert_text "Creating an Article"
+end
+
+The first step is to call visit articles_path. This will take the test to the articles index page.
+
+Then the click_on "New Article" will find the "New Article" button on the index page. This will redirect the browser to /articles/new.
+
+Then the test will fill in the title and body of the article with the specified text. Once the fields are filled in, "Create Article" is clicked on which will send a POST request to create the new article in the database.
+
+We will be redirected back to the articles index page and there we assert that the text from the new article's title is on the articles index page.
+
+
+bin/rails test:system
+
+FIXTURES
+Fixtures are a way of organizing test data; they reside in the fixtures directory.
+Fixtures is a fancy word for sample data. Fixtures allow you to populate your testing 
+database with predefined data before your tests run. Fixtures are database independent 
+and written in YAML. There is one file per model.
+EG,
+# In fixtures/categories.yml
+about:
+  name: About
+ 
+# In fixtures/articles.yml
+first:
+  title: Welcome to Rails!
+  body: Hello world!
+  category: about
+
+ERB allows you to embed Ruby code within templates. The YAML fixture format is pre-processed 
+with ERB when Rails loads fixtures. This allows you to use Ruby to help you generate some sample data. For example, the following code generates a thousand users:
+EG,
+<% 1000.times do |n| %>
+user_<%= n %>:
+  username: <%= "user#{n}" %>
+  email: <%= "user#{n}@example.com" %>
+<% end %>
+
+
+# this will return the User object for the fixture named david
+users(:david)
+ 
+# this will return the property for david called id
+users(:david).id
+ 
+# one can also access methods available on the User class
+david = users(:david)
+david.call(david.partner)
+
+
+
+
+
+
+A jobs directory will also be created when an associated test is first generated.
+
+
+We can run all of our tests at once by using the bin/rails test command.
+
+Or we can run a single test file by passing the bin/rails test command 
+the filename containing the test cases.
+ bin/rails test test/models/article_test.rb
+
+You can also run a particular test method from the test case by 
+providing the -n or --name flag and the test's method name.
+ bin/rails test test/models/article_test.rb -n test_the_truth
+
+Or by directory
+
+
+
+class ArticleTest < ActiveSupport::TestCase
+
+
+test "the truth" do
+  assert true
+end
+
+is same as 
+
+
+def test_the_truth
+  assert true
+end
+
+
+
+Model 
+
+
+class Article < ApplicationRecord
+  validates :title, presence: true
+end
+
+
+
+
