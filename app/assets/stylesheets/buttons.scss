@@ -35,3 +35,45 @@ button:hover {
 
 
 
+
+
+input[type=checkbox]{
+    height: 0;
+    width: 10px;
+    visibility: hidden;
+}
+
+#switch-label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 90px;
+    height: 16px;
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+}
+
+#switch-label:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.2s;
+}
+
+input:checked + #switch-label {
+    background: #00b746;
+}
+
+input:checked + #switch-label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
+}
+
+
+
