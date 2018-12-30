@@ -324,7 +324,7 @@ p.create-item a{
 		    	<div id='job-contacts'></div>
 		    </div>
 
-		    <div id='add-doc-link'>
+		    <div id='add-contact-link'>
 				<%= render 'contacts/contact_dropdown' %>
 			</div>
 	    </div>
@@ -367,8 +367,8 @@ $( document ).on('turbolinks:load', function() {
 
 		job = new Job(data, user_id)
 
-	    displayAppliedDetails(job)
-		toggleApplied(job)
+	    displayAppliedDetails(job)  //creates string and toggle elements
+		toggleApplied(job) //connects applied click listener
 
 		getDocuments(data)
 		getContacts(data)
@@ -408,28 +408,34 @@ const getContacts = function (data) {
 
 
 
+
 //CHANGE APPLIED STATUS USING TOGGLE
 const toggleApplied = function (job) {
 	// place click listener on toggle
 	$('#switch').on('click', function() {
 		// route changing to new status
-	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${!job.applied}`, function(data) {
-	    	$('#job-applied').empty()
-	    	$('#job-applied').append(job.appliedString(!job.applied))
+	    job.applied = !job.applied;
+	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${job.applied}`, function(data) {
+	    	console.log('DATA:', data)
+	    	$('#job-applied').html(job.appliedString(job.applied))
 	    })
 	})
 }
 
 
-
 //DISPLAY APPLIED STRING AND TOGGLE STATUS
 const displayAppliedDetails = function (job) {
 	// renders yes/no string to applied status
-	$('#job-applied').append(job.appliedString())
+	$('#job-applied').html(job.appliedString())
 	// identifies toggle element and positions according to status
 	let tog = document.getElementById("switch")
-	tog.checked = job.applied
+	tog.checked = job.applied;
 }
+
+
+
+
+
 
 
 
@@ -450,11 +456,14 @@ const previousButton = function() {
 }
 
 
+
+
+
+
 //BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
 const linkContact = function() {
 	$('#btn-add-contact').on('click', function(e) {
 		e.preventDefault()
-		console.log('add connnn', e)
 		var form = $('#add-contact')
 		var action = form.attr('action')
 		var c_id = form.serialize()
@@ -534,7 +543,7 @@ const unlinkContact = function() {
 
 //BUTTON LISTENER, REMOVE JOB DOCUMENT 
 const unlinkDocument = function() {
-	$('span.remove-document').on('click', function(e) {
+	$(document.body).on('click', 'span.remove-document', function(e) {
 		let d_id = this.id
 	    $.get(`/users/${user_id}/jobs/${job_id}/unlink_document?q=${d_id}`, function(data) {
 	    	let id = data['id']
@@ -552,7 +561,7 @@ const unlinkDocument = function() {
 const docClick = function() {
 	var clicks = 0
 
-	$("i.doc").on('click', function() {
+	$(document.body).on('click', "i.doc", function() {
 		var id = this.id
 		console.log('doc')
 

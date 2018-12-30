@@ -126,11 +126,14 @@ body {
 
 <script type="text/javascript" charset="utf-8">
 
+var initialized = false;
 
 $( document ).on('turbolinks:load', function(){
     id = $(".user-id").data("id")
 
     $.get(`/users/${id}.json`, function(data) {
+        if(initialized) {return; /*stop here*/}
+        initialized = true;
         getContacts(data)
         getJobs(data)
         getTasks(data)

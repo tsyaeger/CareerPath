@@ -35,13 +35,15 @@ class JobsController < ApplicationController
   end
 
   def applied
-    # binding.pry
-    appStr = !params[:q]
+    appStr = params[:q]
     appBool = appStr === 'true'
 
     @job.applied = appBool
     flash[:notice] = 'Applied status changed'
     @job.save
+    respond_to do |format|
+      format.json { render json: @job }
+    end
   end
 
   def add_contact
