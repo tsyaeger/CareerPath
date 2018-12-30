@@ -1,7 +1,6 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
-
-
-
 
 # RSpec.describe "home page", :type => :request do
 #   it "displays the user's username after successful login" do
@@ -17,8 +16,6 @@ require 'rails_helper'
 #     assert_select ".header .username", :text => "jdoe"
 #   end
 # end
-
-
 
 # url = 'https://everydayrails.com/2016/08/29/replace-rspec-controller-tests.html'
 
@@ -38,13 +35,6 @@ require 'rails_helper'
 #     expect(response).to redirect_to login_url
 #   end
 # end
-
-
-
-
-
-
-
 
 # url = "https://relishapp.com/rspec/rspec-rails/docs/request-specs/request-spec"
 
@@ -69,9 +59,6 @@ require 'rails_helper'
 #   end
 # end
 
-
-
-
 # # REQUEST JSON RESPONSE
 # RSpec.describe "Widget management", :type => :request do
 
@@ -88,8 +75,6 @@ require 'rails_helper'
 
 # end
 
-
-
 # # PROVIDE JSON DATA
 # require "rails_helper"
 
@@ -102,21 +87,3 @@ require 'rails_helper'
 #   end
 
 # end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
