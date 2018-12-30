@@ -22,7 +22,21 @@ class ContactsController < ApplicationController
 	end
 
 
-	
+
+
+	def unlink_contact
+		binding.pry
+		# c_id = params[:q]
+		# contact = Contact.find(c_id)
+		# @job.contacts.delete(contact)
+		# @contact.jobs.delete(j_id)
+		# respond_to do |format|
+	 #      format.json { render json: contact, status: 200 }
+	 #    end
+	end	
+
+
+
 
 
 	def filter

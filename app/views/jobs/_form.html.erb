@@ -3,9 +3,11 @@
 form {
     display: grid;
     grid-template-columns: 1fr;
-    /*grid-template-rows: 40px 1fr;*/
-    /*height: 100%; */
     padding: 35px 20px;
+}
+
+div.actions.field button{
+    margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 600px) {
@@ -27,6 +29,12 @@ form {
         /*padding: 40px 50px;*/
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 60px 100px 100px repeat(3, 1fr);
+        padding: 0px 20px;
+    }
+
+
+    div.actions.field button{
+        float: left;
     }
 
     .field {

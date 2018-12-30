@@ -1,232 +1,272 @@
 <style>
 
-
 #job-show-wrapper {
 	display: grid;
-	grid-template-columns: 300px 1fr 1fr;
-}
-
-.heading-container {
-	grid-column: 1/4;
-	margin: 0;
-	margin-top: 30px;
-	padding: 0;
-	text-align: center;
-}
-
-.edit-delete {
-	float: right;
+	grid-template-columns:  1fr;
+	padding: 0 35px;
 }
 
 
-.pg-btn {
-    margin-top: 6px;
-	margin: 6px 30px 0 30px;
-    font-size: 40px;
-    color: #4c4a4a;
-}
+	.heading-container {
+		margin: 15px 0;
+		padding: 0;
+		text-align: center;
+	}
 
-.pg-btn:hover {
-	color: #a81515;
-}
+	h1#job-company-position {
+		font-size: 25px;
+	}
 
+	#date-section {
+	  display: flex;
+	  justify-content: center;
+	}
 
-#dates-container {
-	grid-column: 1/4;
-}
+	#date-section > div {
+		margin: 0 15px;
+	}
 
-#date-section {
-  display: flex;
-  justify-content: center;
-}
+	#applied-container {
+		padding-bottom: 20px;
+		border-bottom: solid black 1px;
+	}
 
-#date-section > div {
-	margin: 0 15px;
-}
+	#applied-section {
+	  display: flex;
+	  justify-content: center;
+	}
 
+	#applied-section > div {
+		margin: 0 15px;
+	}
+	
+	#applied-bool {
+		margin-top: 18px;
+	}
 
-#applied-container {
-	grid-column: 1/4;
-	padding-bottom: 20px;
-	border-bottom: solid black 1px;
-}
+	.job-content-container {
+		text-align: left;
+		overflow: scroll;
+		padding-bottom: 10px;
+		border-bottom: dotted 1px black;
+	}
 
-#applied-section {
-  display: flex;
-  justify-content: center;
-}
+	.linked-items > div {
+		border-bottom: dotted 1px black;
+	}
 
-#applied-section > div {
-	margin: 0 15px;
-}
-
-
-#applied-bool {
-	margin-top: 18px;
-}
-
-#switch {
-	margin: 0;
-	padding: 0;
-}
+	#switch {
+		margin: 0;
+		padding: 0;
+	}
 
 
 
 /* TOGGLE */
+
 input[type=checkbox]{
-	height: 0;
-	width: 10px;
-	visibility: hidden;
+    height: 0;
+    width: 10px;
+    visibility: hidden;
 }
 
-label {
-	cursor: pointer;
-	text-indent: -9999px;
-	width: 90px;
-	height: 16px;
-	background: grey;
-	display: block;
-	border-radius: 100px;
-	position: relative;
+#switch-label {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 90px;
+    height: 16px;
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
 }
 
-label:after {
-	content: '';
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	width: 16px;
-	height: 16px;
-	background: #fff;
-	border-radius: 90px;
-	transition: 0.2s;
+#switch-label:after {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border-radius: 90px;
+    transition: 0.2s;
 }
 
-input:checked + label {
-	background: #00b746;
+input:checked + #switch-label {
+    background: #00b746;
 }
 
-input:checked + label:after {
-	left: calc(100% - 5px);
-	transform: translateX(-100%);
-}
-
-
-
-
-/* JOB CONTENT */
-.job-content-container {
-	padding: 25px;
-	text-align: left;
-	overflow: scroll;
-
-}
-
-.job-desc-container {
-	grid-column: 2;
-	grid-row: 4; 
-	padding-left: 25px;
-	border-right: solid black 1px;
-	border-bottom: solid black 1px;
-}
-
-.job-co-container {
-	grid-column: 3;
-	grid-row: 4; 
-	border-bottom: solid black 1px;
-}
-
-.job-reqs-container {
-	grid-column: 2;
-	grid-row: 5; 
-	padding-left: 25px;
-	border-right: solid black 1px;
-	border-bottom: solid black 1px;
-}
-
-.job-notes-container {
-	grid-column: 3;
-	grid-row: 5; 
-	border-bottom: solid black 1px;
+input:checked + #switch-label:after {
+    left: calc(100% - 5px);
+    transform: translateX(-100%);
 }
 
 
-/* SIDEBAR */
 
-.link-field {
-	padding: 0 35px 0;
+
+@media only screen and (min-width: 950px) {
+
+
+	#job-show-wrapper {
+		display: grid;
+		grid-template-columns: 300px 1fr 1fr;
+	}
+
+	.heading-container {
+		grid-column: 1/4;
+		margin: 0;
+		margin-top: 30px;
+		padding: 0;
+		text-align: center;
+	}
+
+	h1#job-company-position {
+		font-size: 35px;
+	}
+
+	.edit-delete {
+		float: right;
+	}
+
+
+	.pg-btn {
+	    margin-top: 6px;
+		margin: 6px 30px 0 30px;
+	    font-size: 40px;
+	    color: #4c4a4a;
+	}
+
+	.pg-btn:hover {
+		color: #a81515;
+	}
+
+
+	#dates-container {
+		grid-column: 1/4;
+	}
+
+	#applied-container {
+		grid-column: 1/4;
+/*		padding-bottom: 20px;
+		border-bottom: solid black 1px;*/
+	}
+
+
+
+
+	/* JOB CONTENT */
+
+	.job-content-container {
+		padding: 25px;
+	}
+
+	.job-desc-container {
+		grid-column: 2;
+		grid-row: 4; 
+		padding-left: 25px;
+		border-right: solid black 1px;
+		border-bottom: solid black 1px;
+	}
+
+	.job-co-container {
+		grid-column: 3;
+		grid-row: 4; 
+		border-bottom: solid black 1px;
+	}
+
+	.job-reqs-container {
+		grid-column: 2;
+		grid-row: 5; 
+		padding-left: 25px;
+		border-right: solid black 1px;
+		border-bottom: solid black 1px;
+	}
+
+	.job-notes-container {
+		grid-column: 3;
+		grid-row: 5; 
+		border-bottom: solid black 1px;
+	}
+
+
+	/* SIDEBAR */
+
+	.link-field {
+		padding: 0 35px 0;
+	}
+
+	.linked-items {
+		grid-column: 1;
+		grid-row: 4/6; 
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr
+		margin: 0;
+		padding: 0;
+		text-align: center;
+	}
+
+	.linked-items > div {
+		border-bottom: dotted 1px black;
+	}
+
+
+	.link-doc-container {
+		padding: 26px 0 30px;
+		/*border-bottom: solid black 1px;*/
+		border-right: solid black 1px;
+		display: inline-block;
+
+	}
+
+
+	/*CONSOLIDATE ME*/
+	#btn-add-document {
+		font-size: 16px;
+		height: 35px;
+		margin: 0;
+		padding: 0;
+	}
+	#btn-add-contact {
+		font-size: 16px;
+		height: 35px;
+		margin: 0;
+		padding: 0;
+	}
+
+
+	/*CONSOLIDATE ME*/
+	.link-contact-container {
+		padding: 10px 0 30px;
+		/*border-bottom: solid black 1px;*/
+		border-right: solid black 1px;
+	}
+	.link-task-container {
+		padding: 10px 0 30px;
+		border-right: solid black 1px;
+	}
+
+
+	#linked-docs {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	#add-doc-link {
+		grid-column: 1;
+		grid-row: 3;
+	}
+
+	#job_document_ids {
+		margin: 0;
+	}
+
+	#job_contact_ids {
+		margin: 0;
+	}
+
 }
-
-.linked-items {
-	grid-column: 1;
-	grid-row: 4/6; 
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr 1fr 1fr 1fr 1fr
-	margin: 0;
-	padding: 0;
-	text-align: center;
-}
-
-.linked-items > div {
-	border-bottom: dotted 1px black;
-}
-
-
-.link-doc-container {
-	padding: 10px 0 30px;
-	/*border-bottom: solid black 1px;*/
-	border-right: solid black 1px;
-	display: inline-block;
-
-}
-
-
-/*CONSOLIDATE ME*/
-#btn-add-document {
-	font-size: 16px;
-	height: 35px;
-	margin: 0;
-	padding: 0;
-}
-#btn-add-contact {
-	font-size: 16px;
-	height: 35px;
-	margin: 0;
-	padding: 0;
-}
-
-
-/*CONSOLIDATE ME*/
-.link-contact-container {
-	padding: 10px 0 30px;
-	/*border-bottom: solid black 1px;*/
-	border-right: solid black 1px;
-}
-.link-task-container {
-	padding: 10px 0 30px;
-	border-right: solid black 1px;
-}
-
-
-#linked-docs {
-	grid-column: 1;
-	grid-row: 2;
-}
-
-#add-doc-link {
-	grid-column: 1;
-	grid-row: 3;
-}
-
-#job_document_ids {
-	margin: 0;
-}
-
-#job_contact_ids {
-	margin: 0;
-}
-
 
 /* SHOULD BE GLOBAL FOR ALL CREATE ITEMS*/
 p.create-item a{
@@ -263,10 +303,6 @@ p.create-item a{
 	</div>
 
 
-
-
-
-
 	<div id='applied-container'>
 		<section id='applied-section'>
 			<div id='job-applied'></div>
@@ -275,11 +311,6 @@ p.create-item a{
 	</div>
 
 	
-
-
-
-
-
 	<div class='job-desc-container job-content-container'>
 		<% if @job.job_desc != "" %>
 			<h2> Job Description </h2>
@@ -369,6 +400,12 @@ p.create-item a{
 <script>
 
 //REQUEST JOB JSON
+
+
+
+
+
+
 $( document ).on('turbolinks:load', function() {
 	user_id = $(".user-id").data("id")
 	job_id = $(".job-id").data("id")
@@ -420,20 +457,12 @@ const getContacts = function (data) {
 
 
 
-
-
-
-
-
-
-//CHANGE APPLIED STATUS
+//CHANGE APPLIED STATUS USING TOGGLE
 const toggleApplied = function (job) {
+	// place click listener on toggle
 	$('#switch').on('click', function() {
-		newStatus = !job.applied
-		console.log('second' + job.applied)
-
-	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${newStatus}`, function(data) {
-	    	console.log('third' + job.applied)
+		// route changing to new status
+	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${!job.applied}`, function(data) {
 	    	$('#job-applied').empty()
 	    	$('#job-applied').append(job.appliedString(!job.applied))
 	    })
@@ -444,10 +473,15 @@ const toggleApplied = function (job) {
 
 //DISPLAY APPLIED STRING AND TOGGLE STATUS
 const displayAppliedDetails = function (job) {
+	// renders yes/no string to applied status
 	$('#job-applied').append(job.appliedString())
+	// identifies toggle element and positions according to status
 	let tog = document.getElementById("switch")
 	tog.checked = job.applied
 }
+
+
+
 
 
 
@@ -497,6 +531,7 @@ const linkContact = function() {
 
 //BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
 const linkDocument = function() {
+
 	$('#btn-add-document').on('click', function(e) {
 		e.preventDefault()
 		var form = $('#add-document')
@@ -524,17 +559,17 @@ const linkDocument = function() {
 //TOGGLE LISTENER, REMOVE JOB CONTACT 
 const unlinkContact = function() {
 	$('span.remove-contact').on('click', function(e) {
-		let c_id = this.id
+		let contact_id = this.id
 
 		$.ajax({
-			url: `/users/${user_id}/jobs/${job_id}/unlink_contact`,
-			data: c_id,
+			type: "DELETE", 
+			url: '/users/:user_id/jobs/:job_id/contact/:contact_id',
+			data: contact_id,
 			dataType: 'json',
 			contentType : 'application/json',
 			processData: false,
-			type: "PATCH", 
 	        success: function (data) {
-	        	console.log('after succccc', data)
+	        	console.log('success')
 				let id = data['id']
 		    	$("#contactItem-" + id).remove()
 		    	$("#" + id).remove();

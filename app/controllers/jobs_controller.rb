@@ -39,14 +39,12 @@ class JobsController < ApplicationController
 	def applied
 		# binding.pry
 		appStr = (params[:q])
-		appBool = appStr == "true"
+		appBool = appStr === "true"
 
 		@job.applied = appBool
 		flash[:notice] = "Applied status changed"
 		@job.save
-		respond_to do |format|
-	      format.json { render json: @job, status: 200 }
-	    end
+
 	end
 
 
@@ -71,15 +69,16 @@ class JobsController < ApplicationController
 	end	
 
 
-	def unlink_contact
-		binding.pry
-		c_id = params[:q]
-		contact = Contact.find(c_id)
-		@job.contacts.delete(contact)
-		respond_to do |format|
-	      format.json { render json: contact, status: 200 }
-	    end
-	end	
+	# def unlink_contact
+	# 	binding.pry
+	# 	c_id = params[:q]
+	# 	contact = Contact.find(c_id)
+	# 	@job.contacts.delete(contact)
+	# 	respond_to do |format|
+	#       format.json { render json: contact, status: 200 }
+	#     end
+	# end	
+
 
 	def unlink_document
 		d_id = params[:q]

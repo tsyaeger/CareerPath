@@ -25,10 +25,10 @@ Job.prototype.appliedString = function(applied_bool= this.applied) {
     return `<h3 id='applied-bool'>Applied: ${text}</h3>`
 }
 
-Job.prototype.appliedButton = function(applied_bool= this.applied) {
-    let text = applied_bool ? 'Mark As Not Applied' : 'Mark As Applied'
-    return `<button id='add-applied' data-bool="${applied_bool}">${text}</button><br><br>`
-}
+// Job.prototype.appliedButton = function(applied_bool= this.applied) {
+//     let text = applied_bool ? 'Mark As Not Applied' : 'Mark As Applied'
+//     return `<button id='add-applied' data-bool="${applied_bool}">${text}</button><br><br>`
+// }
 
 //Used in other show pages
 Job.prototype.formatSpan = function() {
