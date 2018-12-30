@@ -455,8 +455,6 @@ const getContacts = function (data) {
 
 
 
-
-
 //CHANGE APPLIED STATUS USING TOGGLE
 const toggleApplied = function (job) {
 	// place click listener on toggle
@@ -479,12 +477,6 @@ const displayAppliedDetails = function (job) {
 	let tog = document.getElementById("switch")
 	tog.checked = job.applied
 }
-
-
-
-
-
-
 
 
 
@@ -556,14 +548,14 @@ const linkDocument = function() {
 
 
 
-//TOGGLE LISTENER, REMOVE JOB CONTACT 
+//TOGREMOVE JOB CONTACT 
 const unlinkContact = function() {
 	$('span.remove-contact').on('click', function(e) {
 		let contact_id = this.id
 
 		$.ajax({
 			type: "DELETE", 
-			url: '/users/:user_id/jobs/:job_id/contact/:contact_id',
+			url: `/users/${user_id}/jobs/${job_id}/contact/${contact_id}`,
 			data: contact_id,
 			dataType: 'json',
 			contentType : 'application/json',

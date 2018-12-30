@@ -19,7 +19,7 @@
     }
   }
 
-  #nav-container li:last-of-type {
+  #user-greeting {
     margin-left: auto;
   }
 
@@ -52,7 +52,7 @@
       <li class="mobile-no-show"><a href="<%= new_user_contact_path(current_user) %>"/>Contacts</a></li>
       <li class="mobile-no-show"><a href="<%= new_user_document_path(current_user) %>"/>Docs</a></li>
       <li><a class="navbar-brand" rel="nofollow" data-method="delete" href="/logout">Log Out</a><li>
-      <li><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.username %></a></li>
+      <li id='user-greeting'><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.username %></a></li>
     </ul>
   <% else %> 
     <ul>

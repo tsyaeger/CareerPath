@@ -53,11 +53,17 @@ textarea, select {
 
 
 
+#new-user-container {
+    width: 100%;
+    margin: 0;
+    padding: 35px;
+}
 
 #user-form {
-    margin-top: 50px;
+    margin: 10px auto;
     display: block;
     text-align: center;
+    max-width: 400px
 }
 
 
