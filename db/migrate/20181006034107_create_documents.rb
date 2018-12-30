@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateDocuments < ActiveRecord::Migration[5.2]
   def change
     create_table :documents do |t|
@@ -11,5 +13,3 @@ class CreateDocuments < ActiveRecord::Migration[5.2]
     end
   end
 end
-
-
