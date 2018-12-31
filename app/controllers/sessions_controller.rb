@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  skip_before_action :authentication_required, only: %i[new create]
+  skip_before_action :authentication_required , only: %i[new create]
 
   def new
     @user = User.new
   end
 
   def create
-    @user = User.new
     @user = User.find_by(username: params[:username])
     if @user # && @user.authenticate(params[:password_digest])
       session[:user_id] = @user.id
