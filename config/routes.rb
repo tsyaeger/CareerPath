@@ -2,6 +2,7 @@
 
 Rails.application.routes.draw do
   devise_for :users
+  
   patch '/users/:id/jobs/:id/add_contact', to: 'jobs#add_contact', as: 'add_job_contact'
   patch '/users/:id/jobs/:id/add_document', to: 'jobs#add_document', as: 'add_job_document'
 
