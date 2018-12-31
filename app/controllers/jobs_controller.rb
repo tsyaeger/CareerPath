@@ -60,24 +60,6 @@ class JobsController < ApplicationController
     render json: document, status: 201
   end
 
-  # def unlink_contact
-  #   binding.pry
-  #   c_id = params[:q]
-  #   contact = Contact.find(c_id)
-  #   @job.contacts.delete(contact)
-  #   respond_to do |format|
-  #       format.json { render json: contact, status: 200 }
-  #     end
-  # end
-
-  def unlink_document
-    d_id = params[:q]
-    document = Document.find(d_id)
-    @job.documents.delete(document)
-    respond_to do |format|
-      format.json { render json: document, status: 200 }
-    end
-  end
 
   def new
     @job = Job.new(user: current_user)
@@ -98,7 +80,8 @@ class JobsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit 
+  end
 
   def update
     @job.update(job_params)

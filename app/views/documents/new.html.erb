@@ -1,7 +1,5 @@
-
-<div id='new-document-wrapper'>
-
-	<div class='column-3'>
+<div id='new-document-wrapper' class='new-item-wrapper'>
+	<div index='doctype-container' class='cdt-container'>
 		<% if @documents.length > 0 %>
 			<% groupDoctype(@documents).each do |d| %>
 				<h1 class='doctype-grp'><%= d[0].pluralize(2) %></h1>
@@ -13,19 +11,16 @@
 			<h1>DOCUMENTS BY TYPE</h1>
 		<% end %>
 	</div> <!-- close column -->
-
-	<div class='column-3'>
+	<div index='alldocs-container' class='cdt-container'>
 	    <h1>All Documents</h1>
 		<div id='document-list'>
 		    <%= render partial: "document", collection: @documents || "No Documents"%>
 	    </div>
 	</div> <!-- close column -->
-
-	<div class='column-3'>
+	<div index='add-doc-container' class='cdt-container'>
 		<h1>Add Document</h1>
 		<%= render 'form' %>
 	</div> <!-- close column -->
-
 </div> <!-- close wrapper -->
 
 
@@ -33,9 +28,9 @@
 
 
 
+
+
 <script type="text/javascript" charset="utf-8">
-
-
 
 $("form").on('submit', function (e) {
 

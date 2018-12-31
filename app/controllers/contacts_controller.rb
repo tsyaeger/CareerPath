@@ -16,21 +16,20 @@ class ContactsController < ApplicationController
     @contacts = current_user.contacts
     @contacts_sorted = @contacts.sort_by &:last_name
     respond_to do |format|
-      # format.html { render :index }
       format.json { render json: @contacts_sorted, status: 200 }
-      # format.json { render json: { html: render_to_string("contacts/_contact.html.erb", layout: false, locals: { contacts_sorted: @contacts_sorted })} }
     end
   end
 
   def unlink_contact
-    binding.pry
-    # c_id = params[:q]
-    # contact = Contact.find(c_id)
-    # @job.contacts.delete(contact)
-    # @contact.jobs.delete(j_id)
-    # respond_to do |format|
-    #      format.json { render json: contact, status: 200 }
-    #    end
+    c_id = params[:contact_id]
+    j_id = params[:job_id]
+    contact = Contact.find(c_id)
+    job = Job.find(j_id)
+    job.contacts.delete(contact)
+    # binding.pry
+    respond_to do |format|
+         format.json { render json: contact, status: 200 }
+       end
   end
 
   def filter

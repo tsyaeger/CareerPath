@@ -1,13 +1,10 @@
-
-<div id='contact-new-page'>
-	<div class='user-id' data-id="<%= current_user.id %>"></div>
-
-	<div class="column-3">
+<div class='user-id' data-id="<%= current_user.id %>"></div>
+<div id='new-contact-wrapper' class='new-item-wrapper'>
+	<div index='reference-container' class='cdt-container'>
 		<h1>References</h1>
 		<%= render partial: "contact", collection: @contacts.is_reference || "No Contacts"%>
 	</div> <!--close column -->
-
-	<div class="column-3">
+	<div index='all-contacts-container' class='cdt-container'>
 	    <h1>Contacts</h1>
 <!-- 	    <button id="contacts-sort">First Name</button>
 	    <button id="contacts-sort-2">Last Name</button> -->
@@ -15,12 +12,10 @@
 		    <%= render partial: "contact", collection: @contacts || "No Contacts"%>
 	    </div> <!--close column -->
 	</div>
-
-	<div class="column-3">
+	<div index='add-contact-container' class='cdt-container'>
 		<h1>Add Contact</h1>
 		<%= render 'form' %>
 	</div> <!--close column -->
-
 </div> <!--close page -->
 
 
@@ -59,7 +54,6 @@ $("form").on('submit', function (e) {
 			alert('something went wrong') }
 	})
 })
-
 
 
 // SORT CONTACTS W/O REQUEST

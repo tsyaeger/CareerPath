@@ -1,5 +1,4 @@
 
-
 function Job(job, user_id) {
     this.user_id = user_id
     this.id = job.id
@@ -13,13 +12,12 @@ function Job(job, user_id) {
 }
 
 
-
-//Used in user show page
+// Listed job items (used on user show page)
 Job.prototype.formatJobIndex = function() {
     return `<h3><a href='/users/${this.user_id}/jobs/${this.id}'>${this.company} - ${this.position}</a></h3>`
 }
 
-//Used in job show page
+// Returns applied status string (used in job show page)
 Job.prototype.appliedString = function(applied_bool= this.applied) {
     let text = applied_bool ? 'Yes' : 'No'
     return `<h3 id='applied-bool'>Applied: ${text}</h3>`
@@ -30,12 +28,14 @@ Job.prototype.appliedString = function(applied_bool= this.applied) {
 //     return `<button id='add-applied' data-bool="${applied_bool}">${text}</button><br><br>`
 // }
 
-//Used in other show pages
+// Returns job Used in other show pages
 Job.prototype.formatSpan = function() {
     let spanItem = `<h3 class="w3-large">
         <i class="material-icons w3-large job" id=${this.id} data-id='${this.id}'>keyboard_arrow_down</i>
         <a href="/users/${this.user_id}/jobs/${this.id}">${this.company} - ${this.position}</a>
-        </h3><span id='${this.id}' class='job remove-job ${this.id}' data-id='${this.id}' style="display: none;" ><p class='remove'>Remove</p></span><br>`
+        </h3><span id='${this.id}' class='job remove-job ${this.id}' data-id='${this.id}' style="display: none;" ><p class='remove'>Remove</p></span>`
     return spanItem
 }
+
+
 

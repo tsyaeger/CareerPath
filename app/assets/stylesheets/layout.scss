@@ -51,29 +51,16 @@ h3 {
 
 
 //NEW PAGES
-.column-3 {
-    border-left: solid;
-    border-width: 1px;
-    border-color: #2d2c2c;
-    text-align: left;
-    float: left;
-    width: 33.333%;
-    padding: 35px;
-    height: 1200px; 
-}
 
 
-/* Clear floats after the columns */
+
+
 .row:after {
     content: "";
     display: table;
     clear: both;
     text-shadow: 2px 2px #f4f2f2;
 }
-
-
-
-
 
 
 

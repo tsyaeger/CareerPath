@@ -11,7 +11,7 @@
       <li class="mobile-no-show"><a href="<%= new_user_contact_path(current_user) %>"/>Contacts</a></li>
       <li class="mobile-no-show"><a href="<%= new_user_document_path(current_user) %>"/>Docs</a></li>
       <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
-      <li id='user-greeting'><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.email %></a></li>
+      <li id='user-greeting'><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.username %></a></li>
     </ul>
   <% else %> 
     <ul>      

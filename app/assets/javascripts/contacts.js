@@ -27,7 +27,7 @@ Contact.prototype.formatBulletItem = function() {
 
 Contact.prototype.referenceString = function(ref_bool= this.reference) {
     let refString = ref_bool.toString()
-    return `<h3>REFERENCE: ${refString}</h3>`
+    return `<h3 id='reference-bool'>REFERENCE: ${refString}</h3>`
 }
 
 // Contact.prototype.referenceButton = function(ref_bool= this.reference) {

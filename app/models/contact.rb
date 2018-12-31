@@ -9,7 +9,7 @@ class Contact < ApplicationRecord
   scope :filtered_contact, ->(substring) { where('last_name LIKE ? OR first_name LIKE ?', "%#{substring}%", "%#{substring}%") }
   scope :is_reference, -> { where('reference = ?', true) }
 
-  validates :email, :first_name, presence: true
+  validates :email, :first_name, :last_name, presence: true
 
   def full_name
     "#{first_name} #{last_name}"

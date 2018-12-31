@@ -6,21 +6,40 @@ Rails.application.routes.draw do
   patch '/users/:id/jobs/:id/add_contact', to: 'jobs#add_contact', as: 'add_job_contact'
   patch '/users/:id/jobs/:id/add_document', to: 'jobs#add_document', as: 'add_job_document'
 
-  delete '/users/:user_id/jobs/:job_id/contact/:contact_id', to: 'contacts#unlink_contact', as: 'unlink_job_contact'
 
-  # @job.contacts (c_id)
-  # @contact.jobs (j_id)
 
-  # patch '/users/:user_id/jobs/:id/unlink_contact', to: 'jobs#unlink_contact', as: 'unlink_job_contact'
-  get '/users/:id/jobs/:id/unlink_document', to: 'jobs#unlink_document', as: 'unlink_job_document'
+
+  delete '/users/:user_id/jobs/:job_id/contact/:contact_id/unlink', to: 'contacts#unlink_contact', as: 'unlink_job_contact'
+  delete '/users/:user_id/jobs/:job_id/document/:document_id/unlink', to: 'documents#unlink_document', as: 'unlink_job_document'
+
+  # get '/users/:id/jobs/:id/unlink_document', to: 'jobs#unlink_document', as: 'unlink_job_document'
+
+
+
 
   patch '/users/:id/tasks/:id/add_contact', to: 'tasks#add_contact', as: 'add_task_contact'
   patch '/users/:id/tasks/:id/add_document', to: 'tasks#add_document', as: 'add_task_document'
   patch '/users/:id/tasks/:id/add_job', to: 'tasks#add_job', as: 'add_task_job'
 
+
+
+
+
+
+
+  # delete '/users/:user_id/tasks/:task_id/contact/:contact_id/unlink', to: 'contacts#unlink_task_contact', as: 'unlink_task_contact'
+  # delete '/users/:user_id/tasks/:task_id/document/:document_id/unlink', to: 'documents#unlink_task_document', as: 'unlink_task_document'
+  # delete '/users/:user_id/tasks/:task_id/job/:job_id/unlink', to: 'jobs#unlink_task_job', as: 'unlink_task_job'
+
   get '/users/:id/tasks/:id/unlink_contact', to: 'tasks#unlink_contact', as: 'unlink_task_contact'
   get '/users/:id/tasks/:id/unlink_document', to: 'tasks#unlink_document', as: 'unlink_task_document'
   get '/users/:id/tasks/:id/unlink_job', to: 'tasks#unlink_job', as: 'unlink_task_job'
+
+
+
+
+
+
 
   get '/users/:id/contacts/:id/add_reference', to: 'contacts#add_reference', as: 'add_reference'
   get '/users/:id/jobs/:id/applied', to: 'jobs#applied', as: 'applied'

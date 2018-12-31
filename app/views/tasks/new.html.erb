@@ -1,26 +1,28 @@
-
-<div id='new-task-wrapper'>
-
-	<div class='column-3'>
+<div id='new-task-wrapper' class='new-item-wrapper'>
+	<div index='completed-tasks-container' class='cdt-container'>
 		<h1>COMPLETED TASKS</h1>
 		<div id='completed-tasks-list'></div>
 	    	<%= render partial: "task", collection: @tasks.completed_true || "No Tasks"%>
-	    </div>
 	</div> <!-- close column -->
-
-	<div class='column-3'>
+	<div index='upcoming-tasks-container' class='cdt-container'>
 	    <h1>UPCOMING TASKS</h1>
 	    <div id='task-list'>
 	    	<%= render partial: "task", collection: @tasks.completed_false.order('due_date ASC') || "No Tasks"%>
 	    </div>
 	</div> <!-- close column -->
-
-	<div class='column-3'>
+	<div index='add-task-container' class='cdt-container'>
 		<h1>Add Task</h1>
 		<%= render 'form' %>
 	</div> <!-- close column -->
-
 </div>  <!-- close wrapper -->
+
+
+
+
+
+
+
+
 
 
 

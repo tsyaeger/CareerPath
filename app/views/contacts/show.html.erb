@@ -1,97 +1,152 @@
 
 <style>
 
-
-#contact-show-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr
-}
-
-.edit-delete {
-    float: right;
-}
-
-.contact-item-container {
-    padding: 15px;
-    border: solid black 1px;
+.show-container {
+/*	display: grid;
+	grid-template-columns:  1fr;*/
+	padding: 0 35px;
 }
 
 .heading-container {
-    grid-column: 2/4;
-    grid-row: 1;
-    margin: 0;
-    margin-top: 30px;
-    padding: 0;
-    text-align: center;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+h1#name-position {
+	margin: 5px;
+}
+
+#contact-info-section {
+  display: flex;
+  justify-content: center;
+}
+
+#contact-info-section > div {
+	margin: 0 15px;
+}
+
+#reference-container {
+	padding-bottom: 20px;
+	border-bottom: solid black 1px;
+}
+
+#reference-section {
+  display: flex;
+  justify-content: center;
+}
+
+#reference-section > div {
+	margin: 0 15px;
+}
+
+#reference-bool {
+	margin-top: 18px;
 }
 
 
-.details-container {
-    grid-column: 2/4;
-    grid-row: 2;
-    text-align: center;
+.linked-container {
+	padding: 20px 0 15px;
+	border-bottom: dotted black 1px;
 }
 
-.link-job-container {
-    grid-column: 2;
-    grid-row: 3;
+#switch {
+	margin: 0;
+	padding: 0;
 }
 
-.link-task-container {
-    grid-column: 3;
-    grid-row: 3;
+
+@media only screen and (min-width: 850px) {
+
+
+	.linked-items-section {
+	  display: flex;
+	  justify-content: center;
+	}
+
+	.linked-items-section > div {
+		padding: 10px 40px;
+	}
+
+	#contact-linked-jobs {
+		border-right: solid black 1px;
+	}
+
+	.linked-container {
+/*		padding: 20px 0 15px;*/
+		border-bottom: none;
+	}
+
 }
 
 </style>
 
 
+
+
+
+
+
 <div class='user-id' data-id="<%= @contact.user.id %>"></div>
 <div class='contact-id' data-id="<%= @contact.id %>"></div>
 
-<div id='contact-show-container'>
-
-		<div class='heading-container contact-item-container'>
-			<h1><%= @contact.first_name %> <%= @contact.last_name %> - <%= @contact.workplace %></h1>
-		</div> <!-- close container -->
 
 
+<div id='contact-show-container' class='show-container'>
 
-		<div class='details-container contact-item-container'>
-			<div><h3><%= @contact.email %></h3></div>
-			<div><h3><%= @contact.phone %></h3></div>
-			<div id='contact_reference'></div>
-
-			<div id='reference-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
-
+	<div class='heading-container contact-item-container'>
+		<div class='edit-delete'>
 		    <td><%= link_to "Edit", edit_user_contact_path(@contact.user, @contact) %></td>
 		    <td><%= link_to "Delete", user_contact_path(@contact.user, @contact), :method => :delete %></td>
-		</div> <!-- close container -->
+		</div>
+
+		<span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
+    	<h1 id='name-position' class='headline'><%= @contact.first_name %> <%= @contact.last_name %> - <%= @contact.workplace %></h1>
+		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
+	</div> <!-- close container -->
 
 
 
-	    <div id='jobs' class='link-job-container contact-item-container'>
-	        <h2>LINKED JOBS</h2>
-	        <div class='linked-items'>
-	            <% if @contact.jobs.length > 0 %>
-	                <%= render partial: "jobs/job", collection: @contact.jobs || "No Linked Jobs" %>
-	            <% else %>
-	                <h3><%= link_to '* Link This Contact To A Job', user_jobs_path(@contact.user) %></h3>
-	            <% end %>
-	        </div>
-	    </div> <!-- close container -->
+	<div id='contact-info-container'>
+		<section id='contact-info-section'>
+			<div><h3><%= @contact.email %></h3></div>
+			<div><h3><%= @contact.phone %></h3></div>
+		</section>
+	</div>
+
+
+	<div id='reference-container'>
+		<section id='reference-section'>
+			<div id='contact_reference'></div>
+			<div id='reference-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+		</section>
+	</div> <!-- close container -->
 
 
 
-	    <div id='tasks' class='link-task-container contact-item-container'>
-	        <h2>TASKS</h2>
-	        <div class='linked-items'>
+	<div class='linked-items'>
+
+		<section class='linked-items-section'>
+		    <div id='contact-linked-jobs' class='linked-container'>
+		        <h2>LINKED JOBS</h2>
+		            <% if @contact.jobs.length > 0 %>
+		                <%= render partial: "jobs/job", collection: @contact.jobs || "No Linked Jobs" %>
+		            <% else %>
+		                <h3><%= link_to '* Link This Contact To A Job', user_jobs_path(@contact.user) %></h3>
+		            <% end %>
+		    </div> <!-- close container -->
+
+		    <div id='contact-linked-tasks' class='linked-container'>
+	        	<h2>TASKS</h2>
 	            <% if @contact.tasks.length > 0 %>
 	                <%= render partial: "tasks/task", collection: @contact.tasks || "No Linked Tasks" %>
 	            <% else %>
 	                <h3><%= link_to '* Link This Contact To A Task', user_jobs_path(@contact.user) %></h3>
 	            <% end %>
-	        </div>
-	    </div> <!-- close container -->
+		    </div> 
+		</section> <!-- close section -->
+
+	</div><!-- close container -->
 
 </div> <!-- close wrapper -->
 

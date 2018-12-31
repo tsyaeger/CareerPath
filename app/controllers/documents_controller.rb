@@ -11,6 +11,20 @@ class DocumentsController < ApplicationController
     end
   end
 
+
+  def unlink_document
+    binding.pry
+    d_id = params[:document_id]
+    j_id = params[:job_id]
+    document = Document.find(d_id)
+    job = Job.find(j_id)
+    job.documents.delete(document)
+    respond_to do |format|
+         format.json { render json: document, status: 200 }
+       end
+  end
+
+
   def filter
     @filtered_documents = current_user.documents.filtered_document(params[:q])
     respond_to do |format|

@@ -1,5 +1,6 @@
 <style>
 
+
 #job-show-wrapper {
 	display: grid;
 	grid-template-columns:  1fr;
@@ -221,6 +222,9 @@ h1#job-company-position {
 
 }
 
+
+
+
 /* SHOULD BE GLOBAL FOR ALL CREATE ITEMS*/
 p.create-item a{
 	color: #B50000;
@@ -234,13 +238,14 @@ p.create-item a{
 <div class='user-id' data-id="<%= @job.user.id %>"></div>
 <div class='job-id' data-id="<%= @job.id %>"></div>
 
-<div id='job-show-wrapper'>
+<div id='job-show-wrapper' class='show-container'>
 
 	<div class='heading-container'>
 		<div class='edit-delete'>
 			<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
 		    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
 		</div>
+
 	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
 	    <h1 id='job-company-position' class='headline'><%= @job.company %> - <%= @job.position %></h1>
 		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
@@ -352,10 +357,6 @@ p.create-item a{
 
 <script>
 
-//REQUEST JOB JSON
-
-
-
 
 
 
@@ -367,10 +368,10 @@ $( document ).on('turbolinks:load', function() {
 
 		job = new Job(data, user_id)
 
-	    displayAppliedDetails(job)  //creates string and toggle elements
+	    displayAppliedDetails(job)  //injects string and toggle elements
 		toggleApplied(job) //connects applied click listener
 
-		getDocuments(data)
+		getDocuments(data) //
 		getContacts(data)
 
 	    nextButton()
@@ -408,7 +409,6 @@ const getContacts = function (data) {
 
 
 
-
 //CHANGE APPLIED STATUS USING TOGGLE
 const toggleApplied = function (job) {
 	// place click listener on toggle
@@ -433,11 +433,6 @@ const displayAppliedDetails = function (job) {
 
 
 
-
-
-
-
-
 //LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
 const nextButton = function() {
 	$('.btn-next').on('click', function() {
@@ -453,9 +448,6 @@ const previousButton = function() {
 		window.location.href = previousPg;
 	})
 }
-
-
-
 
 
 
@@ -491,8 +483,6 @@ const linkDocument = function() {
 		var action = form.attr('action')
 		var d_id = form.serialize()
 
-		console.log('jdshxfjhsdfhsjdfs', d_id)
-
 		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_document`,
 		data: d_id,
 		type: "PATCH", 
@@ -509,52 +499,66 @@ const linkDocument = function() {
 
 
 
-//TOGREMOVE JOB CONTACT 
+
+
+// REMOVE JOB CONTACT 
 const unlinkContact = function() {
-	$('span.remove-contact').on('click', function(e) {
+
+	$(document.body).on('click', 'span.remove-contact', function(e) {
 		let contact_id = this.id
 
 		$.ajax({
 			type: "DELETE", 
-			url: `/users/${user_id}/jobs/${job_id}/contact/${contact_id}`,
+			url: `/users/${user_id}/jobs/${job_id}/contact/${contact_id}/unlink`,
 			data: contact_id,
 			dataType: 'json',
 			contentType : 'application/json',
 			processData: false,
 	        success: function (data) {
-	        	console.log('success')
+	        	console.log(data)
 				let id = data['id']
 		    	$("#contactItem-" + id).remove()
 		    	$("#" + id).remove();
+		    	$('.remove-contact.'+id).remove()
 		    },
 	        error: function (data) {
 	            alert('no success') }
-	        })
-
-	})
-}
-
-
-
-//BUTTON LISTENER, REMOVE JOB DOCUMENT 
-const unlinkDocument = function() {
-	$(document.body).on('click', 'span.remove-document', function(e) {
-		let d_id = this.id
-	    $.get(`/users/${user_id}/jobs/${job_id}/unlink_document?q=${d_id}`, function(data) {
-	    	let id = data['id']
-	    	$("#documentItem-" + id).remove()
-	    	$("#" + id).remove()	 
 	    })
 	})
 }
 
 
+// BUTTON LISTENER, REMOVE JOB DOCUMENT 
+const unlinkDocument = function() {
+
+	$(document.body).on('click', 'span.remove-document', function(e) {
+		let document_id = this.id
+
+		$.ajax({
+			type: "DELETE", 
+			url: `/users/${user_id}/jobs/${job_id}/document/${document_id}/unlink`,
+			data: document_id,
+			dataType: 'json',
+			contentType : 'application/json',
+			processData: false,
+	        success: function (data) {
+	        	console.log(data)
+				let id = data['id']
+		    	$("#documentItem-" + id).remove()
+		    	$("#" + id).remove();
+		    },
+	        error: function (data) {
+	            alert('no success') }
+	    })
+	})
+}
+
+// OPEN DOC DROPDOWN SPAN
 const docClick = function() {
 	var clicks = 0
 
 	$(document.body).on('click', "i.doc", function() {
 		var id = this.id
-		console.log('doc')
 
 	if (clicks % 2 == 0) {
 		$('.document.'+id).css('display', 'block')
@@ -567,18 +571,12 @@ const docClick = function() {
 	});
 }
 
-
-
-
-
-
-
+// OPEN CONTACT DROPDOWN SPAN
 const contactClick = function() {
 	var clicks = 0
 
-	$("i.contact").on('click', function() {
+	$(document.body).on('click', "i.contact", function() {
 		var id = this.id
-		console.log('contact')
 
 	if (clicks % 2 == 0) {
 		$('.contact.'+id).css('display', 'block')
@@ -590,9 +588,6 @@ const contactClick = function() {
 		} 
 	});
 }
-
-
-
 
 
 </script>
