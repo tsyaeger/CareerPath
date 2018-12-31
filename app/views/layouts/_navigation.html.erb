@@ -3,22 +3,21 @@
 
 <div id='nav-container'>
 
-  <% if logged_in? %>
+  <% if user_signed_in? %>
     <ul>
       <li><a href="<%= user_path(current_user) %>"/>Home</a></li>
       <li class="mobile-no-show"><a href="<%= user_jobs_path(current_user) %>"/>Jobs</a></li>
       <li class="mobile-no-show"><a href="<%= new_user_task_path(current_user) %>"/>Tasks</a></li>
       <li class="mobile-no-show"><a href="<%= new_user_contact_path(current_user) %>"/>Contacts</a></li>
       <li class="mobile-no-show"><a href="<%= new_user_document_path(current_user) %>"/>Docs</a></li>
-      <li><a class="navbar-brand" rel="nofollow" data-method="delete" href="/logout">Log Out</a><li>
-      <li id='user-greeting'><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.username %></a></li>
+      <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+      <li id='user-greeting'><a href="<%= user_path(current_user) %>"/>hi, <%= current_user.email %></a></li>
     </ul>
   <% else %> 
-    <ul>
-      <li><a class="navbar-brand" href="<%= new_user_url %>"/>Sign Up</a></li>
-      <li><a class="navbar-brand" href="/signin">Log in</a></li>
+    <ul>      
+      <li><%= link_to "Sign up", new_user_registration_path %></li>   
+      <li><%= link_to "Login", new_user_session_path %></li>
     </ul>
   <% end -%>
 
 </div>
-

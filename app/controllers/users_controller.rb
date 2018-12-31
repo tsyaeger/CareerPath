@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  skip_before_action :authentication_required, only: %i[index new create]
+  skip_before_action :authenticate_user!, only: %i[index new create]
 
   def index
     redirect_to new_user_path

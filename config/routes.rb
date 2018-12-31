@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  devise_for :users
   patch '/users/:id/jobs/:id/add_contact', to: 'jobs#add_contact', as: 'add_job_contact'
   patch '/users/:id/jobs/:id/add_document', to: 'jobs#add_document', as: 'add_job_document'
 
@@ -34,9 +35,6 @@ Rails.application.routes.draw do
   get '/tasks/filter', to: 'tasks#filter', as: 'tasks_filter'
   get '/documents/filter', to: 'documents#filter', as: 'documents_filter'
 
-  get '/signin' => 'sessions#new'
-  post '/signin' => 'sessions#create'
-  delete '/logout' => 'sessions#destroy'
 
   resources :users do
     resources :contacts
