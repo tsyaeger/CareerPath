@@ -60,7 +60,9 @@
 			<div><h3><%= @contact.email %></h3></div>
 			<div><h3><%= @contact.phone %></h3></div>
 			<div id='contact_reference'></div>
-			<div id='reference-btn'></div>
+
+			<div id='reference-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+
 		    <td><%= link_to "Edit", edit_user_contact_path(@contact.user, @contact) %></td>
 		    <td><%= link_to "Delete", user_contact_path(@contact.user, @contact), :method => :delete %></td>
 		</div> <!-- close container -->
@@ -108,31 +110,49 @@ $( document ).on('turbolinks:load', function() {
 
 	$.get(`/users/${user_id}/contacts/${contact_id}.json`, function(data) {
 		contact = new Contact(data, user_id)
-	    displayRefDetails(contact)
-		buttonRefFunc(contact)
+	    displayRefStatus(contact)
+		toggleReference(contact)
 
 	});
 })
 
 
 
-const buttonRefFunc = function(contact) {
-	$('#add-reference').on('click', function() {
-	    $.get(`/users/${user_id}/contacts/${contact_id}/add_reference?q=${!contact.reference}`, function(data) {
-	    	$('#contact_reference').empty()
-	    	$('#reference-btn').empty()
-			$('#contact_reference').append(contact.referenceString(!contact.reference))
-			$('#reference-btn').append(contact.referenceButton(!contact.reference))
-	    })
-	})
+// const buttonRefFunc = function(contact) {
+// 	$('#add-reference').on('click', function() {
+// 	    $.get(`/users/${user_id}/contacts/${contact_id}/add_reference?q=${!contact.reference}`, function(data) {
+// 	    	$('#contact_reference').empty()
+// 	    	$('#reference-btn').empty()
+// 			$('#contact_reference').append(contact.referenceString(!contact.reference))
+// 			$('#reference-btn').append(contact.referenceButton(!contact.reference))
+// 	    })
+// 	})
+// }
+
+
+const toggleReference = function (contact) {
+    // place click listener on toggle
+    $('#switch').on('click', function() {
+        // route changing to new status
+        contact.reference = !contact.reference;
+        $.get(`/users/${user_id}/contacts/${contact_id}/add_reference?q=${contact.reference}`, function(data) {
+            $('#contact_reference').html(contact.referenceString(contact.reference))
+        })
+    })
 }
 
 
 
-const displayRefDetails = function (contact) {
-	$('#contact_reference').append(contact.referenceString())
-	$('#reference-btn').append(contact.referenceButton())
+
+
+const displayRefStatus = function (contact) {
+	$('#contact_reference').html(contact.referenceString())
+	let tog = document.getElementById("switch")
+    tog.checked = contact.reference;
 }
+
+
+
 
 
 

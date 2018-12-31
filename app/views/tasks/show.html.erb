@@ -10,7 +10,9 @@
             <div id='task-due-date'><h3>DUE DATE: <%= format_date(@task.due_date) %></h3></div>
             <div id='task-completed-string'></div>
             <div id='add-completed'></div>
-            <div id='completed-btn'></div>
+
+            <div id='completed-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+
             <td><%= link_to "Edit", edit_user_task_path(@task.user, @task) %></td>
             <td><%= link_to "Delete", user_task_path(@task.user, @task), :method => :delete %></td>
         </div>
@@ -71,11 +73,11 @@ $( document ).on('turbolinks:load', function() {
 
     $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
         task = new Task(data, user_id)
-        displayTaskDetails(task)
+        displayCompletedStatus(task)
+        toggleCompleted(task)
         linkTaskContact()
         linkTaskDocument()
         linkTaskJob()
-        buttonCompleted(task)
         unlinkContact()
         unlinkDocument()
         unlinkJob()
@@ -86,21 +88,34 @@ $( document ).on('turbolinks:load', function() {
 
 
 
-const buttonCompleted = function (task) {
-    $('#completed-btn').on('click', function() {
-        $.get(`/users/${user_id}/tasks/${task_id}/completed?q=${!task.completed}`, function(data) {
-            $('#task-completed-string').empty()
-            $('#completed-btn').empty()
-            $('#task-completed-string').append(task.completedString(!task.completed))
-            $('#completed-btn').append(task.completedButton(!task.completed))
+// const buttonCompleted = function (task) {
+//     $('#completed-btn').on('click', function() {
+//         $.get(`/users/${user_id}/tasks/${task_id}/completed?q=${!task.completed}`, function(data) {
+//             $('#task-completed-string').empty()
+//             $('#task-completed-string').append(task.completedString(!task.completed))
+//         })
+//     })
+// }
+
+
+
+const toggleCompleted = function (task) {
+    // place click listener on toggle
+    $('#switch').on('click', function() {
+        // route changing to new status
+        task.completed = !task.completed;
+        $.get(`/users/${user_id}/tasks/${task_id}/completed?q=${task.completed}`, function(data) {
+            $('#task-completed-string').html(task.completedString(task.completed))
         })
     })
 }
 
 
-const displayTaskDetails = function(task) {
-    $('#task-completed-string').append(task.completedString())
-    $('#completed-btn').append(task.completedButton())
+
+const displayCompletedStatus = function(task) {
+    $('#task-completed-string').html(task.completedString())
+    let tog = document.getElementById("switch")
+    tog.checked = task.completed;
 }
 
 

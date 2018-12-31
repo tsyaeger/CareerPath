@@ -416,7 +416,6 @@ const toggleApplied = function (job) {
 		// route changing to new status
 	    job.applied = !job.applied;
 	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${job.applied}`, function(data) {
-	    	console.log('DATA:', data)
 	    	$('#job-applied').html(job.appliedString(job.applied))
 	    })
 	})
@@ -527,7 +526,6 @@ const unlinkContact = function() {
 				let id = data['id']
 		    	$("#contactItem-" + id).remove()
 		    	$("#" + id).remove();
-		    	//.location.reload()
 		    },
 	        error: function (data) {
 	            alert('no success') }
@@ -535,9 +533,6 @@ const unlinkContact = function() {
 
 	})
 }
-
-
-
 
 
 
@@ -549,13 +544,9 @@ const unlinkDocument = function() {
 	    	let id = data['id']
 	    	$("#documentItem-" + id).remove()
 	    	$("#" + id).remove()	 
-	    	//AND REMOVE THE SPAN CHILD <BR>   	
 	    })
 	})
 }
-
-
-
 
 
 const docClick = function() {
@@ -575,6 +566,10 @@ const docClick = function() {
 		} 
 	});
 }
+
+
+
+
 
 
 

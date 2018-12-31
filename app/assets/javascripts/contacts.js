@@ -19,17 +19,10 @@ Contact.prototype.formatIndex = function() {
 }
 
 
-
-
 Contact.prototype.formatBulletItem = function() {
     // return `<h3><a href='/users/${this.user_id}/contacts/${this.id}'>${this.first} ${this.last}</a></h3>`
     return `<h3 class="list-items"><a class="bullet-item" href="/users/${this.user_id}/contacts/${this.id}"><li>${this.first} ${this.last}</li><br></a></h3>`
 }
-
-
-
-
-
 
 
 Contact.prototype.referenceString = function(ref_bool= this.reference) {
@@ -37,17 +30,20 @@ Contact.prototype.referenceString = function(ref_bool= this.reference) {
     return `<h3>REFERENCE: ${refString}</h3>`
 }
 
-Contact.prototype.referenceButton = function(ref_bool= this.reference) {
-    let text = ref_bool ? 'Remove From References' : 'Mark As Reference'
-    return `<button id='add-reference' data-bool="${ref_bool}">${text}</button><br><br>`
-}
+// Contact.prototype.referenceButton = function(ref_bool= this.reference) {
+//     let text = ref_bool ? 'Remove From References' : 'Mark As Reference'
+//     return `<button id='add-reference' data-bool="${ref_bool}">${text}</button><br><br>`
+// }
 
 
 Contact.prototype.formatSpan = function() {
     let spanItem = `<h3 class="w3-large" id="contactItem-${this.id}">
         <i class="material-icons w3-large contact" id=${this.id} data-id='${this.id}'>keyboard_arrow_down</i>
         <a href="/users/${this.user_id}/contacts/${this.id}">${this.concatName()}</a>
-        </h3><span id='${this.id}' class='contact remove-contact ${this.id}' data-id='${this.id}' style="display: none;" ><p class='remove'>Remove</p></span><br>`
+        </h3>
+        <span id='${this.id}' class='contact remove-contact ${this.id}' data-id='${this.id}' style="display: none;">
+        <p class='remove'>Remove</p>
+        </span>`
     return spanItem
 }
 
