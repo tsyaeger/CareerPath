@@ -1,98 +1,4 @@
 
-<style>
-
-.show-container {
-    padding: 0 35px;
-}
-
-.heading-container {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-h1#task-title {
-    margin: 5px;
-}
-
-#task-description {
-    padding-bottom: 10px;
-}
-
-#task-description-container {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-#contact-info-section > div {
-    margin: 0 15px;
-}
-
-#completed-container {
-    padding-bottom: 20px;
-    border-bottom: solid black 1px;
-}
-
-#completed-section {
-  display: flex;
-  justify-content: center;
-}
-
-#completed-section > div {
-    margin: 0 15px;
-}
-
-#completed-bool {
-    margin-top: 18px;
-}
-
-.linked-container {
-    padding: 20px 0 15px;
-    border-bottom: dotted black 1px;
-}
-
-.linked-items > div {
-    border-bottom: dotted 1px black;
-    padding: 30px 0 30px;
-}
-
-
-#switch {
-    margin: 0;
-    padding: 0;
-}
-
-
-@media only screen and (min-width: 850px) {
-
-
-    .linked-items-section {
-      display: flex;
-      justify-content: center;
-    }
-
-    .linked-items-section > div {
-        padding: 10px 40px;
-    }
-
-    #contact-linked-jobs {
-        border-right: solid black 1px;
-    }
-
-    .linked-container {
-/*      padding: 20px 0 15px;*/
-        border-bottom: none;
-    }
-
-}
-
-</style>
-
-
-
-
-
 <div class='user-id' data-id="<%= @task.user.id %>"></div>
 <div class='task-id' data-id="<%= @task.id %>"></div>
 <div id='task-show-wrapper' class='show-container'>
@@ -115,7 +21,6 @@ h1#task-title {
         <div id='task-description'>
         	<h3>Description: <%= @task.description %></h3>
         </div>
-
         <div id='date-due'><h3>DUE DATE: <%= format_date(@task.due_date) %></h3></div>
     </div>
 
@@ -123,23 +28,21 @@ h1#task-title {
     <div id='completed-container'>
         <section id='completed-section'>
             <div id='task-completed-string'></div>
-            <div id='add-completed'></div>
             <div id='completed-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
         </section>
     </div> <!-- close container -->
 
     
-
-
     <div class='linked-items'>
-
         <section class='linked-items-section'>
 
-            <div class='task-linked-doc-container'>
+            <div id='task-linked-doc-container' class='linked-container'>
                 <% if @task.document != nil %>   
                     <h2 class='linked-item'>LINKED DOCUMENTS</h2>
                     <h3><%= link_to @task.document.title, user_document_path(@task.user, @task.document) %></h3><br>
-                    <button class='unlink-button' id='unlink-document'>Unlink Document</button>
+               
+                    <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-doc' data-disable-with="Link Contact">
+
                 <% else %>
                     <h2 class='unlinked-item'>No linked Documents</h2>
                     <%= render 'documents/document_task_dropdown' %>
@@ -147,14 +50,13 @@ h1#task-title {
             </div> <!-- close container -->
 
 
-            <div class='task-linked-contact-container'>
+            <div id='task-linked-contact-container' class='linked-container'>
                 <% if @task.contact != nil %>   
                     <h2 class='linked-item'>LINKED CONTACTS </h2>
+                    <h3><%= link_to "#{formatted_name(@task.contact)}", user_contact_path(@task.user, @task.contact) %></h3><br>
+                    <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-contact' data-disable-with="Link Contact">
 
-                    <div id='task-contacts'>
-                        <h3><%= link_to "#{formatted_name(@task.contact)}", user_contact_path(@task.user, @task.contact) %></h3><br>
-                    </div>
-                    <button class='unlink-button' id='unlink-contact'>Unlink Contact</button>
+                    
                 <% else %>
                     <h2 class='unlinked-item'>No linked contacts</h2>
                     <%= render 'contacts/contact_task_dropdown' %>
@@ -162,11 +64,12 @@ h1#task-title {
             </div> <!-- close container -->
 
 
-            <div class='task-linked-job-container'>
+            <div id='task-linked-job-container' class='linked-container'>
                 <% if @task.job != nil %>   
                     <h2 class='linked-item'>LINKED JOBS</h2>
                     <h3><%= link_to @task.job.company, user_job_path(@task.user, @task.job) %></h3><br>
-                    <button class='unlink-button' id='unlink-job'>Unlink Job</button>
+                    <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-job' data-disable-with="Link Contact">
+
                 <% else %>
                     <h2 class='unlinked-item'>No linked jobs</h2>
                     <%= render 'jobs/job_task_dropdown' %>
@@ -214,8 +117,6 @@ const toggleCompleted = function (task) {
         })
     })
 }
-
-
 
 const displayCompletedStatus = function(task) {
     $('#task-completed-string').html(task.completedString())
@@ -294,13 +195,9 @@ const linkTaskJob = function() {
 }
 
 
-
-
-
-
-
 const unlinkContact = function (task) {
-    $('#unlink-contact').on('click', function() {
+    $('.unlink-contact').on('click', function(e) {
+        e.preventDefault()
         $.get(`/users/${user_id}/tasks/${task_id}/unlink_contact`, function(data) {
             console.log(data)
         })
@@ -309,7 +206,8 @@ const unlinkContact = function (task) {
 
 
 const unlinkDocument = function (task) {
-    $('#unlink-document').on('click', function() {
+    $('.unlink-doc').on('click', function(e) {
+        e.preventDefault()
         $.get(`/users/${user_id}/tasks/${task_id}/unlink_document`, function(data) {
             console.log(data)
         })
@@ -317,7 +215,8 @@ const unlinkDocument = function (task) {
 }
 
 const unlinkJob = function (task) {
-    $('#unlink-job').on('click', function() {
+    $('.unlink-job').on('click', function(e) {
+        e.preventDefault()
         $.get(`/users/${user_id}/tasks/${task_id}/unlink_job`, function(data) {
             console.log(data)
         })

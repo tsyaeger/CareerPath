@@ -1,80 +1,4 @@
 
-<style>
-
-.show-container {
-/*  display: grid;
-    grid-template-columns:  1fr;*/
-    padding: 0 35px;
-}
-
-.heading-container {
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-h1#document-title {
-    margin: 5px;
-}
-
-#doc-description-container {
-    padding: 20px;
-    border-bottom: solid black 1px;
-    text-align: center;
-}
-
-#doc-info-section {
-  display: flex;
-  justify-content: center;
-}
-
-#doc-info-section > div {
-    margin: 0 15px;
-}
-
-
-.linked-container {
-    padding: 20px 0 15px;
-    border-bottom: dotted black 1px;
-}
-
-#switch {
-    margin: 0;
-    padding: 0;
-}
-
-@media only screen and (min-width: 850px) {
-
-
-    .linked-items-section {
-      display: flex;
-      justify-content: center;
-    }
-
-    .linked-items-section > div {
-        padding: 10px 40px;
-    }
-
-    #document-linked-jobs {
-        border-right: solid black 1px;
-    }
-
-    .linked-container {
-/*      padding: 20px 0 15px;*/
-        border-bottom: none;
-    }
-
-}
-
-
-
-</style>
-
-
-
-
-
-
 <div id='document-show-container' class='show-container'>
 
         <div class='heading-container document-item-container'>
@@ -93,7 +17,7 @@ h1#document-title {
 
         <div id='doc-info-container'>
             <section id='doc-info-section'>
-                <div><h3 class='link'><a href="<%= @document.url %>" target="_blank">Go to Document</a></h3></div>
+                <div><h3 class='link-to'><a href="<%= @document.url %>" target="_blank">Go to Document</a></h3></div>
                 <div><h3>Last update: <%= format_date(@document.updated_at) %></h3></div>
             </section>
         </div> <!-- close container -->

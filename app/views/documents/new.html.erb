@@ -1,4 +1,5 @@
 <div id='new-document-wrapper' class='new-item-wrapper'>
+
 	<div index='doctype-container' class='cdt-container'>
 		<% if @documents.length > 0 %>
 			<% groupDoctype(@documents).each do |d| %>
@@ -11,11 +12,13 @@
 			<h1>DOCUMENTS BY TYPE</h1>
 		<% end %>
 	</div> <!-- close column -->
+
 	<div index='alldocs-container' class='cdt-container'>
 	    <h1>All Documents</h1>
 		<div id='document-list'>
 		    <%= render partial: "document", collection: @documents || "No Documents"%>
 	    </div>
+	    
 	</div> <!-- close column -->
 	<div index='add-doc-container' class='cdt-container'>
 		<h1>Add Document</h1>
@@ -32,7 +35,8 @@
 
 <script type="text/javascript" charset="utf-8">
 
-$("form").on('submit', function (e) {
+// $("form").on('submit', function (e) {
+$(document.body).on('submit', "form", function(e) {
 
 	e.preventDefault()
 	var $form = $(this)

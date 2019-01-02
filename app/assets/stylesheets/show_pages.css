@@ -1,0 +1,195 @@
+
+
+p.remove {
+	display: inline-block;
+}
+
+.remove-contact :hover {
+  font-size: 17px;
+}
+
+.remove-document :hover {
+  font-size: 18px;
+}
+
+
+.headline {
+    display: inline-block;
+    vertical-align: top;
+}
+
+
+.link-to {
+    text-decoration: underline;
+}
+
+.pg-btn {
+	margin-top: 6px;
+	margin: 6px 30px 0 30px;
+}
+
+
+
+
+
+.show-container {
+	padding: 0 35px;
+}
+
+
+.heading-container {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+h1#name-position {
+	margin: 5px;
+}
+
+h1#document-title {
+    margin: 5px;
+}
+
+h1#task-title {
+    margin: 5px;
+}
+
+#task-description {
+    padding-bottom: 10px;
+}
+
+#task-description-container {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+
+
+
+#contact-info-section {
+  display: flex;
+  justify-content: center;
+}
+
+#contact-info-section > div {
+	margin: 0 15px;
+}
+
+#reference-container {
+	padding-bottom: 20px;
+	border-bottom: solid black 1px;
+}
+
+#reference-section {
+  display: flex;
+  justify-content: center;
+}
+
+#reference-section > div {
+	margin: 0 15px;
+}
+
+#reference-bool {
+	margin-top: 18px;
+}
+
+
+#completed-container {
+    padding-bottom: 20px;
+    border-bottom: solid black 1px;
+}
+
+#completed-section {
+  display: flex;
+  justify-content: center;
+}
+
+#completed-section > div {
+    margin: 0 15px;
+}
+
+#completed-bool {
+    margin-top: 18px;
+}
+
+
+
+#doc-description-container {
+    padding: 20px;
+    border-bottom: solid black 1px;
+    text-align: center;
+}
+
+#doc-info-section {
+  display: flex;
+  justify-content: center;
+}
+
+#doc-info-section > div {
+    margin: 0 15px;
+}
+
+
+.linked-container {
+	padding: 30px 0 15px;
+	border-bottom: dotted black 1px;
+}
+
+#switch {
+	margin: 0;
+	padding: 0;
+}
+
+
+@media only screen and (min-width: 850px) {
+
+
+	.linked-items-section {
+	  display: flex;
+	  justify-content: center;
+	}
+
+	.heading-container {
+		grid-column: 1/4;
+		margin: 0;
+		margin-top: 30px;
+		padding: 0;
+		text-align: center;
+	}
+
+	.linked-items-section > div {
+		padding: 30px 40px;
+	}
+
+	#contact-linked-jobs {
+		border-right: solid black 1px;
+	}
+
+
+    #document-linked-jobs {
+        border-right: solid black 1px;
+    }
+
+	.linked-container {
+		padding: 30px 0 15px;
+		border-bottom: none;
+	}
+
+	#contact-linked-jobs {
+        border-right: solid black 1px;
+    }
+
+	.edit-delete {
+		float: right;
+	}
+
+	.pg-btn {
+		margin-top: 6px;
+		margin: 6px 30px 0 30px;
+		font-size: 40px;
+		color: #4c4a4a;
+	}
+
+}

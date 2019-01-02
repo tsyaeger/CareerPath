@@ -37,7 +37,6 @@ class JobsController < ApplicationController
   def applied
     appStr = params[:q]
     appBool = appStr === 'true'
-
     @job.applied = appBool
     flash[:notice] = 'Applied status changed'
     @job.save

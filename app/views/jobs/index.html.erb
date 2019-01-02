@@ -35,7 +35,7 @@ tr > th {
 }
 
 tr.applied td:nth-child(-n+2) {
-  background: #daf2e2;
+  background: #e1f4e8;
 }
 
 
@@ -79,34 +79,31 @@ tr.applied td:nth-child(-n+2) {
           <th>Position</th>
           <th class='mobile-no-show'>Date Posted</th>
           <th class='mobile-no-show'>Close Date</th>
-          <th class='mobile-no-show mid-no-show'>Applied</th>
           <th class='mobile-no-show mid-no-show'>Upcoming Tasks</th>
           <th>Next Task Due</th>
+          <th class='mobile-no-show mid-no-show'>Applied</th>
           <th class='mobile-no-show'></th>
           <th class='mobile-no-show'></th>
         </tr>
+
         <% @jobs.each do |job| %>
       	  <tr class="<%= job.applied == true ? "applied" : "not-applied" %>" >
-      	    <td><%= link_to job.company, user_job_path(job.user, job) %></td>
-      	    <td><%= link_to job.position, user_job_path(job.user, job) %></td>
-      	    <td class='mobile-no-show'><%= format_date(job.date_posted) %></td>
-            <td class='mobile-no-show'>add this to db</td>
-
-            <td class='mobile-no-show mid-no-show applied-<%= job.applied.to_s %>'><%= job.applied.to_s == 'true' %></td>
-
-
-            <td class='mobile-no-show mid-no-show'><%= job.tasks.length %> upcoming</td> 
+      	    <td class='company-td'><%= link_to job.company, user_job_path(job.user, job) %></td>
+      	    <td class='position-td'><%= link_to job.position, user_job_path(job.user, job) %></td>
+      	    <td class='date-posted-td mobile-no-show'><%= format_date(job.date_posted) %></td>
+            <td class='close-date-td mobile-no-show'>12/31/2018</td>
+            <td class='job-tasks-td mobile-no-show mid-no-show'><%= job.tasks.completed_false.length %> todos</td> 
 
             <% if job.tasks.length > 0 %> 
-              <td><%= job.tasks.first %></td>
+              <% next_task = job.tasks.first %>
+              <td><%= link_to format_date(next_task.due_date), user_task_path(job.user, next_task) %></td>
             <% else %>
               <td>na</td>
             <% end %>
 
-
-
-      	    <td class='mobile-no-show'><%= link_to "Edit", edit_user_job_path(job.user, job) %></td>
-      	    <td class='mobile-no-show'><%= link_to "Delete", user_job_path(job.user, job), :method => :delete %></td>
+            <td class='applied-td' mobile-no-show mid-no-show applied-<%= job.applied.to_s %>'><%= job.applied.to_s == 'true' %></td>
+      	    <td class='edit-td mobile-no-show'><%= link_to "Edit", edit_user_job_path(job.user, job) %></td>
+      	    <td class='delete-td mobile-no-show'><%= link_to "Delete", user_job_path(job.user, job), :method => :delete %></td>
       	  </tr>
         <% end %>
       </table> <!-- close table -->

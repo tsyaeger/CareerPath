@@ -1,7 +1,363 @@
+
+<div class='user-id' data-id="<%= @job.user.id %>"></div>
+<div class='job-id' data-id="<%= @job.id %>"></div>
+
+<div id='job-show-wrapper' class='show-container'>
+
+	<div class='heading-container'>
+		<div class='edit-delete'>
+			<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
+		    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
+		</div>
+
+	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
+	    <h1 id='job-company-position' class='headline'><%= @job.company %> - <%= @job.position %></h1>
+		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
+	</div>
+
+
+	<div id='dates-container'>
+		<section id="date-section">
+			<div><h3 class='posted-date'>Posted Date: <%= format_date(@job.date_posted) %></h3></div>
+<!-- 			<div><h3> Closing Date: xxx</h3></div> -->
+			<div><h3 class='link-to'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
+		</section>=
+	</div>
+
+
+	<div id='applied-container'>
+		<section id='applied-section'>
+			<div id='job-applied'></div>
+			<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+		</section>
+	</div>
+
+	
+	<div class='job-desc-container job-content-container'>
+		<% if @job.job_desc != "" %>
+			<h2> Job Description </h2>
+			<h3 class='descriptions'><%= @job.job_desc %></h3>
+		<% else %>
+			<h2>This job has no job description</h2>
+			<p class='create-item'><%= link_to "add job description", edit_user_job_path(@job.user, @job) %></p>
+		<% end %>
+	</div>
+
+
+	<div class='job-co-container job-content-container'>
+		<% if @job.co_desc != "" %>
+			<h2> Company Description </h2>
+			<h3 class='descriptions'><%= @job.co_desc %></h3>
+		<% else %>
+			<h2>This job has no company description</h2>
+			<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
+		<% end %>
+	</div>
+
+
+
+	<div class='job-reqs-container job-content-container'>
+		<h2>Job Requirements</h2>
+		<p class='create-item'><%= link_to "add requirement", edit_user_job_path(@job.user, @job) %></p>
+
+	</div>
+
+
+
+	<div class='job-notes-container job-content-container'>
+		<h2>Job Notes</h2>
+		<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
+
+	</div>
+
+
+
+	<div class='linked-items'>
+
+		<div class='link-doc-container'>
+			<div id='linked-docs'>
+		    	<h2>LINKED DOCUMENTS</h2>
+		    	<div id='job-documents'></div>
+		    </div>
+
+		    <div id='add-doc-link'>
+	    		<%= render 'documents/document_dropdown' %>
+	    	</div>
+	    </div>
+
+	    <div class='link-contact-container'>
+	    	<div id='linked-contacts'>
+		    	<h2>LINKED CONTACTS</h2>
+		    	<div id='job-contacts'></div>
+		    </div>
+
+		    <div id='add-contact-link'>
+				<%= render 'contacts/contact_dropdown' %>
+			</div>
+	    </div>
+
+	    <div class='link-task-container'>
+	    	<h2>LINKED TASKS</h2>
+			<% if @job.tasks.length > 0%>
+				<!-- <div id='task-list'></div> -->
+		    	<%= render partial: "tasks/task", collection: @job.tasks || "No Linked Tasks" %>
+		    <% else %>
+		    	<h3>You have no linked tasks</h3>
+			<% end %>
+			<p class='create-item'><%= link_to "create a task", new_user_task_path(@job.user) %></p>
+	    </div>
+
+	</div>
+
+</div> <!-- close wrapper -->
+
+
+
+
+
+<script>
+
+
+
+
+$( document ).on('turbolinks:load', function() {
+	user_id = $(".user-id").data("id")
+	job_id = $(".job-id").data("id")
+
+	$.get(`/users/${user_id}/jobs/${job_id}`, function(data) {
+
+		job = new Job(data, user_id)
+
+	    displayAppliedDetails(job)  //injects string and toggle elements
+		toggleApplied(job) //connects applied click listener
+
+		getDocuments(data) //
+		getContacts(data)
+
+	    nextButton()
+	    previousButton()
+
+		linkContact()
+		linkDocument()
+		
+		unlinkContact()
+		unlinkDocument()
+
+		docClick()
+		contactClick()
+	},'json'
+	);
+})
+
+
+//RETRIEVE JOB DOCUMENTS, CREATE CONSTANT INSTANCE, APPEND DOCUMENTS
+const getDocuments = function (data) {
+    jQuery(data['documents']).each(function(i, document){
+        let d = new Document(document, user_id)
+        $("#job-documents").append(d.formatSpan())
+    })
+}
+
+
+//RETRIEVE JOB CONTACTS, CREATE CONSTANT INSTANCE, APPEND CONTACTS
+const getContacts = function (data) {
+    jQuery(data['contacts']).each(function(i, contact){
+        let c = new Contact(contact, user_id)
+        $("#job-contacts").append(c.formatSpan())
+    })
+}
+
+
+
+//CHANGE APPLIED STATUS USING TOGGLE
+const toggleApplied = function (job) {
+	// place click listener on toggle
+	$('#switch').on('click', function() {
+		// route changing to new status
+	    job.applied = !job.applied;
+	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${job.applied}`, function(data) {
+	    	$('#job-applied').html(job.appliedString(job.applied))
+	    })
+	})
+}
+
+
+//DISPLAY APPLIED STRING AND TOGGLE STATUS
+const displayAppliedDetails = function (job) {
+	// renders yes/no string to applied status
+	$('#job-applied').html(job.appliedString())
+	// identifies toggle element and positions according to status
+	let tog = document.getElementById("switch")
+	tog.checked = job.applied;
+}
+
+
+
+//LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
+const nextButton = function() {
+	$('.btn-next').on('click', function() {
+		let nextPg = `${job_id}/next`
+		window.location.href = nextPg;
+	})
+}
+
+//LISTENER FOR PREVIOUS BUTTON - SENDS TO USER'S PREVIOUS JOB
+const previousButton = function() {
+	$('.btn-previous').on('click', function() {		
+		let previousPg = `${job_id}/previous`
+		window.location.href = previousPg;
+	})
+}
+
+
+
+//BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
+const linkContact = function() {
+	$('#btn-add-contact').on('click', function(e) {
+		e.preventDefault()
+		var form = $('#add-contact')
+		var action = form.attr('action')
+		var c_id = form.serialize()
+
+		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_contact`, 
+			data: c_id, 
+			type: "PATCH", 
+            success: function (data) {
+            	contact = new Contact(data, user_id)
+				$("#job-contacts").append(contact.formatSpan())
+                alert('success') 
+            },
+            error: function (data) {
+                alert('no success') }
+        })
+	})
+}
+
+
+//BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
+const linkDocument = function() {
+
+	$('#btn-add-document').on('click', function(e) {
+		e.preventDefault()
+		var form = $('#add-document')
+		var action = form.attr('action')
+		var d_id = form.serialize()
+
+		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_document`,
+		data: d_id,
+		type: "PATCH", 
+        success: function (data) {
+        	doc = new Document(data, user_id)
+			$("#job-documents").append(doc.formatSpan())
+            alert('success') },
+        error: function (data) {
+            alert('no success') }
+        })
+	})
+}
+
+
+
+
+// REMOVE JOB CONTACT 
+const unlinkContact = function() {
+
+	$(document.body).on('click', 'span.remove-contact', function(e) {
+		let contact_id = this.id
+
+		$.ajax({
+			type: "DELETE", 
+			url: `/users/${user_id}/jobs/${job_id}/contact/${contact_id}/unlink`,
+			data: contact_id,
+			dataType: 'json',
+			contentType : 'application/json',
+			processData: false,
+	        success: function (data) {
+	        	console.log(data)
+				let id = data['id']
+		    	$("#contactItem-" + id).remove()
+		    	$("#" + id).remove();
+		    	$('.remove-contact.'+id).remove()
+		    },
+	        error: function (data) {
+	            alert('no success') }
+	    })
+	})
+}
+
+
+// BUTTON LISTENER, REMOVE JOB DOCUMENT 
+const unlinkDocument = function() {
+
+	$(document.body).on('click', 'span.remove-document', function(e) {
+		let document_id = this.id
+
+		$.ajax({
+			type: "DELETE", 
+			url: `/users/${user_id}/jobs/${job_id}/document/${document_id}/unlink`,
+			data: document_id,
+			dataType: 'json',
+			contentType : 'application/json',
+			processData: false,
+	        success: function (data) {
+	        	console.log(data)
+				let id = data['id']
+		    	$("#documentItem-" + id).remove()
+		    	$("#" + id).remove();
+		    },
+	        error: function (data) {
+	            alert('no success') }
+	    })
+	})
+}
+
+// OPEN DOC DROPDOWN SPAN
+const docClick = function() {
+	var clicks = 0
+
+	$(document.body).on('click', "i.doc", function() {
+		var id = this.id
+
+	if (clicks % 2 == 0) {
+		$('.document.'+id).css('display', 'block')
+		clicks++
+		}
+	else {
+		$('.document.'+id).css('display', 'none')
+		clicks++
+		} 
+	});
+}
+
+// OPEN CONTACT DROPDOWN SPAN
+const contactClick = function() {
+	var clicks = 0
+
+	$(document.body).on('click', "i.contact", function() {
+		var id = this.id
+
+	if (clicks % 2 == 0) {
+		$('.contact.'+id).css('display', 'block')
+		clicks++
+		}
+	else {
+		$('.contact.'+id).css('display', 'none')
+		clicks++
+		} 
+	});
+}
+
+
+</script>
+
+
+
+
+
 <style>
 
 
-#job-show-wrapper {
+.show-container {
 	display: grid;
 	grid-template-columns:  1fr;
 	padding: 0 35px;
@@ -66,9 +422,9 @@ h1#job-company-position {
 @media only screen and (min-width: 950px) {
 
 
-	#job-show-wrapper {
+	.show-container {
 		display: grid;
-		grid-template-columns: 300px 1fr 1fr;
+		grid-template-columns: 425px 1fr 1fr;
 	}
 
 	.heading-container {
@@ -231,368 +587,6 @@ p.create-item a{
 }
 
 </style>
-
-
-
-
-<div class='user-id' data-id="<%= @job.user.id %>"></div>
-<div class='job-id' data-id="<%= @job.id %>"></div>
-
-<div id='job-show-wrapper' class='show-container'>
-
-	<div class='heading-container'>
-		<div class='edit-delete'>
-			<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
-		    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
-		</div>
-
-	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
-	    <h1 id='job-company-position' class='headline'><%= @job.company %> - <%= @job.position %></h1>
-		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
-	</div>
-
-
-	<div id='dates-container'>
-		<section id="date-section">
-			<div><h3 class='posted-date'>Posted Date: <%= format_date(@job.date_posted) %></h3></div>
-			<div><h3> Closing Date: xxx</h3></div>
-			<div><h3 class='post-to'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
-		</section>
-	</div>
-
-
-	<div id='applied-container'>
-		<section id='applied-section'>
-			<div id='job-applied'></div>
-			<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
-		</section>
-	</div>
-
-	
-	<div class='job-desc-container job-content-container'>
-		<% if @job.job_desc != "" %>
-			<h2> Job Description </h2>
-			<h3 class='descriptions'><%= @job.job_desc %></h3>
-		<% else %>
-			<h2>This job has no job description</h2>
-			<p class='create-item'><%= link_to "add job description", edit_user_job_path(@job.user, @job) %></p>
-		<% end %>
-	</div>
-
-
-	<div class='job-co-container job-content-container'>
-		<% if @job.co_desc != "" %>
-			<h2> Company Description </h2>
-			<h3 class='descriptions'><%= @job.co_desc %></h3>
-		<% else %>
-			<h2>This job has no company description</h2>
-			<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
-		<% end %>
-	</div>
-
-
-
-	<div class='job-reqs-container job-content-container'>
-		<h2>Job Requirements</h2>
-		<h3>5 years dev experience, CS or similar degree, writes DRY code.</h3>
-		<p class='create-item'><%= link_to "add requirement", edit_user_job_path(@job.user, @job) %></p>
-
-	</div>
-
-
-
-	<div class='job-notes-container job-content-container'>
-		<h2>Job Notes</h2>
-		<h3>Remember to mention xxxx and yyyyy. Contact suggested that I practice ....</h3>
-		<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
-
-	</div>
-
-
-
-	<div class='linked-items'>
-
-		<div class='link-doc-container'>
-			<div id='linked-docs'>
-		    	<h2>LINKED DOCUMENTS</h2>
-		    	<div id='job-documents'></div>
-		    </div>
-
-		    <div id='add-doc-link'>
-	    		<%= render 'documents/document_dropdown' %>
-	    	</div>
-	    </div>
-
-	    <div class='link-contact-container'>
-	    	<div id='linked-contacts'>
-		    	<h2>LINKED CONTACTS</h2>
-		    	<div id='job-contacts'></div>
-		    </div>
-
-		    <div id='add-contact-link'>
-				<%= render 'contacts/contact_dropdown' %>
-			</div>
-	    </div>
-
-	    <div class='link-task-container'>
-	    	<h2>LINKED TASKS</h2>
-			<% if @job.tasks.length > 0%>
-				<!-- <div id='task-list'></div> -->
-		    	<%= render partial: "tasks/task", collection: @job.tasks || "No Linked Tasks" %>
-		    <% else %>
-		    	<h3>You have no linked tasks</h3>
-			<% end %>
-			<p class='create-item'><%= link_to "create a task", new_user_task_path(@job.user) %></p>
-	    </div>
-
-	</div>
-
-
-
-</div> <!-- close wrapper -->
-
-
-
-
-
-<script>
-
-
-
-
-$( document ).on('turbolinks:load', function() {
-	user_id = $(".user-id").data("id")
-	job_id = $(".job-id").data("id")
-
-	$.get(`/users/${user_id}/jobs/${job_id}`, function(data) {
-
-		job = new Job(data, user_id)
-
-	    displayAppliedDetails(job)  //injects string and toggle elements
-		toggleApplied(job) //connects applied click listener
-
-		getDocuments(data) //
-		getContacts(data)
-
-	    nextButton()
-	    previousButton()
-
-		linkContact()
-		linkDocument()
-		
-		unlinkContact()
-		unlinkDocument()
-
-		docClick()
-		contactClick()
-	},'json'
-	);
-})
-
-
-//RETRIEVE JOB DOCUMENTS, CREATE CONSTANT INSTANCE, APPEND DOCUMENTS
-const getDocuments = function (data) {
-    jQuery(data['documents']).each(function(i, document){
-        let d = new Document(document, user_id)
-        $("#job-documents").append(d.formatSpan())
-    })
-}
-
-
-//RETRIEVE JOB CONTACTS, CREATE CONSTANT INSTANCE, APPEND CONTACTS
-const getContacts = function (data) {
-    jQuery(data['contacts']).each(function(i, contact){
-        let c = new Contact(contact, user_id)
-        $("#job-contacts").append(c.formatSpan())
-    })
-}
-
-
-
-//CHANGE APPLIED STATUS USING TOGGLE
-const toggleApplied = function (job) {
-	// place click listener on toggle
-	$('#switch').on('click', function() {
-		// route changing to new status
-	    job.applied = !job.applied;
-	    $.get(`/users/${user_id}/jobs/${job_id}/applied?q=${job.applied}`, function(data) {
-	    	$('#job-applied').html(job.appliedString(job.applied))
-	    })
-	})
-}
-
-
-//DISPLAY APPLIED STRING AND TOGGLE STATUS
-const displayAppliedDetails = function (job) {
-	// renders yes/no string to applied status
-	$('#job-applied').html(job.appliedString())
-	// identifies toggle element and positions according to status
-	let tog = document.getElementById("switch")
-	tog.checked = job.applied;
-}
-
-
-
-//LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
-const nextButton = function() {
-	$('.btn-next').on('click', function() {
-		let nextPg = `${job_id}/next`
-		window.location.href = nextPg;
-	})
-}
-
-//LISTENER FOR PREVIOUS BUTTON - SENDS TO USER'S PREVIOUS JOB
-const previousButton = function() {
-	$('.btn-previous').on('click', function() {		
-		let previousPg = `${job_id}/previous`
-		window.location.href = previousPg;
-	})
-}
-
-
-
-//BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
-const linkContact = function() {
-	$('#btn-add-contact').on('click', function(e) {
-		e.preventDefault()
-		var form = $('#add-contact')
-		var action = form.attr('action')
-		var c_id = form.serialize()
-
-		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_contact`, 
-			data: c_id, 
-			type: "PATCH", 
-            success: function (data) {
-            	contact = new Contact(data, user_id)
-				$("#job-contacts").append(contact.formatSpan())
-                alert('success') 
-            },
-            error: function (data) {
-                alert('no success') }
-        })
-	})
-}
-
-
-//BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
-const linkDocument = function() {
-
-	$('#btn-add-document').on('click', function(e) {
-		e.preventDefault()
-		var form = $('#add-document')
-		var action = form.attr('action')
-		var d_id = form.serialize()
-
-		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_document`,
-		data: d_id,
-		type: "PATCH", 
-        success: function (data) {
-        	doc = new Document(data, user_id)
-			$("#job-documents").append(doc.formatSpan())
-            alert('success') },
-        error: function (data) {
-            alert('no success') }
-        })
-	})
-}
-
-
-
-
-
-
-// REMOVE JOB CONTACT 
-const unlinkContact = function() {
-
-	$(document.body).on('click', 'span.remove-contact', function(e) {
-		let contact_id = this.id
-
-		$.ajax({
-			type: "DELETE", 
-			url: `/users/${user_id}/jobs/${job_id}/contact/${contact_id}/unlink`,
-			data: contact_id,
-			dataType: 'json',
-			contentType : 'application/json',
-			processData: false,
-	        success: function (data) {
-	        	console.log(data)
-				let id = data['id']
-		    	$("#contactItem-" + id).remove()
-		    	$("#" + id).remove();
-		    	$('.remove-contact.'+id).remove()
-		    },
-	        error: function (data) {
-	            alert('no success') }
-	    })
-	})
-}
-
-
-// BUTTON LISTENER, REMOVE JOB DOCUMENT 
-const unlinkDocument = function() {
-
-	$(document.body).on('click', 'span.remove-document', function(e) {
-		let document_id = this.id
-
-		$.ajax({
-			type: "DELETE", 
-			url: `/users/${user_id}/jobs/${job_id}/document/${document_id}/unlink`,
-			data: document_id,
-			dataType: 'json',
-			contentType : 'application/json',
-			processData: false,
-	        success: function (data) {
-	        	console.log(data)
-				let id = data['id']
-		    	$("#documentItem-" + id).remove()
-		    	$("#" + id).remove();
-		    },
-	        error: function (data) {
-	            alert('no success') }
-	    })
-	})
-}
-
-// OPEN DOC DROPDOWN SPAN
-const docClick = function() {
-	var clicks = 0
-
-	$(document.body).on('click', "i.doc", function() {
-		var id = this.id
-
-	if (clicks % 2 == 0) {
-		$('.document.'+id).css('display', 'block')
-		clicks++
-		}
-	else {
-		$('.document.'+id).css('display', 'none')
-		clicks++
-		} 
-	});
-}
-
-// OPEN CONTACT DROPDOWN SPAN
-const contactClick = function() {
-	var clicks = 0
-
-	$(document.body).on('click', "i.contact", function() {
-		var id = this.id
-
-	if (clicks % 2 == 0) {
-		$('.contact.'+id).css('display', 'block')
-		clicks++
-		}
-	else {
-		$('.contact.'+id).css('display', 'none')
-		clicks++
-		} 
-	});
-}
-
-
-</script>
-
-
 
 
 

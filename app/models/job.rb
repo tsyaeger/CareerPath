@@ -9,8 +9,12 @@ class Job < ApplicationRecord
   has_many :tasks
 
   scope :filtered_job, ->(substring) { where('company LIKE ? OR position LIKE ?', "%#{substring}%", "%#{substring}%") }
+  scope :applied, -> { where("applied = ? ", true) }
 
-  # scope :applied, -> { where("applied = ? ", true) }
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
 
   def next
     join_query = 'LEFT OUTER JOIN users ON user_id = users.id'
