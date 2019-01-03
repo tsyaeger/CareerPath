@@ -119,29 +119,10 @@ let items = {}
 
 let filters = {
     jobString: '',
-    contactString: '',
     taskString: '',
+    contactString: '',
     documentString: ''
 }
-
-$( document ).on('turbolinks:load', function(){
-    id = $(".user-id").data("id")
-
-    $.get(`/users/${id}.json`, function(data) {
-        items = data
-        // if(initialized) {return; /*stop here*/}
-        // initialized = true;
-
-        renderJobs()
-        jobSearchListener()
-
-        renderTasks()
-        taskSearchListener()
-
-    });
-
-})
-
 
 
 const jobSearchListener = function () {
@@ -180,12 +161,6 @@ const setJobs = function (filteredJobs) {
 
 
 
-const taskSearchListener = function () {
-    $('#filter-tasks').on('keyup', function () {
-        filters['taskString'] = $(this).val()
-        renderTasks()
-    })
-}
 
 const renderTasks = function () {
 
@@ -199,7 +174,7 @@ const renderTasks = function () {
 }
 
 const getFilteredTasks = function (tasks, substring) {
-    return tasks.filter(function (j) {
+    return tasks.filter(function (t) {
         return t.title.includes(substring.toLowerCase())
     })
 }
@@ -212,9 +187,110 @@ const setTasks = function (filteredTasks) {
     })
 }
 
+const taskSearchListener = function () {
+    $('#filter-tasks').on('keyup', function () {
+        filters['taskString'] = $(this).val()
+        renderTasks()
+    })
+}
 
 
 
+
+const renderContacts = function () {
+
+    if (filters['contactString'] != '') {
+        filteredContacts = getFilteredContacts(items['contacts'], filters['contactString'])
+    }
+    else {
+        filteredContacts = items['contacts']
+    }
+    setContacts(filteredContacts)
+}
+
+const getFilteredContacts = function (contacts, substring) {
+    return contacts.filter(function (c) {
+        return c.first_name.includes(substring.toLowerCase()) || c.last_name.includes(substring.toLowerCase())
+    })
+}
+
+const setContacts = function (filteredContacts) {
+    $("#contact-list").empty()
+    $.each(filteredContacts, function(i, contact){
+        let c = new Contact(contact, id)
+        $("#contact-list").append(c.formatIndex())
+    })
+}
+
+const contactSearchListener = function () {
+    $('#filter-contacts').on('keyup', function () {
+        filters['contactString'] = $(this).val()
+        renderContacts()
+    })
+}
+
+
+
+
+const renderDocuments = function () {
+
+    if (filters['documentString'] != '') {
+        filteredDocuments = getFilteredDocuments(items['documents'], filters['documentString'])
+    }
+    else {
+        filteredDocuments = items['documents']
+    }
+    setDocuments(filteredDocuments)
+}
+
+const getFilteredDocuments = function (documents, substring) {
+    return documents.filter(function (d) {
+        return d.title.includes(substring.toLowerCase()) 
+    })
+}
+
+const setDocuments = function (filteredDocuments) {
+    $("#document-list").empty()
+    $.each(filteredDocuments, function(i, document){
+        let d = new Document (document, id)
+        $("#document-list").append(d.formatIndex())
+    })
+}
+
+const documentSearchListener = function () {
+    $('#filter-documents').on('keyup', function () {
+        filters['documentString'] = $(this).val()
+        renderDocuments()
+    })
+}
+
+
+
+
+
+$( document ).on('turbolinks:load', function(){
+    id = $(".user-id").data("id")
+
+    $.get(`/users/${id}.json`, function(data) {
+        items = data
+        // if(initialized) {return; /*stop here*/}
+        // initialized = true;
+
+        renderJobs()
+        jobSearchListener()
+
+        renderTasks()
+        taskSearchListener()
+
+        renderContacts()
+        contactSearchListener()
+
+        renderDocuments()
+        documentSearchListener()
+
+    });
+
+})
 
 </script>
 
