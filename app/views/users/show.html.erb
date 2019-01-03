@@ -63,7 +63,7 @@ body {
 <div id='user-show-container'>
 
     <div id='position-container' class='user-item-container'>
-        <h1><%= link_to 'Positions', user_jobs_path(@user) %></h1>
+        <h1><%= link_to 'Positions', jobs_path %></h1>
         <div id='job-search'>
             <div>
                 <input type='text' id='filter-jobs' class='dash-field' placeholder='filter positions'>        
@@ -74,7 +74,7 @@ body {
 
 
     <div id='task-container' class='user-item-container'>
-        <h1><%= link_to 'Tasks', new_user_task_path(@user) %></h1>
+        <h1><%= link_to 'Tasks', new_task_path %></h1>
         <div id='task-search'>
             <div>
                 <input type='text' id='filter-tasks' class='dash-field' placeholder='filter tasks'> 
@@ -85,7 +85,7 @@ body {
 
 
     <div id='contact-container' class='user-item-container'>
-        <h1><%= link_to 'Contacts', new_user_contact_path(@user) %></h1>
+        <h1><%= link_to 'Contacts', new_contact_path %></h1>
         <div id='contact-search'>
             <div>
                 <input type='text' id='filter-contacts' class='dash-field' placeholder='filter contacts'>
@@ -96,7 +96,7 @@ body {
 
 
     <div id='document-container' class='user-item-container'>
-        <h1><%= link_to 'Documents', new_user_document_path(@user) %></h1>
+        <h1><%= link_to 'Documents', new_document_path %></h1>
         <div id='document-search'>
             <div>
                 <input type='text' id='filter-documents' class='dash-field' placeholder='filter documents'>
