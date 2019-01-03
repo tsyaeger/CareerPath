@@ -85,26 +85,6 @@
 <script>
 
 
-$( document ).on('turbolinks:load', function() {
-    user_id = $(".user-id").data("id")
-    task_id = $(".task-id").data("id")
-
-    $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
-        task = new Task(data, user_id)
-        displayCompletedStatus(task)
-        toggleCompleted(task)
-        // linkTaskContact()
-        // linkTaskDocument()
-        // linkTaskJob()
-        // unlinkContact()
-        // unlinkDocument()
-        // unlinkJob()
-
-    });
-    
-})
-
-
 
 const toggleCompleted = function (task) {
     // place click listener on toggle
@@ -119,9 +99,28 @@ const toggleCompleted = function (task) {
 
 const displayCompletedStatus = function(task) {
     $('#task-completed-string').html(task.completedString())
+    console.log('running')
     let tog = document.getElementById("switch")
     tog.checked = task.completed;
 }
+
+
+$( document ).on('turbolinks:load', function() {
+    user_id = $(".user-id").data("id")
+    task_id = $(".task-id").data("id")
+    console.log('window load')
+
+    $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
+        console.log('sending')
+        task = new Task(data, user_id)
+        console.log(task)
+        // displayCompletedStatus(task)
+        // toggleCompleted(task)
+
+    });
+    
+})
+
 
 
 
@@ -221,7 +220,6 @@ const displayCompletedStatus = function(task) {
 //         })
 //     })
 // }
-
 
 
 

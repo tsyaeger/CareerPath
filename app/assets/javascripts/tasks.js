@@ -6,9 +6,6 @@ function Task(task, user_id) {
     this.desc = task.description
     this.due = task.due_date
     this.completed = task.completed
-    this.document = task.document
-    this.job = task.job
-    this.contact = task.contact
 }
 
 
@@ -30,12 +27,6 @@ Task.prototype.formatDate = function() {
 Task.prototype.completedString = function(completed_bool= this.completed) {
     let compString = completed_bool.toString()
     return `<h3 id='completed-bool'>COMPLETED: ${compString.toUpperCase()}</h3>`
-}
-
-
-Task.prototype.completedButton = function(completed_bool= this.completed) {
-    let text = completed_bool ? 'Mark As Not completed' : 'Mark As Completed'
-    return `<button id='add-completed' data-bool="${completed_bool}">${text}</button><br><br>`
 }
 
 
