@@ -17,8 +17,8 @@
 	    <td><%= task.description %></td>
 	    <td><%= convert_date(task.due_date) %></td>
 	    <td>Completed</td>
-	    <td><%= link_to "Edit", edit_user_task_path(task.user, task) %></td>
-	    <td><%= link_to "Delete", user_task_path(task.user, task), :method => :delete %></td>
+	    <td><%= link_to "Edit", edit_task_path(task) %></td>
+	    <td><%= link_to "Delete", task_path(task), :method => :delete %></td>
 	  </tr>
   <% end %>
 </table>

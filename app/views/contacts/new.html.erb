@@ -57,39 +57,39 @@ $("form").on('submit', function (e) {
 
 
 // SORT CONTACTS W/O REQUEST
-const buttonSort1 = function() {
-	$('#contacts-sort').on('click', function() {
-		let $cList = $( "#contact-list .list-items" ).toArray().map((li) => { 
-			return `<h3 class="list-items">${li.innerHTML}</h3>`
-		})
-		$($("#contact-list .list-items" )).remove()
-		let $sorted = sortContacts($cList).join('')
-		$('#contact-list').append($sorted)
-	})
-}
+// const buttonSort1 = function() {
+// 	$('#contacts-sort').on('click', function() {
+// 		let $cList = $( "#contact-list .list-items" ).toArray().map((li) => { 
+// 			return `<h3 class="list-items">${li.innerHTML}</h3>`
+// 		})
+// 		$($("#contact-list .list-items" )).remove()
+// 		let $sorted = sortContacts($cList).join('')
+// 		$('#contact-list').append($sorted)
+// 	})
+// }
 
-const sortContacts = function (c_list) {
-	return c_list.sort(function (a, b) {
-		let reg = /<li>(.*?)</
-		if ( a.match(reg)[0] < b.match(reg)[0] ) return -1;
-		if ( a.match(reg)[0] > b.match(reg)[0] ) return 1;
-		return 0;
-	})
-}
+// const sortContacts = function (c_list) {
+// 	return c_list.sort(function (a, b) {
+// 		let reg = /<li>(.*?)</
+// 		if ( a.match(reg)[0] < b.match(reg)[0] ) return -1;
+// 		if ( a.match(reg)[0] > b.match(reg)[0] ) return 1;
+// 		return 0;
+// 	})
+// }
 
 
-// SORT CONTACTS W/ GET REQUEST
-const buttonSort2 = function() {
-	$('#contacts-sort-2').on('click', function() {
-		$.get(`/users/${user_id}/contacts/sort`, function(data) {
-			$($("#contact-list .list-items" )).remove()
-		    jQuery(data).each(function(i, contact){
-		        let c = new Contact(contact, user_id)
-		        $("#contact-list").append(c.formatBulletItem())
-		    })
-        })
-	})
-}
+// // SORT CONTACTS W/ GET REQUEST
+// const buttonSort2 = function() {
+// 	$('#contacts-sort-2').on('click', function() {
+// 		$.get(`/contacts/sort`, function(data) {
+// 			$($("#contact-list .list-items" )).remove()
+// 		    jQuery(data).each(function(i, contact){
+// 		        let c = new Contact(contact, user_id)
+// 		        $("#contact-list").append(c.formatBulletItem())
+// 		    })
+//         })
+// 	})
+// }
 
 
 

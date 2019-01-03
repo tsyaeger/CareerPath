@@ -9,8 +9,8 @@
 
 	<div class='heading-container contact-item-container'>
 		<div class='edit-delete'>
-		    <td><%= link_to "Edit", edit_user_contact_path(@contact.user, @contact) %></td>
-		    <td><%= link_to "Delete", user_contact_path(@contact.user, @contact), :method => :delete %></td>
+		    <td><%= link_to "Edit", edit_contact_path(@contact) %></td>
+		    <td><%= link_to "Delete", contact_path(@contact), :method => :delete %></td>
 		</div>
 
 		<span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
@@ -45,7 +45,7 @@
 		            <% if @contact.jobs.length > 0 %>
 		                <%= render partial: "jobs/job", collection: @contact.jobs || "No Linked Jobs" %>
 		            <% else %>
-		                <h3><%= link_to '* Link This Contact To A Job', user_jobs_path(@contact.user) %></h3>
+		                <h3><%= link_to '* Link This Contact To A Job', jobs_path %></h3>
 		            <% end %>
 		    </div> <!-- close container -->
 
@@ -54,7 +54,7 @@
 	            <% if @contact.tasks.length > 0 %>
 	                <%= render partial: "tasks/task", collection: @contact.tasks || "No Linked Tasks" %>
 	            <% else %>
-	                <h3><%= link_to '* Link This Contact To A Task', new_user_task_path(@contact.user) %></h3>
+	                <h3><%= link_to '* Link This Contact To A Task', new_task_path %></h3>
 	            <% end %>
 		    </div> 
 		</section> <!-- close section -->
@@ -95,45 +95,17 @@
 
 
 
-$( document ).on('turbolinks:load', function() {
-	user_id = $(".user-id").data("id")
-	contact_id = $(".contact-id").data("id")
-
-	$.get(`/users/${user_id}/contacts/${contact_id}.json`, function(data) {
-		contact = new Contact(data, user_id)
-	    displayRefStatus(contact)
-		toggleReference(contact)
-
-	});
-})
-
-
-
-// const buttonRefFunc = function(contact) {
-// 	$('#add-reference').on('click', function() {
-// 	    $.get(`/users/${user_id}/contacts/${contact_id}/add_reference?q=${!contact.reference}`, function(data) {
-// 	    	$('#contact_reference').empty()
-// 	    	$('#reference-btn').empty()
-// 			$('#contact_reference').append(contact.referenceString(!contact.reference))
-// 			$('#reference-btn').append(contact.referenceButton(!contact.reference))
-// 	    })
-// 	})
-// }
-
-
 const toggleReference = function (contact) {
     // place click listener on toggle
     $('#switch').on('click', function() {
         // route changing to new status
+        console.log('switch listen')
         contact.reference = !contact.reference;
-        $.get(`/users/${user_id}/contacts/${contact_id}/add_reference?q=${contact.reference}`, function(data) {
+        $.get(`/contacts/${contact_id}/add_reference?q=${contact.reference}`, function(data) {
             $('#contact_reference').html(contact.referenceString(contact.reference))
         })
     })
 }
-
-
-
 
 
 const displayRefStatus = function (contact) {
@@ -143,7 +115,20 @@ const displayRefStatus = function (contact) {
 }
 
 
+$( document ).on('turbolinks:load', function() {
+	user_id = $(".user-id").data("id")
+	contact_id = $(".contact-id").data("id")
 
+	console.log('load')
+
+	$.get(`/contacts/${contact_id}.json`, function(data) {
+		contact = new Contact(data, user_id)
+		console.log("running")
+	    displayRefStatus(contact)
+		toggleReference(contact)
+
+	});
+})
 
 
 

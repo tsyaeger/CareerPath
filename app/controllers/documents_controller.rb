@@ -13,7 +13,7 @@ class DocumentsController < ApplicationController
 
 
   def unlink_document
-    binding.pry
+    # binding.pry
     d_id = params[:document_id]
     j_id = params[:job_id]
     document = Document.find(d_id)
@@ -51,13 +51,13 @@ class DocumentsController < ApplicationController
   def update
     flash[:notice] = 'Document updated'
     @document.update(document_params)
-    redirect_to user_document_path(@document.user, @document)
+    redirect_to document_path(@document)
   end
 
   def destroy
     flash[:notice] = 'Document destroyed'
     @document.destroy
-    redirect_to new_user_document_path(@document.user)
+    redirect_to new_document_path
   end
 
   private
@@ -67,6 +67,6 @@ class DocumentsController < ApplicationController
   end
 
   def set_document
-    @document = Document.find(params[:id])
+    @document = Document.find(params[:id] || params[:document_id])
   end
 end

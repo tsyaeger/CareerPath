@@ -11,7 +11,7 @@ function Task(task, user_id) {
 
 
 Task.prototype.formatIndex = function() {
-    let taskHTML = `<h3><a href="/users/${this.user_id}/tasks/${this.id}">${this.title} - ${this.formatDate()}</a></h3>`
+    let taskHTML = `<h3><a href="/tasks/${this.id}">${this.title} - ${this.formatDate()}</a></h3>`
     return taskHTML
 }
 
@@ -32,7 +32,7 @@ Task.prototype.completedString = function(completed_bool= this.completed) {
 Task.prototype.formatSpan = function() {
     let spanItem = `<h3 class="w3-large">
         <i class="material-icons w3-large task" id=${this.id} data-id='${this.id}'>keyboard_arrow_down</i>
-        <a href="/users/${this.user_id}/tasks/${this.id}">${this.title} - ${this.formatDate()}</a>
+        <a href="/tasks/${this.id}">${this.title} - ${this.formatDate()}</a>
         </h3><span id='${this.id}' class='task remove-task ${this.id}' data-id='${this.id}' style="display: none;" ><p class='remove'>Remove</p></span>`
     return spanItem
 }

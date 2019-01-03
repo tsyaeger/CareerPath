@@ -3,8 +3,8 @@
 
         <div class='heading-container document-item-container'>
             <div class='edit-delete'>
-                <td><%= link_to "Edit", edit_user_document_path(@document.user, @document) %></td>
-                <td><%= link_to "Delete", user_document_path(@document.user, @document), :method => :delete %></td>
+                <td><%= link_to "Edit", edit_document_path(@document) %></td>
+                <td><%= link_to "Delete", document_path(@document), :method => :delete %></td>
             </div>
 
             <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
@@ -37,7 +37,7 @@
                     <% if @document.jobs.length > 0 %>
                         <%= render partial: "jobs/job", collection: @document.jobs || "No Linked Jobs" %>
                     <% else %>
-                        <h3><%= link_to '* Link This Document To A Job', user_jobs_path(@document.user) %></h3>
+                        <h3><%= link_to '* Link This Document To A Job', jobs_path %></h3>
                     <% end %>
                 </div>
             </div> <!-- close container -->
@@ -49,7 +49,7 @@
                     <% if @document.tasks.length > 0 %>
                         <%= render partial: "tasks/task", collection: @document.tasks || "No Linked Tasks" %>
                     <% else %>
-                        <h3><%= link_to '* Link This Document To A Task', new_user_task_path(@document.user) %></h3>
+                        <h3><%= link_to '* Link This Document To A Task', new_task_path %></h3>
 
                     <% end %>
                 </div>

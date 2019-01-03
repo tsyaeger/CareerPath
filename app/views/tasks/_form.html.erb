@@ -1,5 +1,5 @@
 	
-<%= form_for [@task.user, @task] do |f| %>
+<%= form_for [@task] do |f| %>
 
     <div class="field">
         <%= f.label :title, "Title" %><br>
@@ -9,7 +9,7 @@
     <div class="field">
         <%= f.label :due_date %><br>
         <%= f.date_field :due_date, id: "due-date" %>
-    </div>            
+    </div>          
 
     <div class="field">
         <%= f.label :description, "Description" %><br>
@@ -21,6 +21,7 @@
     </div>
 
 <% end %>
+
 
    
 

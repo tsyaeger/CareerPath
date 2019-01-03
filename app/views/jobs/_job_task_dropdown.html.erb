@@ -1,6 +1,6 @@
 
 <div>
-	<%= form_for [@task.user, @task], :url => user_task_path(@task.user, @task), :html => {:id => "add-job", :method => :post} do |f| %>
+	<%= form_for [@task], :url => task_path(@task), :html => {:id => "add-job", :method => :post} do |f| %>
 
 		<p><%= f.collection_select :job_ids, @task.user.jobs, :id, :company, {:include_blank => 'choose job'} %></p>	
 

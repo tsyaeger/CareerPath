@@ -89,7 +89,7 @@ div.actions.field button{
 
 <div id='new-job-form'>
 
-    <%= form_for [@job.user, @job] do |f| %>
+    <%= form_for [@job] do |f| %>
 
             <div class="actions field">
                 <%= f.button "SAVE POSITION" %>
@@ -137,6 +137,6 @@ div.actions.field button{
             </div>
 
 
-    <% end %>
+    <% end %> <!-- close form -->
 
-</div> <!-- close form -->
+</div> 

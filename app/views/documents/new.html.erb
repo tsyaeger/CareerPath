@@ -5,7 +5,7 @@
 			<% groupDoctype(@documents).each do |d| %>
 				<h1 class='doctype-grp'><%= d[0].pluralize(2) %></h1>
 				<% d[1].each do |doc| %>
-					<h3><%= link_to "<li>#{doc.title}</li><br>".html_safe, user_document_path(doc.user, doc), :class => "bullet-item" %></h3>
+					<h3><%= link_to "<li>#{doc.title}</li><br>".html_safe, document_path(doc), :class => "bullet-item" %></h3>
 				<% end %> 
 			<% end %>
 		<% else %>

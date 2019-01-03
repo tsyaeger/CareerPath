@@ -1,6 +1,6 @@
 
 
-<%= form_for [@task.user, @task], :url => user_task_path(@task.user, @task), :html => {:id => "add-contact", :method => :post} do |f| %>
+<%= form_for @task, :url => task_path(@task), :html => {:id => "add-contact", :method => :post} do |f| %>
 
 	<p><%= f.collection_select :contact_ids, @task.user.contacts, :id, :last_name, {:include_blank => 'choose contact'} %></p>	
 

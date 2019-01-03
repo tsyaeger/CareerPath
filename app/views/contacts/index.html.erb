@@ -16,13 +16,13 @@
 	  <tr>
 	  	<% c_name = "#{contact.first_name}  #{contact.last_name}" %>
 
-	    <td><%= link_to c_name, user_contact_path(contact.user, contact) %></td>
+	    <td><%= link_to c_name, contact_path(contact) %></td>
 	    <td><%= contact.workplace %></td>
 	    <td><%= contact.phone %></td>
 	    <td><%= contact.email %></td>
 	    <td><%= contact.linkedin %></td>
-	    <td><%= link_to "Edit", edit_user_contact_path(contact.user, contact) %></td>
-	    <td><%= link_to "Delete", user_contact_path(contact.user, contact), :method => :delete %></td>
+	    <td><%= link_to "Edit", edit_contact_path(contact) %></td>
+	    <td><%= link_to "Delete", contact_path(contact), :method => :delete %></td>
 	  </tr>
   <% end %>
 

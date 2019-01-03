@@ -33,6 +33,7 @@ class ContactsController < ApplicationController
   end
 
   def add_reference
+    # binding.pry
     refStr = params[:q]
     refBool = refStr.to_s == 'true'
     @contact.reference = refBool
@@ -72,13 +73,13 @@ class ContactsController < ApplicationController
   def update
     flash[:notice] = 'Contact updated'
     @contact.update(contact_params)
-    redirect_to user_contact_path(@contact.user, @contact)
+    redirect_to contact_path(@contact)
   end
 
   def destroy
     flash[:notice] = 'Contact destroyed'
     @contact.destroy
-    redirect_to new_user_contact_path(current_user)
+    redirect_to new_contact_path
   end
 
   private
@@ -88,6 +89,6 @@ class ContactsController < ApplicationController
   end
 
   def set_contact
-    @contact = Contact.find(params[:id])
+    @contact = Contact.find(params[:id] || params[:contact_id])
   end
 end
