@@ -10,7 +10,7 @@ class CreateJobs < ActiveRecord::Migration[5.2]
       t.string :job_desc
       t.string :co_desc
       t.boolean :applied, default: false
-      t.references :user, index: true, foreign_key: true
+      
 
       t.timestamps
     end

@@ -2,12 +2,6 @@
 
 class DeviseCreateUsers < ActiveRecord::Migration[5.2]
   def change
-    remove_foreign_key :documents, name: 'fk_rails_2be0318c46'
-    remove_foreign_key :jobs, name: 'fk_rails_df6238c8a6'
-    remove_foreign_key :tasks, name: 'fk_rails_4d2a9e4d7e'
-    remove_foreign_key :contacts, name: 'fk_rails_8d2134e55e'
-    drop_table :users, if_exists: true
-
     create_table :users do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""

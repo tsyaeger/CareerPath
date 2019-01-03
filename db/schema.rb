@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_02_204540) do
+ActiveRecord::Schema.define(version: 2019_01_03_073833) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 2019_01_02_204540) do
     t.string "phone"
     t.string "email"
     t.boolean "reference", default: false
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_contacts_on_user_id"
   end
 
@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(version: 2019_01_02_204540) do
     t.string "description"
     t.string "url"
     t.string "doctype"
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_documents_on_user_id"
   end
 
@@ -58,16 +58,16 @@ ActiveRecord::Schema.define(version: 2019_01_02_204540) do
     t.string "company"
     t.string "position"
     t.string "url"
-    t.datetime "date_posted", default: "2018-12-25 00:58:44", null: false
+    t.datetime "date_posted", default: "2019-01-03 07:39:40", null: false
     t.string "job_desc"
     t.string "co_desc"
     t.boolean "applied", default: false
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "closing_date"
     t.string "requirements"
     t.string "notes"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
@@ -97,9 +97,9 @@ ActiveRecord::Schema.define(version: 2019_01_02_204540) do
     t.string "description"
     t.datetime "due_date", null: false
     t.boolean "completed", default: false
-    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
 
@@ -117,4 +117,8 @@ ActiveRecord::Schema.define(version: 2019_01_02_204540) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "contacts", "users"
+  add_foreign_key "documents", "users"
+  add_foreign_key "jobs", "users"
+  add_foreign_key "tasks", "users"
 end

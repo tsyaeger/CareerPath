@@ -10,7 +10,6 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.integer :contact_id
       t.integer :document_id
       t.integer :job_id
-      t.references :user, index: true, foreign_key: true
 
       t.timestamps
     end
