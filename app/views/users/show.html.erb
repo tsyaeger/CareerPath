@@ -112,101 +112,104 @@ body {
 
 <script type="text/javascript" charset="utf-8">
 
-var initialized = false;
+// var initialized = false;
+
+
+let items = {}
+
+let filters = {
+    jobString: '',
+    contactString: '',
+    taskString: '',
+    documentString: ''
+}
 
 $( document ).on('turbolinks:load', function(){
     id = $(".user-id").data("id")
 
     $.get(`/users/${id}.json`, function(data) {
-        if(initialized) {return; /*stop here*/}
-        initialized = true;
-        getContacts(data)
-        getJobs(data)
-        getTasks(data)
-        getDocuments(data)
-        filterJobs()
-        filterContacts()        
-        filterDocuments()
-        filterTasks()
+        items = data
+        // if(initialized) {return; /*stop here*/}
+        // initialized = true;
+        getJobs()
+
+        renderJobs()
+
     });
 
 })
 
 
+const getJobs = function () {
+    let jobs = items['jobs']
+    $.each(jobs, function(i, job){
+        let j = new Job(job, id)
+        $("#job-list").append(j.formatJobIndex())
+    })
+}
 
-const getContacts = function (data) {
-    jQuery(data['contacts']).each(function(i, contact){
-        let c = new Contact(contact, id)
-        $("#contact-list").append(c.formatIndex())
+// const getTasks = function () {
+//     let tasks = items['tasks']
+//     $.each(tasks, function(i, task){
+//         let t = new Task(task, id)
+//         $("#task-list").append(t.formatIndex())
+//     })
+// }
+
+// const getContacts = function () {
+//     let contacts = items['contacts']
+//     $.each(contacts, function(i, contact){
+//         let c = new Contact(contact, id)
+//         $("#contact-list").append(c.formatIndex())
+//     })
+// }
+
+// const getDocuments = function () {
+//     let documents = items['documents']
+//     $.each(documents, function(i, document){
+//         let d = new Document(document, id)
+//         $("#document-list").append(d.formatIndex())
+//     })
+// }
+
+
+
+
+
+
+
+const renderJobs = function () {
+    $('#filter-jobs').on('keyup', function () {
+        filters['jobString'] = $(this).val()
+
+        if (filters['jobString'] != '') {
+            filteredJobs = getFilteredJobs(items['jobs'], filters['jobString'])
+        }
+        else {
+            filteredJobs = items['jobs']
+        }
+        setJobs(filteredJobs)
     })
 }
 
 
-const getJobs = function (data) {
-    jQuery(data['jobs']).each(function(i, job){
+const getFilteredJobs = function (jobs, substring) {
+    return jobs.filter(function (j) {
+        return j.company.includes(substring.toLowerCase()) || j.position.includes(substring.toLowerCase())
+    })
+}
+
+const setJobs = function (filteredJobs) {
+    $("#job-list").empty()
+    $.each(filteredJobs, function(i, job){
         let j = new Job(job, id)
         $("#job-list").append(j.formatJobIndex())
     })
 }
 
 
-const getTasks = function (data) {
-    jQuery(data['tasks']).each(function(i, task){
-        let t = new Task(task, id)
-        // chron order here?
-        $("#task-list").append(t.formatIndex())
-    })
-}
 
 
-const getDocuments = function (data) {
-    jQuery(data['documents']).each(function(i, document){
-        let d = new Document(document, id)
-        $("#document-list").append(d.formatIndex())
-    })
-}
-
-
-
-
-const filterJobs = function (data) {
-    $('#filter-jobs').on('change', function () {
-        let substring = $(this).val()
-        $.get(`/jobs/filter?q=${substring}`, function(data) {
-            $("#job-list").empty().html(data.html)
-        })
-    })
-}
-
-
-const filterContacts = function (data) {
-    $('#filter-contacts').on('change', function () {
-        let substring = $(this).val()
-        $.get(`/contacts/filter?q=${substring}`, function(data) {
-            $("#contact-list").empty().html(data.html)
-        })
-    })
-}
-
-
-const filterTasks = function (data) {
-    $('#filter-tasks').on('change', function () {
-        let substring = $(this).val()
-        $.get(`/tasks/filter?q=${substring}`, function(data) {
-            $("#task-list").empty().html(data.html)
-        })
-    })
-}
-
-
-const filterDocuments = function (data) {
-    $('#filter-documents').on('change', function () {
-        let substring = $(this).val()
-        $.get(`/documents/filter?q=${substring}`, function(data) {
-            $("#document-list").empty().html(data.html)
-        })
-    })
-}
 
 
 </script>

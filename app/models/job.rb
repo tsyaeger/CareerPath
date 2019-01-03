@@ -2,11 +2,15 @@
 
 class Job < ApplicationRecord
   belongs_to :user
+  
   has_many :job_contacts
   has_many :contacts, through: :job_contacts
+
   has_many :job_documents
   has_many :documents, through: :job_documents
-  has_many :tasks
+  
+  has_many :task_jobs
+  has_many :tasks, through: :task_jobs
 
   scope :filtered_job, ->(substring) { where('company LIKE ? OR position LIKE ?', "%#{substring}%", "%#{substring}%") }
   scope :applied, -> { where("applied = ? ", true) }

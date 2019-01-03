@@ -45,14 +45,14 @@ class JobsController < ApplicationController
     end
   end
 
-  def add_contact
+  def link_contact
     c_id = params[:job][:contact_ids]
     contact = Contact.find(c_id)
     @job.contacts << contact unless @job.contacts.include?(contact)
     render json: contact, status: 201
   end
 
-  def add_document
+  def link_document
     d_id = params[:job][:document_ids]
     document = Document.find(d_id)
     @job.documents << document unless @job.documents.include?(document)
@@ -97,7 +97,7 @@ class JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:company, :position, :date_posted, :job_desc, :co_desc, :url, :applied)
+    params.require(:job).permit(:company, :position, :date_posted, :closing_date, :job_desc, :co_desc, :url, :applied, :requirements, :notes)
   end
 
   def set_job

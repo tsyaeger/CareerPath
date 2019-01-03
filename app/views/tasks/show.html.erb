@@ -37,9 +37,8 @@
         <section class='linked-items-section'>
 
             <div id='task-linked-doc-container' class='linked-container'>
-                <% if @task.document != nil %>   
+                <% if @task.documents != [] %>   
                     <h2 class='linked-item'>LINKED DOCUMENTS</h2>
-                    <h3><%= link_to @task.document.title, user_document_path(@task.user, @task.document) %></h3><br>
                
                     <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-doc' data-disable-with="Link Contact">
 
@@ -53,7 +52,7 @@
             <div id='task-linked-contact-container' class='linked-container'>
                 <% if @task.contact != nil %>   
                     <h2 class='linked-item'>LINKED CONTACTS </h2>
-                    <h3><%= link_to "#{formatted_name(@task.contact)}", user_contact_path(@task.user, @task.contact) %></h3><br>
+
                     <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-contact' data-disable-with="Link Contact">
 
                     
@@ -67,7 +66,7 @@
             <div id='task-linked-job-container' class='linked-container'>
                 <% if @task.job != nil %>   
                     <h2 class='linked-item'>LINKED JOBS</h2>
-                    <h3><%= link_to @task.job.company, user_job_path(@task.user, @task.job) %></h3><br>
+                    
                     <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-job' data-disable-with="Link Contact">
 
                 <% else %>
@@ -94,12 +93,12 @@ $( document ).on('turbolinks:load', function() {
         task = new Task(data, user_id)
         displayCompletedStatus(task)
         toggleCompleted(task)
-        linkTaskContact()
-        linkTaskDocument()
-        linkTaskJob()
-        unlinkContact()
-        unlinkDocument()
-        unlinkJob()
+        // linkTaskContact()
+        // linkTaskDocument()
+        // linkTaskJob()
+        // unlinkContact()
+        // unlinkDocument()
+        // unlinkJob()
 
     });
     
@@ -128,100 +127,100 @@ const displayCompletedStatus = function(task) {
 
 
 
-const linkTaskContact = function() {
-    $('#btn-add-contact').on('click', function(e) {
-        e.preventDefault()
-        var form = $('#add-contact')
+// const linkTaskContact = function() {
+//     $('#btn-add-contact').on('click', function(e) {
+//         e.preventDefault()
+//         var form = $('#add-contact')
 
-        var action = form.attr('action')
-        var c_id = form.serialize()
-
-
-        $.ajax({url: `/users/${user_id}/tasks/${task_id}/add_contact`, 
-            data: c_id, 
-            type: "PATCH", 
-            success: function (data) {
-                alert('success') 
-                $('#task-contacts').append(`<a href="/users/2/contacts/11">Rachel  Maddow</a>`)
-            },
-            error: function (data) {
-                alert('no success') }
-
-        })
-    })
-}
+//         var action = form.attr('action')
+//         var c_id = form.serialize()
 
 
-const linkTaskDocument = function() {
-    $('#btn-add-document').on('click', function(e) {
-        e.preventDefault()
-        var form = $('#add-document')
-        var action = form.attr('action') //necessary?
-        var d_id = form.serialize()
+//         $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_contact`, 
+//             data: c_id, 
+//             type: "PATCH", 
+//             success: function (data) {
+//                 alert('success') 
+//                 $('#task-contacts').append(`<a href="/users/2/contacts/11">Rachel  Maddow</a>`)
+//             },
+//             error: function (data) {
+//                 alert('no success') }
 
-        $.ajax({url: `/users/${user_id}/tasks/${task_id}/add_document`, 
-            data: d_id, 
-            type: "PATCH", 
-            success: function (data) {
-                console.log('data')
-                console.log(data)
-                alert('success') },
-            error: function (data) {
-                alert('no success') }
-        })
-    })
-}
+//         })
+//     })
+// }
 
 
-const linkTaskJob = function() {
-    let jobId = $('#task-job-ids')
-    $('#btn-add-job').on('click', function(e) {
-        e.preventDefault()
-        var form = $('#add-job')
-        var action = form.attr('action')
-        var j_id = form.serialize()
+// const linkTaskDocument = function() {
+//     $('#btn-add-document').on('click', function(e) {
+//         e.preventDefault()
+//         var form = $('#add-document')
+//         var action = form.attr('action') //necessary?
+//         var d_id = form.serialize()
 
-        $.ajax({url: `/users/${user_id}/tasks/${task_id}/add_job`, 
-            data: j_id, 
-            type: "PATCH", 
-            success: function (data) {
-                console.log('data')
-                console.log(data)
-                alert('success') },
-            error: function (data) {
-                alert('no success') }
-        })
-    })
-}
-
-
-const unlinkContact = function (task) {
-    $('.unlink-contact').on('click', function(e) {
-        e.preventDefault()
-        $.get(`/users/${user_id}/tasks/${task_id}/unlink_contact`, function(data) {
-            console.log(data)
-        })
-    })
-}
+//         $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_document`, 
+//             data: d_id, 
+//             type: "PATCH", 
+//             success: function (data) {
+//                 console.log('data')
+//                 console.log(data)
+//                 alert('success') },
+//             error: function (data) {
+//                 alert('no success') }
+//         })
+//     })
+// }
 
 
-const unlinkDocument = function (task) {
-    $('.unlink-doc').on('click', function(e) {
-        e.preventDefault()
-        $.get(`/users/${user_id}/tasks/${task_id}/unlink_document`, function(data) {
-            console.log(data)
-        })
-    })
-}
+// const linkTaskJob = function() {
+//     let jobId = $('#task-job-ids')
+//     $('#btn-add-job').on('click', function(e) {
+//         e.preventDefault()
+//         var form = $('#add-job')
+//         var action = form.attr('action')
+//         var j_id = form.serialize()
 
-const unlinkJob = function (task) {
-    $('.unlink-job').on('click', function(e) {
-        e.preventDefault()
-        $.get(`/users/${user_id}/tasks/${task_id}/unlink_job`, function(data) {
-            console.log(data)
-        })
-    })
-}
+//         $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_job`, 
+//             data: j_id, 
+//             type: "PATCH", 
+//             success: function (data) {
+//                 console.log('data')
+//                 console.log(data)
+//                 alert('success') },
+//             error: function (data) {
+//                 alert('no success') }
+//         })
+//     })
+// }
+
+
+// const unlinkContact = function (task) {
+//     $('.unlink-contact').on('click', function(e) {
+//         e.preventDefault()
+//         $.get(`/users/${user_id}/tasks/${task_id}/unlink_contact`, function(data) {
+//             console.log(data)
+//         })
+//     })
+// }
+
+
+// const unlinkDocument = function (task) {
+//     $('.unlink-doc').on('click', function(e) {
+//         e.preventDefault()
+//         $.get(`/users/${user_id}/tasks/${task_id}/unlink_document`, function(data) {
+//             console.log(data)
+//         })
+//     })
+// }
+
+// const unlinkJob = function (task) {
+//     $('.unlink-job').on('click', function(e) {
+//         e.preventDefault()
+//         $.get(`/users/${user_id}/tasks/${task_id}/unlink_job`, function(data) {
+//             console.log(data)
+//         })
+//     })
+// }
 
 
 

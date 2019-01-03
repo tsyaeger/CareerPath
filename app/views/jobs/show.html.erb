@@ -219,7 +219,7 @@ const linkContact = function() {
 		var action = form.attr('action')
 		var c_id = form.serialize()
 
-		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_contact`, 
+		$.ajax({url: `/users/${user_id}/jobs/${job_id}/link_contact`, 
 			data: c_id, 
 			type: "PATCH", 
             success: function (data) {
@@ -243,7 +243,7 @@ const linkDocument = function() {
 		var action = form.attr('action')
 		var d_id = form.serialize()
 
-		$.ajax({url: `/users/${user_id}/jobs/${job_id}/add_document`,
+		$.ajax({url: `/users/${user_id}/jobs/${job_id}/link_document`,
 		data: d_id,
 		type: "PATCH", 
         success: function (data) {

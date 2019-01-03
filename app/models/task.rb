@@ -2,9 +2,15 @@
 
 class Task < ApplicationRecord
   belongs_to :user
-  belongs_to :contact, optional: true
-  belongs_to :job, optional: true
-  belongs_to :document, optional: true
+
+  has_many :task_contacts
+  has_many :tasks, through: :task_contacts
+
+  has_many :task_documents
+  has_many :documents, through: :task_documents
+  
+  has_many :task_jobs
+  has_many :jobs, through: :task_jobs
 
   validates_associated :user
 
