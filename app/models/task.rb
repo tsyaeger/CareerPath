@@ -4,7 +4,7 @@ class Task < ApplicationRecord
   belongs_to :user
 
   has_many :task_contacts
-  has_many :tasks, through: :task_contacts
+  has_many :contacts, through: :task_contacts
 
   has_many :task_documents
   has_many :documents, through: :task_documents

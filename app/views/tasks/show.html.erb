@@ -50,7 +50,7 @@
 
 
             <div id='task-linked-contact-container' class='linked-container'>
-                <% if @task.contact != nil %>   
+                <% if @task.contacts != [] %>   
                     <h2 class='linked-item'>LINKED CONTACTS </h2>
 
                     <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-contact' data-disable-with="Link Contact">
@@ -64,7 +64,7 @@
 
 
             <div id='task-linked-job-container' class='linked-container'>
-                <% if @task.job != nil %>   
+                <% if @task.jobs != [] %>   
                     <h2 class='linked-item'>LINKED JOBS</h2>
                     
                     <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-job' data-disable-with="Link Contact">
