@@ -32,13 +32,6 @@ class ContactsController < ApplicationController
        end
   end
 
-  def filter
-    @filtered_contacts = current_user.contacts.filtered_contact(params[:q])
-    respond_to do |format|
-      format.json { render json: { html: render_to_string('contacts/_filtered_contacts.html.erb', layout: false, locals: { filtered_contacts: @filtered_contacts }) } }
-    end
-  end
-
   def add_reference
     refStr = params[:q]
     refBool = refStr.to_s == 'true'
@@ -73,7 +66,8 @@ class ContactsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit 
+  end
 
   def update
     flash[:notice] = 'Contact updated'

@@ -27,13 +27,6 @@ class JobsController < ApplicationController
     end
   end
 
-  def filter
-    @filtered_jobs = current_user.jobs.filtered_job(params[:q])
-    respond_to do |format|
-      format.json { render json: { html: render_to_string('jobs/_filtered_jobs.html.erb', layout: false, locals: { filtered_jobs: @filtered_jobs }) } }
-    end
-  end
-
   def applied
     appStr = params[:q]
     appBool = appStr === 'true'
@@ -46,17 +39,22 @@ class JobsController < ApplicationController
   end
 
   def link_contact
+    # binding.pry
     c_id = params[:job][:contact_ids]
-    contact = Contact.find(c_id)
-    @job.contacts << contact unless @job.contacts.include?(contact)
-    render json: contact, status: 201
+    @contact = Contact.find(c_id)
+    @job.contacts << @contact unless @job.contacts.include?(@contact)
+    respond_to do |format|
+      format.json { render json: @contact }
+    end
   end
 
   def link_document
     d_id = params[:job][:document_ids]
-    document = Document.find(d_id)
-    @job.documents << document unless @job.documents.include?(document)
-    render json: document, status: 201
+    @document = Document.find(d_id)
+    @job.documents << @document unless @job.documents.include?(@document)
+    respond_to do |format| 
+      format.json { render json: @document }
+    end
   end
 
 
@@ -98,9 +96,16 @@ class JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:company, :position, :date_posted, :closing_date, :job_desc, :co_desc, :url, :applied, :requirements, :notes)
-  end
+  end  
+
+# INCLUDES ASSOC ITEMS
+  # def job_params
+  #   params.require(:job).permit(
+  #     :company, :position, :date_posted, :closing_date, :job_desc, :co_desc, :url, :applied, :requirements, :notes, :contact_ids => [], :job_ids => [], :gif_ids => [])
+  # end
 
   def set_job
-    @job = Job.find(params[:id])
+    # binding.pry
+    @job = Job.find(params[:id] || params[:job_id])
   end
 end

@@ -31,7 +31,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def add_contact
+  def link_contact
     c_id = params[:task][:contact_id]
     contact = Contact.find(c_id)
     unless contact.tasks.include?(@task)
@@ -40,7 +40,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def add_document
+  def link_document
     d_id = params[:task][:document_id]
     document = Document.find(d_id)
     unless document.tasks.include?(@task)
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
     end
   end
 
-  def add_job
+  def link_job
     j_id = params[:task][:job_id]
     job = Job.find(j_id)
     unless job.tasks.include?(@task)

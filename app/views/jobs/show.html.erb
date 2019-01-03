@@ -6,8 +6,8 @@
 
 	<div class='heading-container'>
 		<div class='edit-delete'>
-			<td><%= link_to "Edit", edit_user_job_path(@job.user, @job) %></td>
-		    <td><%= link_to "Delete", user_job_path(@job.user, @job), :method => :delete %></td>
+			<td><%= link_to "Edit", edit_job_path(@job) %></td>
+		    <td><%= link_to "Delete", job_path(@job), method: :delete %></td>
 		</div>
 
 	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
@@ -109,7 +109,7 @@
 		    <% else %>
 		    	<h3>You have no linked tasks</h3>
 			<% end %>
-			<p class='create-item'><%= link_to "create a task", new_user_task_path(@job.user) %></p>
+			<p class='create-item'><%= link_to "create a task", new_task_path %></p>
 	    </div>
 
 	</div>
@@ -125,34 +125,21 @@
 
 
 
-$( document ).on('turbolinks:load', function() {
-	user_id = $(".user-id").data("id")
-	job_id = $(".job-id").data("id")
+//LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
+const nextButton = function() {
+	$('.btn-next').on('click', function() {
+		let nextPg = `${job_id}/next`
+		window.location.href = nextPg;
+	})
+}
 
-	$.get(`/users/${user_id}/jobs/${job_id}`, function(data) {
-
-		job = new Job(data, user_id)
-
-	    displayAppliedDetails(job)  //injects string and toggle elements
-		toggleApplied(job) //connects applied click listener
-
-		getDocuments(data) //
-		getContacts(data)
-
-	    nextButton()
-	    previousButton()
-
-		linkContact()
-		linkDocument()
-		
-		unlinkContact()
-		unlinkDocument()
-
-		docClick()
-		contactClick()
-	},'json'
-	);
-})
+//LISTENER FOR PREVIOUS BUTTON - SENDS TO USER'S PREVIOUS JOB
+const previousButton = function() {
+	$('.btn-previous').on('click', function() {		
+		let previousPg = `${job_id}/previous`
+		window.location.href = previousPg;
+	})
+}
 
 
 //RETRIEVE JOB DOCUMENTS, CREATE CONSTANT INSTANCE, APPEND DOCUMENTS
@@ -198,23 +185,6 @@ const displayAppliedDetails = function (job) {
 
 
 
-//LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
-const nextButton = function() {
-	$('.btn-next').on('click', function() {
-		let nextPg = `${job_id}/next`
-		window.location.href = nextPg;
-	})
-}
-
-//LISTENER FOR PREVIOUS BUTTON - SENDS TO USER'S PREVIOUS JOB
-const previousButton = function() {
-	$('.btn-previous').on('click', function() {		
-		let previousPg = `${job_id}/previous`
-		window.location.href = previousPg;
-	})
-}
-
-
 
 //BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
 const linkContact = function() {
@@ -222,17 +192,21 @@ const linkContact = function() {
 		e.preventDefault()
 		var form = $('#add-contact')
 		var action = form.attr('action')
-		var c_id = form.serialize()
+		var contact_form = form.serialize()
 
-		$.ajax({url: `/users/${user_id}/jobs/${job_id}/link_contact`, 
-			data: c_id, 
-			type: "PATCH", 
+		$.ajax({
+			url: `/jobs/${job_id}/link_contact`, 
+			data: contact_form, 
+			type: "PATCH",
+			dataType: 'json',
             success: function (data) {
             	contact = new Contact(data, user_id)
 				$("#job-contacts").append(contact.formatSpan())
                 alert('success') 
             },
             error: function (data) {
+            	console.log('fail')
+            	console.log(data)
                 alert('no success') }
         })
 	})
@@ -242,14 +216,16 @@ const linkContact = function() {
 //BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
 const linkDocument = function() {
 
-	$('#btn-add-document').on('click', function(e) {
+	$('#add-document').on('submit', function(e) {
 		e.preventDefault()
+		console.log('this is being triggered')
 		var form = $('#add-document')
 		var action = form.attr('action')
-		var d_id = form.serialize()
+		var data = form.serialize()
 
-		$.ajax({url: `/users/${user_id}/jobs/${job_id}/link_document`,
-		data: d_id,
+		$.ajax({
+		url: action,
+		data: data,
 		type: "PATCH", 
         success: function (data) {
         	doc = new Document(data, user_id)
@@ -295,15 +271,13 @@ const unlinkContact = function() {
 const unlinkDocument = function() {
 
 	$(document.body).on('click', 'span.remove-document', function(e) {
-		let document_id = this.id
+		let documentId = $(this).data('id')
+		console.log(documentId)
 
 		$.ajax({
 			type: "DELETE", 
-			url: `/users/${user_id}/jobs/${job_id}/document/${document_id}/unlink`,
-			data: document_id,
+			url: `/jobs/${job_id}/documents/${documentId}/unlink`,
 			dataType: 'json',
-			contentType : 'application/json',
-			processData: false,
 	        success: function (data) {
 	        	console.log(data)
 				let id = data['id']
@@ -352,6 +326,36 @@ const contactClick = function() {
 	});
 }
 
+
+
+$( document ).on('turbolinks:load', function() {
+	user_id = $(".user-id").data("id")
+	job_id = $(".job-id").data("id")
+
+	$.get(`/jobs/${job_id}`, function(data) {
+		console.log('after ajax finishes..')
+		job = new Job(data, user_id)
+
+	    displayAppliedDetails(job)  //injects string and toggle elements
+		toggleApplied(job) //connects applied click listener
+
+		getDocuments(data) //
+		getContacts(data)
+
+	    nextButton()
+	    previousButton()
+
+		linkContact()
+		linkDocument()
+		
+		unlinkContact()
+		unlinkDocument()
+
+		docClick()
+		contactClick()
+	},'json'
+	);
+})
 
 </script>
 

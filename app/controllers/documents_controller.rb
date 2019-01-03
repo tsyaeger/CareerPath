@@ -24,14 +24,6 @@ class DocumentsController < ApplicationController
        end
   end
 
-
-  def filter
-    @filtered_documents = current_user.documents.filtered_document(params[:q])
-    respond_to do |format|
-      format.json { render json: { html: render_to_string('documents/_filtered_documents.html.erb', layout: false, locals: { filtered_documents: @filtered_documents }) } }
-    end
-  end
-
   def new
     @document = Document.new(user: current_user)
     @documents = current_user.documents

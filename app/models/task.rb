@@ -12,9 +12,8 @@ class Task < ApplicationRecord
   has_many :task_jobs
   has_many :jobs, through: :task_jobs
 
+  validates :title, presence: true
   validates_associated :user
-
-  scope :filtered_task, ->(substring) { where('title LIKE ? ', "%#{substring}%") }
 
   scope :completed_false, -> { where('completed = ?', false) }
   scope :completed_true, -> { where('completed = ?', true) }

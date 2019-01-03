@@ -4,7 +4,7 @@ class User < ApplicationRecord
 
  attr_writer :login
 
-  has_many :contacts  
+  has_many :contacts, -> { order(last_name: :desc) }
   has_many :documents
   has_many :jobs
   has_many :tasks

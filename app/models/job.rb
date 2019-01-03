@@ -12,8 +12,11 @@ class Job < ApplicationRecord
   has_many :task_jobs
   has_many :tasks, through: :task_jobs
 
-  scope :filtered_job, ->(substring) { where('company LIKE ? OR position LIKE ?', "%#{substring}%", "%#{substring}%") }
+  validates :company, :position, presence: true
+  validates_associated :user
+
   scope :applied, -> { where("applied = ? ", true) }
+
 
   def full_name
     "#{first_name} #{last_name}"

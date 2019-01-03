@@ -8,10 +8,10 @@ class Contact < ApplicationRecord
   has_many :task_contacts
   has_many :tasks, through: :task_contacts
 
-  scope :filtered_contact, ->(substring) { where('last_name LIKE ? OR first_name LIKE ?', "%#{substring}%", "%#{substring}%") }
   scope :is_reference, -> { where('reference = ?', true) }
 
-  validates :email, :first_name, :last_name, presence: true
+  validates :email, :first_name, presence: true
+  validates_associated :user
 
   def full_name
     "#{first_name} #{last_name}"

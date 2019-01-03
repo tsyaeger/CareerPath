@@ -133,14 +133,12 @@ const jobSearchListener = function () {
 }
 
 const renderJobs = function () {
-
     if (filters['jobString'] != '') {
-        filteredJobs = getFilteredJobs(items['jobs'], filters['jobString'])
+        jobs = getFilteredJobs(items['jobs'], filters['jobString'])
+    } else {
+        jobs = items['jobs']
     }
-    else {
-        filteredJobs = items['jobs']
-    }
-    setJobs(filteredJobs)
+    setJobs(jobs)
 }
 
 const getFilteredJobs = function (jobs, substring) {
@@ -165,12 +163,11 @@ const setJobs = function (filteredJobs) {
 const renderTasks = function () {
 
     if (filters['taskString'] != '') {
-        filteredTasks = getFilteredTasks(items['tasks'], filters['taskString'])
+        tasks = getFilteredTasks(items['tasks'], filters['taskString'])
+    } else {
+        tasks = items['tasks']
     }
-    else {
-        filteredTasks = items['tasks']
-    }
-    setTasks(filteredTasks)
+    setTasks(tasks)
 }
 
 const getFilteredTasks = function (tasks, substring) {
@@ -201,10 +198,10 @@ const renderContacts = function () {
 
     if (filters['contactString'] != '') {
         filteredContacts = getFilteredContacts(items['contacts'], filters['contactString'])
-    }
-    else {
+    } else {
         filteredContacts = items['contacts']
     }
+    // contacts = filteredContacts['first_name'].sort()
     setContacts(filteredContacts)
 }
 
@@ -235,12 +232,11 @@ const contactSearchListener = function () {
 const renderDocuments = function () {
 
     if (filters['documentString'] != '') {
-        filteredDocuments = getFilteredDocuments(items['documents'], filters['documentString'])
+        documents = getFilteredDocuments(items['documents'], filters['documentString'])
+    } else {
+        documents = items['documents']
     }
-    else {
-        filteredDocuments = items['documents']
-    }
-    setDocuments(filteredDocuments)
+    setDocuments(documents)
 }
 
 const getFilteredDocuments = function (documents, substring) {

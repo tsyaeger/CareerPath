@@ -9,5 +9,6 @@ class Document < ApplicationRecord
   has_many :task_documents
   has_many :tasks, through: :task_documents
 
-  scope :filtered_document, ->(substring) { where('title LIKE ? ', "%#{substring}%") }
+  validates :title, presence: true
+  validates_associated :user
 end
