@@ -12,12 +12,6 @@ class TasksController < ApplicationController
     end
   end
 
-  def filter
-    @filtered_tasks = current_user.tasks.filtered_task(params[:q])
-    respond_to do |format|
-      format.json { render json: { html: render_to_string('tasks/_filtered_tasks.html.erb', layout: false, locals: { filtered_tasks: @filtered_tasks }) } }
-    end
-  end
 
   def completed
     completedStr = params[:q]
