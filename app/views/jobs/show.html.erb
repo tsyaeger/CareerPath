@@ -55,21 +55,26 @@
 	</div>
 
 
-
 	<div class='job-reqs-container job-content-container'>
-		<h2>Job Requirements</h2>
-		<p class='create-item'><%= link_to "add requirement", edit_user_job_path(@job.user, @job) %></p>
-
+		<% if @job.requirements != "" %>
+			<h2> Requirements </h2>
+			<h3 class='descriptions'><%= @job.requirements %></h3>
+		<% else %>
+			<h2>This job has no company requirements</h2>
+			<p class='create-item'><%= link_to "add requirements", edit_user_job_path(@job.user, @job) %></p>
+		<% end %>
 	</div>
-
 
 
 	<div class='job-notes-container job-content-container'>
-		<h2>Job Notes</h2>
-		<p class='create-item'><%= link_to "add company description", edit_user_job_path(@job.user, @job) %></p>
-
+		<% if @job.notes != "" %>
+			<h2> Notes </h2>
+			<h3 class='descriptions'><%= @job.notes %></h3>
+		<% else %>
+			<h2>This job has no company notes</h2>
+			<p class='create-item'><%= link_to "add notes", edit_user_job_path(@job.user, @job) %></p>
+		<% end %>
 	</div>
-
 
 
 	<div class='linked-items'>

@@ -8,7 +8,7 @@
         <div class='edit-delete'>
             <td><%= link_to "Edit", edit_user_task_path(@task.user, @task) %></td>
             <td><%= link_to "Delete", user_task_path(@task.user, @task), :method => :delete %></td>
-        </div>
+        </div> <!-- close container -->
 
 
         <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
@@ -22,7 +22,7 @@
         	<h3>Description: <%= @task.description %></h3>
         </div>
         <div id='date-due'><h3>DUE DATE: <%= format_date(@task.due_date) %></h3></div>
-    </div>
+    </div> <!-- close container -->
 
 
     <div id='completed-container'>
@@ -86,6 +86,13 @@
 
 
 
+const displayCompletedStatus = function(task) {
+    $('#task-completed-string').html(task.completedString())
+    console.log('running')
+    let tog = document.getElementById("switch")
+    tog.checked = task.completed;
+}
+
 const toggleCompleted = function (task) {
     // place click listener on toggle
     $('#switch').on('click', function() {
@@ -96,32 +103,6 @@ const toggleCompleted = function (task) {
         })
     })
 }
-
-const displayCompletedStatus = function(task) {
-    $('#task-completed-string').html(task.completedString())
-    console.log('running')
-    let tog = document.getElementById("switch")
-    tog.checked = task.completed;
-}
-
-
-$( document ).on('turbolinks:load', function() {
-    user_id = $(".user-id").data("id")
-    task_id = $(".task-id").data("id")
-    console.log('window load')
-
-    $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
-        console.log('sending')
-        task = new Task(data, user_id)
-        console.log(task)
-        // displayCompletedStatus(task)
-        // toggleCompleted(task)
-
-    });
-    
-})
-
-
 
 
 
@@ -148,6 +129,41 @@ $( document ).on('turbolinks:load', function() {
 //         })
 //     })
 // }
+
+
+//BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
+const linkTaskContact = function() {
+    $('#btn-add-contact').on('click', function(e) {
+        e.preventDefault()
+        var form = $('#add-contact')
+        var action = form.attr('action')
+        var c_id = form.serialize()
+
+        $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_contact`, 
+            data: c_id, 
+            type: "PATCH", 
+            success: function (data) {
+                contact = new Contact(data, user_id)
+                $("#task-contacts").append(contact.formatSpan())
+                alert('success') 
+            },
+            error: function (data) {
+                alert('no success') }
+        })
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // const linkTaskDocument = function() {
@@ -221,6 +237,24 @@ $( document ).on('turbolinks:load', function() {
 //     })
 // }
 
+
+
+
+$( document ).on('turbolinks:load', function() {
+    user_id = $(".user-id").data("id")
+    task_id = $(".task-id").data("id")
+    console.log('window load')
+
+    $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
+        console.log('sending')
+        task = new Task(data, user_id)
+        console.log(task)
+        displayCompletedStatus(task)
+        toggleCompleted(task)
+
+    });
+    
+})
 
 
 </script>

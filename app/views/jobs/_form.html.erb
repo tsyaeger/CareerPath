@@ -69,6 +69,16 @@ div.actions.field button{
         grid-row: 4;
     }
 
+    .requirements {
+        grid-column: 1;
+        grid-row: 5;
+    }
+
+    .notes {
+        grid-column: 2;
+        grid-row: 5;
+    }
+
 
 }
 
@@ -114,6 +124,16 @@ div.actions.field button{
             <div class="field co-desc">
                 <%= f.label :co_desc, "Company Description" %><br>
                 <%= f.text_area :co_desc, id: "co_desc" %>
+            </div>
+
+            <div class="field requirements">
+                <%= f.label :requirements, "Requirements" %><br>
+                <%= f.text_area :requirements, id: "requirements"%>
+            </div>            
+
+            <div class="field notes">
+                <%= f.label :notes, "Notes" %><br>
+                <%= f.text_area :notes, id: "notes" %>
             </div>
 
 

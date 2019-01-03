@@ -23,7 +23,6 @@ Task.prototype.formatDate = function() {
 }    
 
 
-
 Task.prototype.completedString = function(completed_bool= this.completed) {
     let compString = completed_bool.toString()
     return `<h3 id='completed-bool'>COMPLETED: ${compString.toUpperCase()}</h3>`
