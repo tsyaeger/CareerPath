@@ -131,67 +131,36 @@ $( document ).on('turbolinks:load', function(){
         items = data
         // if(initialized) {return; /*stop here*/}
         // initialized = true;
-        getJobs()
 
         renderJobs()
+        jobSearchListener()
+
+        renderTasks()
+        taskSearchListener()
 
     });
 
 })
 
 
-const getJobs = function () {
-    let jobs = items['jobs']
-    $.each(jobs, function(i, job){
-        let j = new Job(job, id)
-        $("#job-list").append(j.formatJobIndex())
-    })
-}
 
-// const getTasks = function () {
-//     let tasks = items['tasks']
-//     $.each(tasks, function(i, task){
-//         let t = new Task(task, id)
-//         $("#task-list").append(t.formatIndex())
-//     })
-// }
-
-// const getContacts = function () {
-//     let contacts = items['contacts']
-//     $.each(contacts, function(i, contact){
-//         let c = new Contact(contact, id)
-//         $("#contact-list").append(c.formatIndex())
-//     })
-// }
-
-// const getDocuments = function () {
-//     let documents = items['documents']
-//     $.each(documents, function(i, document){
-//         let d = new Document(document, id)
-//         $("#document-list").append(d.formatIndex())
-//     })
-// }
-
-
-
-
-
-
-
-const renderJobs = function () {
+const jobSearchListener = function () {
     $('#filter-jobs').on('keyup', function () {
         filters['jobString'] = $(this).val()
-
-        if (filters['jobString'] != '') {
-            filteredJobs = getFilteredJobs(items['jobs'], filters['jobString'])
-        }
-        else {
-            filteredJobs = items['jobs']
-        }
-        setJobs(filteredJobs)
+        renderJobs()
     })
 }
 
+const renderJobs = function () {
+
+    if (filters['jobString'] != '') {
+        filteredJobs = getFilteredJobs(items['jobs'], filters['jobString'])
+    }
+    else {
+        filteredJobs = items['jobs']
+    }
+    setJobs(filteredJobs)
+}
 
 const getFilteredJobs = function (jobs, substring) {
     return jobs.filter(function (j) {
@@ -207,6 +176,41 @@ const setJobs = function (filteredJobs) {
     })
 }
 
+
+
+
+
+const taskSearchListener = function () {
+    $('#filter-tasks').on('keyup', function () {
+        filters['taskString'] = $(this).val()
+        renderTasks()
+    })
+}
+
+const renderTasks = function () {
+
+    if (filters['taskString'] != '') {
+        filteredTasks = getFilteredTasks(items['tasks'], filters['taskString'])
+    }
+    else {
+        filteredTasks = items['tasks']
+    }
+    setTasks(filteredTasks)
+}
+
+const getFilteredTasks = function (tasks, substring) {
+    return tasks.filter(function (j) {
+        return t.title.includes(substring.toLowerCase())
+    })
+}
+
+const setTasks = function (filteredTasks) {
+    $("#task-list").empty()
+    $.each(filteredTasks, function(i, task){
+        let t = new Task(task, id)
+        $("#task-list").append(t.formatIndex())
+    })
+}
 
 
 
