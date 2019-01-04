@@ -4,6 +4,7 @@ module Jobs
     skip_before_action :verify_authenticity_token
 
     def unlink
+      # binding.pry
       contact = Contact.find(params[:contact_id])
       job = Job.find(params[:job_id])
       job.contacts.delete(contact)

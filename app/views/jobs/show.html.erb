@@ -240,25 +240,30 @@ const linkDocument = function() {
 
 
 
+
+
+
+
+
+
+
 // REMOVE JOB CONTACT 
 const unlinkContact = function() {
 
 	$(document.body).on('click', 'span.remove-contact', function(e) {
-		let contact_id = this.id
+		let contactId = this.id
+		console.log(contactId)
 
 		$.ajax({
 			type: "DELETE", 
-			url: `/users/${user_id}/jobs/${job_id}/contact/${contact_id}/unlink`,
-			data: contact_id,
+			url: `/jobs/${job_id}/contacts/${contactId}/unlink`,
 			dataType: 'json',
-			contentType : 'application/json',
-			processData: false,
 	        success: function (data) {
 	        	console.log(data)
 				let id = data['id']
 		    	$("#contactItem-" + id).remove()
 		    	$("#" + id).remove();
-		    	$('.remove-contact.'+id).remove()
+		    	$('.remove-contact.'+ id).remove()
 		    },
 	        error: function (data) {
 	            alert('no success') }
@@ -267,12 +272,13 @@ const unlinkContact = function() {
 }
 
 
+
+
 // BUTTON LISTENER, REMOVE JOB DOCUMENT 
 const unlinkDocument = function() {
 
 	$(document.body).on('click', 'span.remove-document', function(e) {
 		let documentId = $(this).data('id')
-		console.log(documentId)
 
 		$.ajax({
 			type: "DELETE", 
