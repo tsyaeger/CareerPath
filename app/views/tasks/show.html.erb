@@ -115,7 +115,7 @@ $( document ).on('turbolinks:load', function() {
     task_id = $(".task-id").data("id")
     console.log('window load')
 
-    $.get(`/users/${user_id}/tasks/${task_id}.json`, function(data) {
+    $.get(`/tasks/${task_id}.json`, function(data) {
         console.log('sending')
         task = new Task(data, user_id)
         console.log(task)

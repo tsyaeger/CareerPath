@@ -1,6 +1,5 @@
 
 
-
 .show-container {
 	padding: 0 35px;
 }
@@ -40,8 +39,7 @@ h1#task-title {
 }
 
 #contact-info-section {
-  display: flex;
-  justify-content: center;
+  display: flex; justify-content: center;
 }
 
 #contact-info-section > div {
@@ -114,6 +112,8 @@ h1#task-title {
 
 p.remove {
 	display: inline-block;
+	text-align: left;
+	padding-left: 28px;
 }
 
 .remove-contact :hover {
@@ -130,7 +130,7 @@ p.remove {
 }
 
 
-@media only screen and (min-width: 850px) {
+@media only screen and (min-width: 925px) {
 
 
 	.linked-items-section {

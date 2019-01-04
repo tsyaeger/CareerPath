@@ -43,8 +43,7 @@ input[type=submit]:hover {
 
 textarea, select {
     width: 100%;
-    box-sizing: border-box;
-    border-radius: 4px;
+    box-sizing: border-box; border-radius: 4px;
     margin: 0 0 20px 0;
     font-size: 16px;
 }

@@ -1,5 +1,9 @@
 
 
+#job-show-wrapper {
+	padding: 0 35px;
+}
+
 h1#job-company-position {
 	font-size: 25px;
 }
@@ -36,18 +40,19 @@ h1#job-company-position {
 	margin-top: 18px;
 }
 
-.job-content-container {
+div.job-content-container {
 	text-align: left;
 	overflow: scroll;
 	padding-bottom: 10px;
 	border-bottom: dotted 1px black;
 }
 
-@media only screen and (min-width: 950px) {
+@media only screen and (min-width: 925px) {
 
 	#job-show-wrapper {
 		display: grid;
-		grid-template-columns: 425px 1fr 1fr;
+		grid-template-columns: 325px 1fr 1fr;
+		grid-gap: 0;
 	}
 
 	.heading-container {
@@ -75,33 +80,14 @@ h1#job-company-position {
 
 	/* JOB CONTENT */
 
-	.job-content-container {
+	div.job-content-container {
 		padding: 25px;
 		border-bottom: solid black 1px;
+		max-height: 600px;
 	}
 
-	.job-desc-container {
-		grid-column: 2;
-		grid-row: 4; 
-		padding-left: 25px;
+	div.job-content-container:nth-child(even) {
 		border-right: solid black 1px;
-	}
-
-	.job-co-container {
-		grid-column: 3;
-		grid-row: 4; 
-	}
-
-	.job-reqs-container {
-		grid-column: 2;
-		grid-row: 5; 
-		padding-left: 25px;
-		border-right: solid black 1px;
-	}
-
-	.job-notes-container {
-		grid-column: 3;
-		grid-row: 5; 
 	}
 
 	/* SIDEBAR */
@@ -111,7 +97,7 @@ h1#job-company-position {
 		grid-row: 4/6; 
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+		grid-template-rows: 1fr 1fr 1fr
 		margin: 0;
 		padding: 0;
 		text-align: center;
