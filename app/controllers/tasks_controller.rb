@@ -22,7 +22,7 @@ class TasksController < ApplicationController
     @task.user = current_user
     @task.save
     respond_to do |format|
-      format.html { redirect_to new_task_path }
+      format.html { redirect_to task_path(@task) }
       format.json { render json: @task, status: 200 }
     end
   end

@@ -13,6 +13,9 @@
 	<div index='upcoming-tasks-container' class='cdt-container'>
 	    <h1>UPCOMING TASKS</h1>
 	    <div id='task-list'>
+	    	
+
+	    	
 	    	<%= render partial: "task", collection: @tasks || "No Tasks"%>
 	    </div>
 	</div> <!-- close column -->
@@ -34,34 +37,6 @@
 
 
 
-<script type="text/javascript" charset="utf-8">
-
-
-// $(document.body).on('submit', "form", function(e) {
-// 	console.log('loaded')
-// 	e.preventDefault()
-// 	var $form = $(this)
-// 	var action = $form.attr('action')
-// 	var params = $form.serialize()
-// 	console.log($form)
-
-
-	// $.ajax({
-	// 	url: "/tasks/create",
-	// 	data: params,
-	// 	datatype: 'json',
-	// 	method: 'POST', 
-	//     success: function (data) {
-	// 		alert('success') 
-	// 		$("#task-list").append(data.html),
-	// 		$("#new_task")[0].reset();
-	// 	},
-	// 	error: function (data) {
-	// 		alert('something went wrong') }
-	// })
-// })
-
-
 
 <script type="text/javascript" charset="utf-8">
 
@@ -77,6 +52,7 @@ $("form").on('submit', function (e) {
 		method: 'POST', 
 	    success: function (data) {
 			alert('success') 
+			console.log(data)
 			$("#task-list").append(data.html),
 			$("#new_task")[0].reset();
 		},
