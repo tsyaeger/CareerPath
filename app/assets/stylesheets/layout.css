@@ -51,6 +51,21 @@ h3 {
     list-style-type: circle;
 }
 
+p.create-item a{
+  color: #B50000;
+}
 
+.link-to {
+    text-decoration: underline;
+}
+
+
+.link-field {
+  padding: 0 35px 0;
+}
+
+.edit-delete {
+  float: right;
+}
 
 

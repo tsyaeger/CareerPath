@@ -1,4 +1,5 @@
 
+
 button {
     background-color: white;
     border-radius: 4px;
@@ -70,5 +71,14 @@ input:checked + #switch-label:after {
     transform: translateX(-100%);
 }
 
+.pg-btn {
+    margin-top: 6px;
+    margin: 6px 30px 0 30px;
+    font-size: 40px;
+    color: #4c4a4a;
+}
 
+.pg-btn:hover {
+    color: #a81515;
+}
 

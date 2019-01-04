@@ -68,8 +68,8 @@
 		<% end %>
 	</div> <!-- close container -->
 
-	<div class='linked-items'>
-		<div class='link-doc-container'>
+	<div class='linked-job-items'>
+		<div class='link-doc-container link-container'>
 			<div id='linked-docs'>
 		    	<h2>LINKED DOCUMENTS</h2>
 		    	<div id='job-documents'></div>
@@ -80,7 +80,7 @@
 	    	</div>
 	    </div> <!-- close container -->
 
-	    <div class='link-contact-container'>
+	    <div class='link-contact-container link-container'>
 	    	<div id='linked-contacts'>
 		    	<h2>LINKED CONTACTS</h2>
 		    	<div id='job-contacts'></div>
@@ -91,7 +91,7 @@
 			</div>
 	    </div> <!-- close container -->
 
-	    <div class='link-task-container'>
+	    <div class='link-task-container link-container'>
 	    	<h2>LINKED TASKS</h2>
 			<% if @job.tasks.length > 0%>
 				<!-- <div id='task-list'></div> -->
@@ -353,243 +353,6 @@ $( document ).on('turbolinks:load', function() {
 
 </script>
 
-
-
-
-
-<style>
-
-
-.show-container {
-	display: grid;
-	grid-template-columns:  1fr;
-	padding: 0 35px;
-}
-
-.heading-container {
-	margin: 15px 0;
-	padding: 0;
-	text-align: center;
-}
-
-h1#job-company-position {
-	font-size: 25px;
-}
-
-#date-section {
-  display: flex;
-  justify-content: center;
-}
-
-#date-section > div {
-	margin: 0 15px;
-}
-
-#applied-container {
-	padding-bottom: 20px;
-	border-bottom: solid black 1px;
-}
-
-#applied-section {
-  display: flex;
-  justify-content: center;
-}
-
-#applied-section > div {
-	margin: 0 15px;
-}
-
-#applied-bool {
-	margin-top: 18px;
-}
-
-.job-content-container {
-	text-align: left;
-	overflow: scroll;
-	padding-bottom: 10px;
-	border-bottom: dotted 1px black;
-}
-
-.linked-items > div {
-	border-bottom: dotted 1px black;
-}
-
-#switch {
-	margin: 0;
-	padding: 0;
-}
-
-
-
-
-@media only screen and (min-width: 950px) {
-
-
-	.show-container {
-		display: grid;
-		grid-template-columns: 425px 1fr 1fr;
-	}
-
-	.heading-container {
-		grid-column: 1/4;
-		margin: 0;
-		margin-top: 30px;
-		padding: 0;
-		text-align: center;
-	}
-
-	h1#job-company-position {
-		font-size: 35px;
-	}
-
-	.edit-delete {
-		float: right;
-	}
-
-
-	.pg-btn {
-	    margin-top: 6px;
-		margin: 6px 30px 0 30px;
-	    font-size: 40px;
-	    color: #4c4a4a;
-	}
-
-	.pg-btn:hover {
-		color: #a81515;
-	}
-
-
-	#dates-container {
-		grid-column: 1/4;
-	}
-
-	#applied-container {
-		grid-column: 1/4;
-	}
-
-
-
-
-	/* JOB CONTENT */
-
-	.job-content-container {
-		padding: 25px;
-	}
-
-	.job-desc-container {
-		grid-column: 2;
-		grid-row: 4; 
-		padding-left: 25px;
-		border-right: solid black 1px;
-		border-bottom: solid black 1px;
-	}
-
-	.job-co-container {
-		grid-column: 3;
-		grid-row: 4; 
-		border-bottom: solid black 1px;
-	}
-
-	.job-reqs-container {
-		grid-column: 2;
-		grid-row: 5; 
-		padding-left: 25px;
-		border-right: solid black 1px;
-		border-bottom: solid black 1px;
-	}
-
-	.job-notes-container {
-		grid-column: 3;
-		grid-row: 5; 
-		border-bottom: solid black 1px;
-	}
-
-
-	/* SIDEBAR */
-
-	.link-field {
-		padding: 0 35px 0;
-	}
-
-	.linked-items {
-		grid-column: 1;
-		grid-row: 4/6; 
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 1fr 1fr 1fr 1fr
-		margin: 0;
-		padding: 0;
-		text-align: center;
-	}
-
-	.linked-items > div {
-		border-bottom: dotted 1px black;
-	}
-
-
-	.link-doc-container {
-		padding: 26px 0 30px;
-		border-right: solid black 1px;
-		display: inline-block;
-
-	}
-
-
-	/*CONSOLIDATE ME*/
-	#btn-add-document {
-		font-size: 16px;
-		height: 35px;
-		margin: 0;
-		padding: 0;
-	}
-	#btn-add-contact {
-		font-size: 16px;
-		height: 35px;
-		margin: 0;
-		padding: 0;
-	}
-
-
-	/*CONSOLIDATE ME*/
-	.link-contact-container {
-		padding: 10px 0 30px;
-		border-right: solid black 1px;
-	}
-	.link-task-container {
-		padding: 10px 0 30px;
-		border-right: solid black 1px;
-	}
-
-
-	#linked-docs {
-		grid-column: 1;
-		grid-row: 2;
-	}
-
-	#add-doc-link {
-		grid-column: 1;
-		grid-row: 3;
-	}
-
-	#job_document_ids {
-		margin: 0;
-	}
-
-	#job_contact_ids {
-		margin: 0;
-	}
-
-}
-
-
-
-
-/* SHOULD BE GLOBAL FOR ALL CREATE ITEMS*/
-p.create-item a{
-	color: #B50000;
-}
-
-</style>
 
 
 

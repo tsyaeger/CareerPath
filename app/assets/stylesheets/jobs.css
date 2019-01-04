@@ -1,5 +1,160 @@
-// Place all the styles related to the Jobs controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+h1#job-company-position {
+	font-size: 25px;
+}
+
+.linked-job-items > div {
+	border-bottom: dotted 1px black;
+}
+
+
+#job-date-section {
+  display: flex;
+  justify-content: center;
+}
+
+#job-date-section > div {
+	margin: 0 15px;
+}
+
+#applied-container {
+	padding-bottom: 20px;
+	border-bottom: solid black 1px;
+}
+
+#applied-section {
+  display: flex;
+  justify-content: center;
+}
+
+#applied-section > div {
+	margin: 0 15px;
+}
+
+#applied-bool {
+	margin-top: 18px;
+}
+
+.job-content-container {
+	text-align: left;
+	overflow: scroll;
+	padding-bottom: 10px;
+	border-bottom: dotted 1px black;
+}
+
+@media only screen and (min-width: 950px) {
+
+	#job-show-wrapper {
+		display: grid;
+		grid-template-columns: 425px 1fr 1fr;
+	}
+
+	.heading-container {
+		grid-column: 1/4;
+		margin: 0;
+		margin-top: 30px;
+		padding: 0;
+		text-align: center;
+	}
+
+	h1#job-company-position {
+		font-size: 35px;
+	}
+
+	#dates-container {
+		grid-column: 1/4;
+	}
+
+	#applied-container {
+		grid-column: 1/4;
+	}
+
+
+
+
+	/* JOB CONTENT */
+
+	.job-content-container {
+		padding: 25px;
+		border-bottom: solid black 1px;
+	}
+
+	.job-desc-container {
+		grid-column: 2;
+		grid-row: 4; 
+		padding-left: 25px;
+		border-right: solid black 1px;
+	}
+
+	.job-co-container {
+		grid-column: 3;
+		grid-row: 4; 
+	}
+
+	.job-reqs-container {
+		grid-column: 2;
+		grid-row: 5; 
+		padding-left: 25px;
+		border-right: solid black 1px;
+	}
+
+	.job-notes-container {
+		grid-column: 3;
+		grid-row: 5; 
+	}
+
+	/* SIDEBAR */
+
+	.linked-job-items {
+		grid-column: 1;
+		grid-row: 4/6; 
+		display: grid;
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr 1fr 1fr 1fr 1fr
+		margin: 0;
+		padding: 0;
+		text-align: center;
+	}
+
+	.linked-job-items > div {
+		border-bottom: dotted 1px black;
+	}
+
+	.link-doc-container {
+		padding: 26px 0 30px;
+		border-right: solid black 1px;
+		display: inline-block;
+
+	}
+
+	#btn-add-job-item {
+		font-size: 16px;
+		height: 35px;
+		margin: 0;
+		padding: 0;
+	}
+
+	.link-contact-container, .link-task-container {
+		padding: 10px 0 30px;
+		border-right: solid black 1px;
+	}
+
+	#linked-docs {
+		grid-column: 1;
+		grid-row: 2;
+	}
+
+	#add-doc-link {
+		grid-column: 1;
+		grid-row: 3;
+	}
+
+	#job_document_ids {
+		margin: 0;
+	}
+
+	#job_contact_ids {
+		margin: 0;
+	}
+}

@@ -1,4 +1,0 @@
-
-<% filtered_tasks.each do |task| %>
-	<h3><%= link_to "#{task.title} #{format_date(task.due_date)}", task_path(task)%></h3>
-<% end %>
