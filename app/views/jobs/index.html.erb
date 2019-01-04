@@ -1,80 +1,9 @@
-
-<style>
-
-#job-index-container {
-  margin: auto;
-  width: 85%;
-  margin-top: 55px;
-}
-
-#job-index-container table {
-    margin: auto;
-    width: 100%;
-    border: solid 1px;
-    border-color: #cecece;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2), 0 1px 3px 0 rgba(0,0,0,0.19);
-}
-
-#job-index-container th {
-  text-transform: uppercase;
-}
-
-#job-index-container td, #job-index-container th {
-    border: 1px solid #545353;
-    text-align: left;
-    padding: 8px;
-}
-
-/*#job-index-container tr:nth-child(even) {
-    background-color: #dddddd;
-}*/
-
-tr > th {
-  
-    background-color: #dddddd;
-}
-
-tr.applied td:nth-child(-n+2) {
-  background: #e1f4e8;
-}
-
-
-@media only screen and (max-width: 1100px) {
-  #job-index-container th.mid-no-show {
-    display: none;
-  }
-
-  #job-index-container td.mid-no-show {
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 850px) {
-  #job-index-container th.mobile-no-show {
-    display: none;
-  }
-
-  #job-index-container td.mobile-no-show {
-    display: none;
-  }
-}
-
-
-
-</style>
-
-
-
-
 <div id='job-index-container'>
-
   <% if @jobs.length > 0 %>
-
     <h1>POSITIONS</h1>
     <button><%= link_to "Add New Position", new_job_path %></button><br><br>
-
       <table>
-        <tr>
+        <tr class='job-index-header-row'>
           <th>Company</th>
           <th>Position</th>
           <th class='mobile-no-show'>Date Posted</th>
@@ -85,39 +14,39 @@ tr.applied td:nth-child(-n+2) {
           <th class='mobile-no-show'></th>
           <th class='mobile-no-show'></th>
         </tr>
-
         <% @jobs.each do |job| %>
       	  <tr class="<%= job.applied == true ? "applied" : "not-applied" %>" >
       	    <td class='company-td'><%= link_to job.company, job_path(job) %></td>
       	    <td class='position-td'><%= link_to job.position, job_path(job) %></td>
       	    <td class='date-posted-td mobile-no-show'><%= format_date(job.date_posted) %></td>
-            <td class='close-date-td mobile-no-show'>12/31/2018</td>
+
+            <% if job.closing_date != nil %>
+              <td class='close-date-td mobile-no-show'><%= job.closing_date %></td>
+            <% else %>
+              <td class='close-date-td mobile-no-show'>---</td>
+            <% end %>
+
             <td class='job-tasks-td mobile-no-show mid-no-show'><%= job.tasks.completed_false.length %> todos</td> 
 
             <% if job.tasks.length > 0 %> 
               <% next_task = job.tasks.first %>
               <td><%= link_to format_date(next_task.due_date), task_path(next_task) %></td>
             <% else %>
-              <td>na</td>
+              <td>---</td>
             <% end %>
 
-            <td class='applied-td' mobile-no-show mid-no-show applied-<%= job.applied.to_s %>'><%= job.applied.to_s == 'true' %></td>
+            <td class='applied-td mobile-no-show mid-no-show applied-<%= job.applied.to_s %>'><%= job.applied.to_s == 'true' %></td>
       	    <td class='edit-td mobile-no-show'><%= link_to "Edit", edit_job_path(job) %></td>
       	    <td class='delete-td mobile-no-show'><%= link_to "Delete", job_path(job), :method => :delete %></td>
       	  </tr>
         <% end %>
       </table> <!-- close table -->
-
   <% else %>
-
     <div id='top'>
       <h1>YOU HAVE NO SAVED POSITIONS</h1>
       <button><%= link_to "Add New Position", new_job_path %></button><br><br>
     </div>
-
   <% end %>
-
-
 </div> <!--close page-->
 
 

@@ -1,67 +1,5 @@
-<style>
-body {
-    padding: 0;
-    margin: 0;
-    /*-webkit-font-smoothing: antialiased;*/
-    -moz-osx-font-smoothing: grayscale;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    min-height: 100vh;
-}
-
-.container {
-    /*flex-grow: 10;*/
-}
-
-#user-show-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    height: 100%;
-}
-
-.user-item-container {
-    border-bottom: solid;
-    border-width: 1px;
-    border-color: #2d2c2c;
-    text-align: left;
-    padding: 35px;
-
-}
-
-@media only screen and (min-width: 600px) {
-    #user-show-container {
-        grid-template-columns: 1fr 1fr;
-    }
-    .user-item-container:nth-child(odd) {
-        border-right: solid;
-        border-width: 1px;
-    }
-}
-
-
-@media only screen and (min-width: 1000px) {
-    #user-show-container {
-        grid-template-columns: repeat(4, 1fr);
-    }
-    .user-item-container {
-        min-height: 1200px;
-    }
-    .user-item-container:nth-child(-n+3) {
-        border-right: solid;
-        border-width: 1px;
-    }
-}
-
-
-</style>
-
-
-
-
-
 <div class='user-id' data-id="<%= @user.id %>"></div>
 <div id='user-show-container'>
-
     <div id='position-container' class='user-item-container'>
         <h1><%= link_to 'Positions', jobs_path %></h1>
         <div id='job-search'>
@@ -70,8 +8,7 @@ body {
             </div>            
             <div id="job-list"></div>
         </div>
-    </div>
-
+    </div> <!-- close container -->
 
     <div id='task-container' class='user-item-container'>
         <h1><%= link_to 'Tasks', new_task_path %></h1>
@@ -81,8 +18,7 @@ body {
             </div>
             <div id="task-list"></div>
         </div>
-    </div>
-
+    </div> <!-- close container -->
 
     <div id='contact-container' class='user-item-container'>
         <h1><%= link_to 'Contacts', new_contact_path %></h1>
@@ -92,8 +28,7 @@ body {
             </div>
             <div id='contact-list' data-id="<%= @user.id %>"></div>
         </div>
-    </div>
-
+    </div> <!-- close container -->
 
     <div id='document-container' class='user-item-container'>
         <h1><%= link_to 'Documents', new_document_path %></h1>
@@ -103,8 +38,7 @@ body {
             </div>
             <div id="document-list"></div>
         </div>
-    </div>/
-
+    </div> <!-- close container -->
 </div> <!-- close page -->
 
 

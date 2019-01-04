@@ -1,6 +1,4 @@
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
-
 
 html {
   box-sizing: border-box;
@@ -9,16 +7,21 @@ html {
   box-sizing: inherit;
 }
 
+body {
+    font-family: 'Open Sans', sans-serif;
+    padding: 0;
+    margin: 0;
+    /*-webkit-font-smoothing: antialiased;*/
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+}
+
 .wrapper {
   width: 100%;
   height: 100%;
   margin: 0 auto 100px;
   text-align: center;
   max-width: 1500px;
-}
-
-body {
-  font-family: 'Open Sans', sans-serif;
 }
 
 a {
@@ -46,20 +49,6 @@ h3 {
 .bullet-item{
     color: black;
     list-style-type: circle;
-}
-
-
-
-//NEW PAGES
-
-
-
-
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-    text-shadow: 2px 2px #f4f2f2;
 }
 
 

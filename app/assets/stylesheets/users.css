@@ -1,0 +1,41 @@
+
+#user-show-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: left;
+}
+
+#user-show-container h3 {
+    margin-top: 17px;
+}
+
+.user-item-container {
+    border-bottom: solid;
+    border-width: 1px;
+    border-color: #2d2c2c;
+    text-align: left;
+    padding: 35px;
+}
+
+@media only screen and (min-width: 600px) {
+    #user-show-container {
+        grid-template-columns: 1fr 1fr;
+    }
+    .user-item-container:nth-child(odd) {
+        border-right: solid;
+        border-width: 1px;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    #user-show-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .user-item-container {
+        min-height: 1200px;
+    }
+    .user-item-container:nth-child(-n+3) {
+        border-right: solid;
+        border-width: 1px;
+    }
+}
