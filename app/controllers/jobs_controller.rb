@@ -45,11 +45,14 @@ class JobsController < ApplicationController
     end
   end
 
+
+
+
   def link_contact
-    # binding.pry
     c_id = params[:job][:contact_ids]
     @contact = Contact.find(c_id)
     @job.contacts << @contact unless @job.contacts.include?(@contact)
+    @job.save
     respond_to do |format|
       format.json { render json: @contact }
     end
@@ -59,10 +62,14 @@ class JobsController < ApplicationController
     d_id = params[:job][:document_ids]
     @document = Document.find(d_id)
     @job.documents << @document unless @job.documents.include?(@document)
+    @job.save
     respond_to do |format| 
       format.json { render json: @document }
     end
   end
+
+
+
 
 
   def new

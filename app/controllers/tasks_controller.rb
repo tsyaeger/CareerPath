@@ -47,75 +47,47 @@ class TasksController < ApplicationController
     end
   end
 
+
+
+
+
   def link_contact
-    c_id = params[:task][:contact_id]
-    contact = Contact.find(c_id)
-    unless contact.tasks.include?(@task)
-      contact.tasks << @task
-      contact.save
+    c_id = params[:task][:contact_ids]
+    @contact = Contact.find(c_id)
+    @task.contacts << @contact unless @task.contacts.include?(@contact)
+    @task.save
+    respond_to do |format|
+      format.json { render json: @contact }
     end
   end
 
   def link_document
-    d_id = params[:task][:document_id]
-    document = Document.find(d_id)
-    unless document.tasks.include?(@task)
-      document.tasks << @task
-      document.save
+    # binding.pry
+    d_id = params[:task][:document_ids]
+    @document = Document.find(d_id)
+    @task.documents << @document unless @task.documents.include?(@document)
+    # @task.save
+    respond_to do |format|
+      format.json { render json: @document }
     end
   end
-
+    
   def link_job
-    j_id = params[:task][:job_id]
-    job = Job.find(j_id)
-    unless job.tasks.include?(@task)
-      job.tasks << @task
-      job.save
-    end
-  end
-
-  def unlink_contact
-    c = @task.contact
-    c.tasks.delete(@task)
-    @task.contact_id = nil
-    c.save
-    @task.save
-
-    flash[:notice] = 'Contact removed'
+    # binding.pry
+    j_id = params[:task][:job_ids]
+    @job = Job.find(j_id)
+    @task.jobs << @job unless @task.jobs.include?(@job)
+    # @task.save
     respond_to do |format|
-      format.html { render :show }
-      format.json { render json: @task, status: 200 }
-    end
-  end
-
-  def unlink_document
-    d = @task.document
-    d.tasks.delete(@task)
-    @task.document_id = nil
-    d.save
-    @task.save
-    flash[:notice] = 'Document removed'
-    respond_to do |format|
-      format.html { render :show }
-      format.json { render json: @task, status: 200 }
-    end
-  end
-
-  def unlink_job
-    j = @task.job
-    j.tasks.delete(@task)
-    @task.job_id = nil
-    j.save
-    @task.save
-    flash[:notice] = 'Job removed'
-    respond_to do |format|
-      format.html { render :show }
-      format.json { render json: @task, status: 200 }
+      format.json { render json: @job }
     end
   end
 
 
-  def edit; end
+
+
+  def edit
+  end
 
   def update
     @task.update(task_params)

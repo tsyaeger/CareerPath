@@ -10,5 +10,6 @@ class JobSerializer < ActiveModel::Serializer
   has_many :job_contacts 
   has_many :contacts
 
+  has_many :task_jobs
   has_many :tasks
 end

@@ -13,7 +13,6 @@ class DocumentsController < ApplicationController
 
 
   def unlink_document
-    # binding.pry
     d_id = params[:document_id]
     j_id = params[:job_id]
     document = Document.find(d_id)

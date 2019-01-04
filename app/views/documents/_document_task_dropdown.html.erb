@@ -1,8 +1,10 @@
 
-<%= form_for [@task], :url => task_path(@task), :html => {:id => "add-document", :method => :post} do |f| %>
+<div>
+	<%= form_for @task, url: task_link_document_path(@task), :html => {:id => "add-document", :class => "link-field", :method => :patch} do |f| %>
 
-	<p><%= f.collection_select :document_ids, @task.user.documents, :id, :title, {:include_blank => 'choose document'} %></p>	
+		<p><%= f.collection_select :document_ids, @task.user.documents, :id, :title, {:include_blank => 'choose document'} %></p>	
 
-	<%= f.submit "Link Document", {id: 'btn-add-document'} %>
+		<%= f.submit "Link Document", {id: 'btn-add-document', class: 'btn-add-task-item'} %>
 
-<% end %>
+	<% end %>
+</div>

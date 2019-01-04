@@ -7,5 +7,6 @@ class DocumentSerializer < ActiveModel::Serializer
   has_many :job_documents
   has_many :jobs
 
+  has_many :task_documents
   has_many :tasks
 end

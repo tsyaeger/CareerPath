@@ -4,7 +4,7 @@
 
 		<p><%= f.collection_select :document_ids, @job.user.documents, :id, :title, {:include_blank => 'choose document'} %></p>	
 
-		<%= f.submit "Link Document", {id: 'btn-add-document', class: 'btn-add-job--item'} %>
+		<%= f.submit "Link Document", {id: 'btn-add-document', class: 'btn-add-job-item'} %>
 
 	<% end %>
 </div>

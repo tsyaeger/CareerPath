@@ -1,10 +1,10 @@
 
 
-<%= form_for @task, :url => task_path(@task), :html => {:id => "add-contact", :method => :post} do |f| %>
+<%= form_for @task, :url => task_path(@task), :html => {:id => "add-contact", :method => :patch} do |f| %>
 
 	<p><%= f.collection_select :contact_ids, @task.user.contacts, :id, :last_name, {:include_blank => 'choose contact'} %></p>	
 
-	<%= f.submit "Link Contact", {id: 'btn-add-contact'} %>
+	<%= f.submit "Link Contact", {id: 'btn-add-contact', class: 'btn-add-task-item'} %>
 
 <% end %>
 

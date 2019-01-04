@@ -29,9 +29,10 @@
     <div class='linked-items'>
         <section class='linked-items-section'>
             <div id='task-linked-doc-container' class='linked-container'>
+
+
                 <% if @task.documents != [] %>   
                     <h2 class='linked-item'>LINKED DOCUMENTS</h2>
-                    <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-doc' data-disable-with="Link Contact">
                 <% else %>
                     <h2 class='unlinked-item'>No linked Documents</h2>
                     <%= render 'documents/document_task_dropdown' %>
@@ -41,7 +42,6 @@
             <div id='task-linked-contact-container' class='linked-container'>
                 <% if @task.contacts != [] %>   
                     <h2 class='linked-item'>LINKED CONTACTS </h2>
-                    <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-contact' data-disable-with="Link Contact">
                 <% else %>
                     <h2 class='unlinked-item'>No linked contacts</h2>
                     <%= render 'contacts/contact_task_dropdown' %>
@@ -51,12 +51,19 @@
             <div id='task-linked-job-container' class='linked-container'>
                 <% if @task.jobs != [] %>   
                     <h2 class='linked-item'>LINKED JOBS</h2>
-                    <input type="submit" name="commit" value="unLink Document" id="btn-add-contact" class='unlink-job' data-disable-with="Link Contact">
                 <% else %>
                     <h2 class='unlinked-item'>No linked jobs</h2>
                     <%= render 'jobs/job_task_dropdown' %>
                 <% end %>
             </div> <!-- close container -->
+
+
+
+
+
+
+
+
         </section>
     </div> <!-- close linked items-->
 </div> <!-- close wrapper -->
@@ -70,7 +77,6 @@ var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
 const displayCompletedStatus = function(task) {
     $('#task-completed-string').html(task.completedString())
-    console.log('running')
     let tog = document.getElementById("switch")
     tog.checked = task.completed;
 }
@@ -91,16 +97,22 @@ const toggleCompleted = function (task) {
 const linkTaskContact = function() {
     $('#btn-add-contact').on('click', function(e) {
         e.preventDefault()
+        console.log('clicked')
         var form = $('#add-contact')
         var action = form.attr('action')
         var data = form.serialize()
         data.authenticity_token = AUTH_TOKEN;
+        console.log(data.authenticity_token)
 
-        $.ajax({url: `/tasks/${task_id}/link_contact`, 
+        $.ajax({
+            url: `/tasks/${task_id}/link_contact`, 
             data: data, 
-            type: "PATCH", 
+            type: "PATCH",
+            dataType: 'json',
             success: function (response) {
+                console.log(response)
                 contact = new Contact(response, user_id)
+                console.log(contact)
                 $("#task-contacts").append(contact.formatSpan())
                 alert('success') 
             },
@@ -110,17 +122,71 @@ const linkTaskContact = function() {
     })
 }
 
+
+//BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
+const linkTaskDocument = function() {
+
+    $('#add-document').on('submit', function(e) {
+        e.preventDefault()
+        var form = $('#add-document')
+        var action = form.attr('action')
+        var data = form.serialize()
+        data.authenticity_token = AUTH_TOKEN;
+        $.ajax({
+        url: action,
+        data: data,
+        type: "PATCH", 
+        success: function (data) {
+            doc = new Document(data, user_id)
+            $("#task-documents").append(doc.formatSpan())
+            alert('success') },
+        error: function (data) {
+            alert('no success') }
+        })
+    })
+}
+
+
+//BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
+const linkTaskJob = function() {
+
+    $('#add-job').on('submit', function(e) {
+        e.preventDefault()
+        var form = $('#add-job')
+        var action = form.attr('action')
+        var data = form.serialize()
+        data.authenticity_token = AUTH_TOKEN;
+        $.ajax({
+        url: action,
+        data: data,
+        type: "PATCH", 
+        success: function (data) {
+            doc = new Job(data, user_id)
+            $("#task-jobs").append(doc.formatSpan())
+            alert('success') },
+        error: function (data) {
+            alert('no success') }
+        })
+    })
+}
+
+
+
+
+
+
 $( document ).on('turbolinks:load', function() {
     user_id = $(".user-id").data("id")
     task_id = $(".task-id").data("id")
-    console.log('window load')
 
     $.get(`/tasks/${task_id}.json`, function(data) {
-        console.log('sending')
         task = new Task(data, user_id)
         console.log(task)
         displayCompletedStatus(task)
         toggleCompleted(task)
+        linkTaskContact()
+        linkTaskDocument()
+        linkTaskJob()
 
     });
     
