@@ -66,7 +66,7 @@
 
 <script>
 
-
+var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
 const displayCompletedStatus = function(task) {
     $('#task-completed-string').html(task.completedString())
@@ -87,140 +87,28 @@ const toggleCompleted = function (task) {
 }
 
 
-
-
-// const linkTaskContact = function() {
-//     $('#btn-add-contact').on('click', function(e) {
-//         e.preventDefault()
-//         var form = $('#add-contact')
-
-//         var action = form.attr('action')
-//         var c_id = form.serialize()
-
-
-//         $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_contact`, 
-//             data: c_id, 
-//             type: "PATCH", 
-//             success: function (data) {
-//                 alert('success') 
-//                 $('#task-contacts').append(`<a href="/users/2/contacts/11">Rachel  Maddow</a>`)
-//             },
-//             error: function (data) {
-//                 alert('no success') }
-
-//         })
-//     })
-// }
-
-
 //BUTTON LISTENER, SEND PATCH W CONTACT TO CONTROLLER, 
 const linkTaskContact = function() {
     $('#btn-add-contact').on('click', function(e) {
         e.preventDefault()
         var form = $('#add-contact')
         var action = form.attr('action')
-        var c_id = form.serialize()
+        var data = form.serialize()
+        data.authenticity_token = AUTH_TOKEN;
 
         $.ajax({url: `/tasks/${task_id}/link_contact`, 
-            data: c_id, 
+            data: data, 
             type: "PATCH", 
-            success: function (data) {
-                contact = new Contact(data, user_id)
+            success: function (response) {
+                contact = new Contact(response, user_id)
                 $("#task-contacts").append(contact.formatSpan())
                 alert('success') 
             },
-            error: function (data) {
+            error: function (response) {
                 alert('no success') }
         })
     })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const linkTaskDocument = function() {
-//     $('#btn-add-document').on('click', function(e) {
-//         e.preventDefault()
-//         var form = $('#add-document')
-//         var action = form.attr('action') //necessary?
-//         var d_id = form.serialize()
-
-//         $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_document`, 
-//             data: d_id, 
-//             type: "PATCH", 
-//             success: function (data) {
-//                 console.log('data')
-//                 console.log(data)
-//                 alert('success') },
-//             error: function (data) {
-//                 alert('no success') }
-//         })
-//     })
-// }
-
-
-// const linkTaskJob = function() {
-//     let jobId = $('#task-job-ids')
-//     $('#btn-add-job').on('click', function(e) {
-//         e.preventDefault()
-//         var form = $('#add-job')
-//         var action = form.attr('action')
-//         var j_id = form.serialize()
-
-//         $.ajax({url: `/users/${user_id}/tasks/${task_id}/link_job`, 
-//             data: j_id, 
-//             type: "PATCH", 
-//             success: function (data) {
-//                 console.log('data')
-//                 console.log(data)
-//                 alert('success') },
-//             error: function (data) {
-//                 alert('no success') }
-//         })
-//     })
-// }
-
-
-// const unlinkContact = function (task) {
-//     $('.unlink-contact').on('click', function(e) {
-//         e.preventDefault()
-//         $.get(`/users/${user_id}/tasks/${task_id}/unlink_contact`, function(data) {
-//             console.log(data)
-//         })
-//     })
-// }
-
-
-// const unlinkDocument = function (task) {
-//     $('.unlink-doc').on('click', function(e) {
-//         e.preventDefault()
-//         $.get(`/users/${user_id}/tasks/${task_id}/unlink_document`, function(data) {
-//             console.log(data)
-//         })
-//     })
-// }
-
-// const unlinkJob = function (task) {
-//     $('.unlink-job').on('click', function(e) {
-//         e.preventDefault()
-//         $.get(`/users/${user_id}/tasks/${task_id}/unlink_job`, function(data) {
-//             console.log(data)
-//         })
-//     })
-// }
-
-
-
 
 $( document ).on('turbolinks:load', function() {
     user_id = $(".user-id").data("id")

@@ -28,11 +28,9 @@
 
 
 
-
-
-
-
 <script type="text/javascript" charset="utf-8">
+
+var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
 // $("form").on('submit', function (e) {
 $(document.body).on('submit', "form", function(e) {
@@ -40,12 +38,12 @@ $(document.body).on('submit', "form", function(e) {
 	e.preventDefault()
 	var $form = $(this)
 	var action = $form.attr('action')
-	var params = $form.serialize()
-
+	var data = $form.serialize()
+	data.authenticity_token = AUTH_TOKEN;
 
 	$.ajax({
 		url: action,
-		data: params,
+		data: data,
 		datatype: 'json',
 		method: 'POST', 
 	    success: function (data) {

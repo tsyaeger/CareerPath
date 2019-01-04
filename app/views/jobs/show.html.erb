@@ -110,8 +110,7 @@
 
 <script>
 
-
-
+var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
 //LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
 const nextButton = function() {
@@ -180,11 +179,11 @@ const linkContact = function() {
 		e.preventDefault()
 		var form = $('#add-contact')
 		var action = form.attr('action')
-		var contact_form = form.serialize()
-
+		var data = form.serialize()
+		data.authenticity_token = AUTH_TOKEN;
 		$.ajax({
 			url: `/jobs/${job_id}/link_contact`, 
-			data: contact_form, 
+			data: data, 
 			type: "PATCH",
 			dataType: 'json',
             success: function (data) {
@@ -210,7 +209,7 @@ const linkDocument = function() {
 		var form = $('#add-document')
 		var action = form.attr('action')
 		var data = form.serialize()
-
+		data.authenticity_token = AUTH_TOKEN;
 		$.ajax({
 		url: action,
 		data: data,
@@ -246,6 +245,8 @@ const unlinkContact = function() {
 			type: "DELETE", 
 			url: `/jobs/${job_id}/contacts/${contactId}/unlink`,
 			dataType: 'json',
+			data: {authenticity_token: AUTH_TOKEN},
+
 	        success: function (data) {
 	        	console.log(data)
 				let id = data['id']
@@ -271,6 +272,7 @@ const unlinkDocument = function() {
 		$.ajax({
 			type: "DELETE", 
 			url: `/jobs/${job_id}/documents/${documentId}/unlink`,
+			data: {authenticity_token: AUTH_TOKEN},
 			dataType: 'json',
 	        success: function (data) {
 	        	console.log(data)

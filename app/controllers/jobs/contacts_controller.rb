@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Jobs
   class ContactsController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    
 
     def unlink
       # binding.pry

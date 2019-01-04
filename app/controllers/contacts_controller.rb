@@ -2,7 +2,7 @@
 
 class ContactsController < ApplicationController
   before_action :set_contact, only: %i[show edit update destroy add_reference]
-  skip_before_action :verify_authenticity_token
+  
 
   def index
     @contacts = current_user.contacts
