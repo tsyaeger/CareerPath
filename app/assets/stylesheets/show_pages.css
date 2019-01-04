@@ -159,6 +159,14 @@ p.remove {
         border-right: solid black 1px;
     }
 
+	    
+	.task-linked-container {
+	    min-width: 300px;
+	    text-align: center;
+	}
+
+
+
 	.linked-container {
 		padding: 30px 0 15px;
 		border-bottom: none;

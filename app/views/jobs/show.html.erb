@@ -116,7 +116,7 @@ var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 //LISTENER FOR NEXT BUTTON - SENDS TO USER'S NEXT JOB
 const nextButton = function() {
 	$('.btn-next').on('click', function() {
-		let nextPg = `${job_id}/next`
+		let nextPg = `/jobs/${job_id}/next`
 		window.location.href = nextPg;
 	})
 }
@@ -124,7 +124,7 @@ const nextButton = function() {
 //LISTENER FOR PREVIOUS BUTTON - SENDS TO USER'S PREVIOUS JOB
 const previousButton = function() {
 	$('.btn-previous').on('click', function() {		
-		let previousPg = `${job_id}/previous`
+		let previousPg = `/jobs/${job_id}/previous`
 		window.location.href = previousPg;
 	})
 }
