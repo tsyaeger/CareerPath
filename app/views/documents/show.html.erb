@@ -1,19 +1,13 @@
-
 <div id='document-show-container' class='show-container'>
-
         <div class='heading-container document-item-container'>
             <div class='edit-delete'>
                 <td><%= link_to "Edit", edit_document_path(@document) %></td>
                 <td><%= link_to "Delete", document_path(@document), :method => :delete %></td>
             </div>
-
             <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
             <h1 id='document-title' class='headline'><%= @document.title %></h1>
             <span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
         </div> <!-- close container -->
-
-            
-
 
         <div id='doc-info-container'>
             <section id='doc-info-section'>
@@ -24,12 +18,10 @@
 
         <div id='doc-description-container'>
             <h3>Description: <%= @document.description %></h3>
-        </div>
+        </div> <!-- close container -->
 
 
     <div class='linked-items'>
-
-
         <section class='linked-items-section'>
             <div id='document-linked-jobs' class='linked-container'>
                 <h2>LINKED JOBS</h2>
@@ -41,7 +33,6 @@
                     <% end %>
                 </div>
             </div> <!-- close container -->
-
 
             <div id='document-linked-tasks' class='linked-container'>
                 <h2>LINKED TASKS</h2>
@@ -55,7 +46,5 @@
                 </div>
             </div>  <!-- close container -->
         </section>
-
-    </div>
-
+    </div> <!-- close linked items -->
 </div> <!-- close wrapper -->

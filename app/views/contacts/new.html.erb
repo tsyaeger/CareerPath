@@ -4,14 +4,16 @@
 		<h1>References</h1>
 		<%= render partial: "contact", collection: @contacts.is_reference || "No Contacts"%>
 	</div> <!--close column -->
+	
 	<div index='all-contacts-container' class='cdt-container'>
 	    <h1>Contacts</h1>
 <!-- 	    <button id="contacts-sort">First Name</button>
 	    <button id="contacts-sort-2">Last Name</button> -->
 		<div id='contact-list'>
 		    <%= render partial: "contact", collection: @contacts || "No Contacts"%>
-	    </div> <!--close column -->
-	</div>
+	    </div>
+	</div> <!--close column -->
+
 	<div index='add-contact-container' class='cdt-container'>
 		<h1>Add Contact</h1>
 		<%= render 'form' %>

@@ -151,7 +151,7 @@ const setJobs = function (filteredJobs) {
     $("#job-list").empty()
     $.each(filteredJobs, function(i, job){
         let j = new Job(job, id)
-        $("#job-list").append(j.formatJobIndex())
+        $("#job-list").append(j.formatIndex())
     })
 }
 

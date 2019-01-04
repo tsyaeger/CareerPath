@@ -1,5 +1,4 @@
 <div id='new-document-wrapper' class='new-item-wrapper'>
-
 	<div index='doctype-container' class='cdt-container'>
 		<% if @documents.length > 0 %>
 			<% groupDoctype(@documents).each do |d| %>
@@ -18,8 +17,8 @@
 		<div id='document-list'>
 		    <%= render partial: "document", collection: @documents || "No Documents"%>
 	    </div>
-	    
 	</div> <!-- close column -->
+	
 	<div index='add-doc-container' class='cdt-container'>
 		<h1>Add Document</h1>
 		<%= render 'form' %>

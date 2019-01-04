@@ -11,12 +11,13 @@ function Document(document, user_id) {
     this.updated_at = document.updated_at
 }
 
+// Listed job items (used on user show page)
 Document.prototype.formatIndex = function() {
     let documentHTML = `<h3><a href="/documents/${this.id}">${this.title}</a></h3>`
     return documentHTML
 }
 
-
+// Returns job with remove span (used in show pages of linked items)
 Document.prototype.formatSpan = function() {
     let spanItem = `<h3 class="w3-large" id="documentItem-${this.id}">
         <i class="material-icons w3-large doc" id=${this.id} data-id='${this.id}'>keyboard_arrow_down</i>

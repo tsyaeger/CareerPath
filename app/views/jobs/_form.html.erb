@@ -1,91 +1,3 @@
-<style>
-
-form {
-    display: grid;
-    grid-template-columns: 1fr; 
-    padding: 35px 20px;
-}
-
-div.actions.field button{
-    margin-bottom: 20px;
-}
-
-@media only screen and (min-width: 600px) {
-    form {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media only screen and (min-width: 750px) {
-    #new-job-form {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media only screen and (min-width: 1000px) {
-    form {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 60px 100px 100px repeat(3, 1fr);
-        padding: 0px 20px;
-    }
-
-
-    div.actions.field button{
-        float: left;
-    }
-
-    .field {
-        margin: 25px;
-    }
-
-    .actions {
-        grid-column: 1;
-    }
-    .co-name {
-        grid-column: 1;
-    }
-    .position {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .link {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    .posted-date {
-        grid-column: 2;
-        grid-row: 3;
-    }
-
-    .job-desc {
-        grid-column: 1;
-        grid-row: 4;
-    }
-
-    .co-desc {
-        grid-column: 2;
-        grid-row: 4;
-    }
-
-    .requirements {
-        grid-column: 1;
-        grid-row: 5;
-    }
-
-    .notes {
-        grid-column: 2;
-        grid-row: 5;
-    }
-
-
-}
-
-</style>
-
-
-
 
 <div id='new-job-form'>
 
@@ -113,27 +25,32 @@ div.actions.field button{
             <div class="field posted-date" id="job-posted-date-field">
                 <%= f.label :date_posted %><br>
                 <%= f.date_field :date_posted, id: "date_posted" %>
+            </div>             
+
+            <div class="field closing-date" id="job-closing-date-field">
+                <%= f.label :closing_date %><br>
+                <%= f.date_field :closing_date, id: "closing_date" %>
             </div> 
 
 
             <div class="field job-desc">
                 <%= f.label :job_desc, "Job Description" %><br>
-                <%= f.text_area :job_desc, id: "job_desc"%>
+                <%= f.text_area :job_desc, {id: "job_desc", class: "field"}%>
             </div>            
 
             <div class="field co-desc">
                 <%= f.label :co_desc, "Company Description" %><br>
-                <%= f.text_area :co_desc, id: "co_desc" %>
+                <%= f.text_area :co_desc, {id: "co_desc", class: "field"} %>
             </div>
 
             <div class="field requirements">
                 <%= f.label :requirements, "Requirements" %><br>
-                <%= f.text_area :requirements, id: "requirements"%>
+                <%= f.text_area :requirements, {id: "requirements", class: "field"} %>
             </div>            
 
             <div class="field notes">
                 <%= f.label :notes, "Notes" %><br>
-                <%= f.text_area :notes, id: "notes" %>
+                <%= f.text_area :notes, {id: "notes", class: "field"} %>
             </div>
 
 

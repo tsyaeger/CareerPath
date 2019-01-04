@@ -9,10 +9,13 @@ function Job(job, user_id) {
     this.applied = job.applied
     this.job_desc = job.job_desc
     this.co_desc = job.co_desc
+    this.closing_date = job.closing_date
+    this.requirements = job.requirements
+    this.notes = job.notes
 }
 
 // Listed job items (used on user show page)
-Job.prototype.formatJobIndex = function() {
+Job.prototype.formatIndex = function() {
     return `<h3><a href='/jobs/${this.id}'>${this.company} - ${this.position}</a></h3>`
 }
 

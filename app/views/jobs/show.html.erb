@@ -1,38 +1,33 @@
-
 <div class='user-id' data-id="<%= @job.user.id %>"></div>
 <div class='job-id' data-id="<%= @job.id %>"></div>
-
 <div id='job-show-wrapper' class='show-container'>
-
 	<div class='heading-container'>
 		<div class='edit-delete'>
 			<td><%= link_to "Edit", edit_job_path(@job) %></td>
 		    <td><%= link_to "Delete", job_path(@job), method: :delete %></td>
 		</div>
-
 	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
 	    <h1 id='job-company-position' class='headline'><%= @job.company %> - <%= @job.position %></h1>
 		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
-	</div>
-
+	</div> <!-- close container -->
 
 	<div id='dates-container'>
 		<section id="date-section">
 			<div><h3 class='posted-date'>Posted Date: <%= format_date(@job.date_posted) %></h3></div>
-<!-- 			<div><h3> Closing Date: xxx</h3></div> -->
+			<% if @job.closing_date != nil %>
+				<div><h3> Closing Date: <%= @job.closing_date %></h3></div>
+			<% end %>
 			<div><h3 class='link-to'><a href="<%= @job.url %>" target="_blank">Go to Posting</a></h3></div>
-		</section>=
-	</div>
-
+		</section>
+	</div> <!-- close container -->
 
 	<div id='applied-container'>
 		<section id='applied-section'>
 			<div id='job-applied'></div>
 			<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
 		</section>
-	</div>
+	</div> <!-- close container -->
 
-	
 	<div class='job-desc-container job-content-container'>
 		<% if @job.job_desc != "" %>
 			<h2> Job Description </h2>
@@ -41,8 +36,7 @@
 			<h2>This job has no job description</h2>
 			<p class='create-item'><%= link_to "add job description", edit_job_path(@job) %></p>
 		<% end %>
-	</div>
-
+	</div> <!-- close container -->
 
 	<div class='job-co-container job-content-container'>
 		<% if @job.co_desc != "" %>
@@ -52,8 +46,7 @@
 			<h2>This job has no company description</h2>
 			<p class='create-item'><%= link_to "add company description", edit_job_path(@job) %></p>
 		<% end %>
-	</div>
-
+	</div> <!-- close container -->
 
 	<div class='job-reqs-container job-content-container'>
 		<% if @job.requirements != "" %>
@@ -63,8 +56,7 @@
 			<h2>This job has no company requirements</h2>
 			<p class='create-item'><%= link_to "add requirements", edit_job_path(@job) %></p>
 		<% end %>
-	</div>
-
+	</div> <!-- close container -->
 
 	<div class='job-notes-container job-content-container'>
 		<% if @job.notes != "" %>
@@ -74,11 +66,9 @@
 			<h2>This job has no company notes</h2>
 			<p class='create-item'><%= link_to "add notes", edit_job_path(@job) %></p>
 		<% end %>
-	</div>
-
+	</div> <!-- close container -->
 
 	<div class='linked-items'>
-
 		<div class='link-doc-container'>
 			<div id='linked-docs'>
 		    	<h2>LINKED DOCUMENTS</h2>
@@ -88,7 +78,7 @@
 		    <div id='add-doc-link'>
 	    		<%= render 'documents/document_dropdown' %>
 	    	</div>
-	    </div>
+	    </div> <!-- close container -->
 
 	    <div class='link-contact-container'>
 	    	<div id='linked-contacts'>
@@ -99,7 +89,7 @@
 		    <div id='add-contact-link'>
 				<%= render 'contacts/contact_dropdown' %>
 			</div>
-	    </div>
+	    </div> <!-- close container -->
 
 	    <div class='link-task-container'>
 	    	<h2>LINKED TASKS</h2>
@@ -110,10 +100,8 @@
 		    	<h3>You have no linked tasks</h3>
 			<% end %>
 			<p class='create-item'><%= link_to "create a task", new_task_path %></p>
-	    </div>
-
-	</div>
-
+	    </div> <!-- close container -->
+	</div> <!-- close linked items -->
 </div> <!-- close wrapper -->
 
 
