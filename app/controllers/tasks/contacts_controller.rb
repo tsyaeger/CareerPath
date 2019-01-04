@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 module Tasks
   class ContactsController < ApplicationController
-    skip_before_action :verify_authenticity_token
+    skip_before_filter :verify_authenticity_token
 
     def unlink
       contact = Contact.find(params[:contact_id])
