@@ -97,7 +97,7 @@ div.job-content-container {
 		grid-row: 4/6; 
 		display: grid;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 1fr 1fr
+		grid-template-rows: 1fr 1fr 1fr;
 		margin: 0;
 		padding: 0;
 		text-align: center;
