@@ -91,8 +91,8 @@ var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
 //RETRIEVE TASK DOCUMENT, CREATE CONSTANT INSTANCE, APPEND DOCUMENT
 const getDocuments = function (data) {
-    jQuery(data['documents']).each(function(i, document){
-        let d = new Document(document, user_id)
+    jQuery(data['documents']).each(function(i, doc){
+        let d = new Document(doc, user_id)
         $("#task-documents").append(d.formatSpan())
     })
 }
@@ -102,6 +102,7 @@ const getDocuments = function (data) {
 const getContacts = function (data) {
     jQuery(data['contacts']).each(function(i, contact){
         let c = new Contact(contact, user_id)
+        console.log(c)
         $("#task-contacts").append(c.formatSpan())
     })
 }
@@ -140,25 +141,18 @@ const toggleCompleted = function (task) {
 const linkTaskContact = function() {
     $('#btn-add-contact').on('click', function(e) {
         e.preventDefault()
-        console.log('clicked')
         var form = $('#add-contact')
         var action = form.attr('action')
         var data = form.serialize()
         data.authenticity_token = AUTH_TOKEN;
-        console.log(data.authenticity_token)
-
         $.ajax({
             url: `/tasks/${task_id}/link_contact`, 
             data: data, 
             type: "PATCH",
             dataType: 'json',
             success: function (response) {
-                console.log(response)
-                console.log('no response')
                 contact = new Contact(response, user_id)
-                console.log(contact)
                 $("#task-contacts").append(contact.formatSpan())
-                alert('success') 
             },
             error: function (response) {
                 alert('no success') }
@@ -169,7 +163,6 @@ const linkTaskContact = function() {
 
 //BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
 const linkTaskDocument = function() {
-
     $('#add-document').on('submit', function(e) {
         e.preventDefault()
         var form = $('#add-document')
@@ -183,7 +176,7 @@ const linkTaskDocument = function() {
         success: function (data) {
             doc = new Document(data, user_id)
             $("#task-documents").append(doc.formatSpan())
-            alert('success') },
+        },
         error: function (data) {
             alert('no success') }
         })
@@ -228,17 +221,14 @@ const linkTaskJob = function() {
 
 // BUTTON LISTENER, REMOVE TASK DOCUMENT 
 const unlinkTaskDocument = function() {
-
     $(document.body).on('click', 'span.remove-document', function(e) {
         let documentId = $(this).data('id')
-        console.log('id: ' + documentId)
         $.ajax({
             type: "DELETE", 
             url: `/tasks/${task_id}/documents/${documentId}/unlink`,
             data: {authenticity_token: AUTH_TOKEN},
             dataType: 'json',
             success: function (data) {
-                // console.log(data)
                 let id = data['id']
                 console.log('worked')
                 $("#documentItem-" + documentId).remove()
@@ -256,16 +246,12 @@ const unlinkTaskContact = function() {
 
     $(document.body).on('click', 'span.remove-contact', function(e) {
         let contactId = this.id
-        console.log('running')
-
         $.ajax({
             type: "DELETE", 
             url: `/tasks/${task_id}/contacts/${contactId}/unlink`,
             dataType: 'json',
             data: {authenticity_token: AUTH_TOKEN},
-
             success: function (data) {
-                console.log(data)
                 let id = data['id']
                 $("#contactItem-" + id).remove()
                 $("#" + id).remove();
