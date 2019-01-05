@@ -88,6 +88,36 @@
 
 var AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
+
+//RETRIEVE TASK DOCUMENT, CREATE CONSTANT INSTANCE, APPEND DOCUMENT
+const getDocuments = function (data) {
+    jQuery(data['documents']).each(function(i, document){
+        let d = new Document(document, user_id)
+        $("#task-documents").append(d.formatSpan())
+    })
+}
+
+
+//RETRIEVE TASK CONTACTS, CREATE CONSTANT INSTANCE, APPEND CONTACTS
+const getContacts = function (data) {
+    jQuery(data['contacts']).each(function(i, contact){
+        let c = new Contact(contact, user_id)
+        $("#task-contacts").append(c.formatSpan())
+    })
+}
+
+
+//RETRIEVE TASK JOBS, CREATE CONSTANT INSTANCE, APPEND JOBS
+const getJobs = function (data) {
+    jQuery(data['jobs']).each(function(i, job){
+        let j = new Job(job, user_id)
+        console.log('worked')
+        $("#task-jobs").append(j.formatSpan())
+    })
+}
+
+
+
 const displayCompletedStatus = function(task) {
     $('#task-completed-string').html(task.completedString())
     let tog = document.getElementById("switch")
@@ -124,6 +154,7 @@ const linkTaskContact = function() {
             dataType: 'json',
             success: function (response) {
                 console.log(response)
+                console.log('no response')
                 contact = new Contact(response, user_id)
                 console.log(contact)
                 $("#task-contacts").append(contact.formatSpan())
@@ -188,6 +219,147 @@ const linkTaskJob = function() {
 
 
 
+
+
+
+
+
+
+
+// BUTTON LISTENER, REMOVE TASK DOCUMENT 
+const unlinkTaskDocument = function() {
+
+    $(document.body).on('click', 'span.remove-document', function(e) {
+        let documentId = $(this).data('id')
+        console.log('id: ' + documentId)
+        $.ajax({
+            type: "DELETE", 
+            url: `/tasks/${task_id}/documents/${documentId}/unlink`,
+            data: {authenticity_token: AUTH_TOKEN},
+            dataType: 'json',
+            success: function (data) {
+                // console.log(data)
+                let id = data['id']
+                console.log('worked')
+                $("#documentItem-" + documentId).remove()
+                $("#" + id).remove();
+            },
+            error: function (data) {
+                alert('no success') }
+        })
+    })
+}
+
+
+// REMOVE TASK CONTACT 
+const unlinkTaskContact = function() {
+
+    $(document.body).on('click', 'span.remove-contact', function(e) {
+        let contactId = this.id
+        console.log('running')
+
+        $.ajax({
+            type: "DELETE", 
+            url: `/tasks/${task_id}/contacts/${contactId}/unlink`,
+            dataType: 'json',
+            data: {authenticity_token: AUTH_TOKEN},
+
+            success: function (data) {
+                console.log(data)
+                let id = data['id']
+                $("#contactItem-" + id).remove()
+                $("#" + id).remove();
+                $('.remove-contact.'+ id).remove()
+            },
+            error: function (data) {
+                alert('no success') }
+        })
+    })
+}
+
+// BUTTON LISTENER, REMOVE TASK DOCUMENT 
+const unlinkTaskJob = function() {
+
+    $(document.body).on('click', 'span.remove-job', function(e) {
+        let jobId = $(this).data('id')
+
+        $.ajax({
+            type: "DELETE", 
+            url: `/tasks/${task_id}/jobs/${jobId}/unlink`,
+            data: {authenticity_token: AUTH_TOKEN},
+            dataType: 'json',
+            success: function (data) {
+                console.log(data)
+                let id = data['id']
+                $("#remove-job-" + id).remove()
+                $('span.remove-job.'+ id).remove()
+            },
+            error: function (data) {
+                alert('no success') }
+        })
+    })
+}
+
+
+
+
+// OPEN DOC DROPDOWN SPAN
+const docClick = function() {
+    var clicks = 0
+
+    $(document.body).on('click', "i.doc", function() {
+        var id = this.id
+
+    if (clicks % 2 == 0) {
+        $('.document.'+id).css('display', 'block')
+        clicks++
+        }
+    else {
+        $('.document.'+id).css('display', 'none')
+        clicks++
+        } 
+    });
+}
+
+// OPEN CONTACT DROPDOWN SPAN
+const contactClick = function() {
+    var clicks = 0
+
+    $(document.body).on('click', "i.contact", function() {
+        var id = this.id
+
+    if (clicks % 2 == 0) {
+        $('.contact.'+id).css('display', 'block')
+        clicks++
+        }
+    else {
+        $('.contact.'+id).css('display', 'none')
+        clicks++
+        } 
+    });
+}
+
+// OPEN CONTACT DROPDOWN SPAN
+const jobClick = function() {
+    var clicks = 0
+
+    $(document.body).on('click', "i.job", function() {
+        var id = this.id
+
+    if (clicks % 2 == 0) {
+        $('.job.'+id).css('display', 'block')
+        clicks++
+        }
+    else {
+        $('.job.'+id).css('display', 'none')
+        clicks++
+        } 
+    });
+}
+
+
+
+
 $( document ).on('turbolinks:load', function() {
     user_id = $(".user-id").data("id")
     task_id = $(".task-id").data("id")
@@ -195,11 +367,20 @@ $( document ).on('turbolinks:load', function() {
     $.get(`/tasks/${task_id}.json`, function(data) {
         task = new Task(data, user_id)
         console.log(task)
+        getDocuments(data)
+        getContacts(data)
+        getJobs(data)
         displayCompletedStatus(task)
         toggleCompleted(task)
         linkTaskContact()
         linkTaskDocument()
         linkTaskJob()
+        docClick()
+        jobClick()
+        contactClick()
+        unlinkTaskContact()
+        unlinkTaskDocument()
+        unlinkTaskJob()
 
     });
     

@@ -62,11 +62,10 @@ class TasksController < ApplicationController
   end
 
   def link_document
-    # binding.pry
     d_id = params[:task][:document_ids]
     @document = Document.find(d_id)
     @task.documents << @document unless @task.documents.include?(@document)
-    # @task.save
+    @task.save
     respond_to do |format|
       format.json { render json: @document }
     end
@@ -77,10 +76,12 @@ class TasksController < ApplicationController
     j_id = params[:task][:job_ids]
     @job = Job.find(j_id)
     @task.jobs << @job unless @task.jobs.include?(@job)
-    # @task.save
-    respond_to do |format|
-      format.json { render json: @job }
+    if not @task.save
+      respond_to do |format|
+        format.json { render json: @job }
+      end
     end
+      
   end
 
 

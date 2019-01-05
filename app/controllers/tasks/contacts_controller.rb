@@ -4,8 +4,9 @@ module Tasks
     
 
     def unlink
+      # binding.pry
       contact = Contact.find(params[:contact_id])
-      task = Task.find(params[:job_id])
+      task = Task.find(params[:task_id])
       task.contacts.delete(contact)
       respond_to do |format|
         format.json { render json: contact, status: 200 }
