@@ -2,9 +2,7 @@
 module Jobs
   class ContactsController < ApplicationController
     
-
     def unlink
-      # binding.pry
       contact = Contact.find(params[:contact_id])
       job = Job.find(params[:job_id])
       job.contacts.delete(contact)
