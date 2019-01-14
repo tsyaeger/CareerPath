@@ -8,6 +8,7 @@ html {
 }
 
 body {
+    display: grid;
     font-family: 'Open Sans', sans-serif;
     padding: 0;
     margin: 0;
