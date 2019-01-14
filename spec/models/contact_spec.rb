@@ -6,7 +6,6 @@ RSpec.describe Contact, type: :model do
   describe 'associations' do
     it { should have_many(:job_contacts) }
     it { should have_many(:jobs).through(:job_contacts) }
-    it { should have_many(:tasks) }
     it { should belong_to(:user) }
   end
 
