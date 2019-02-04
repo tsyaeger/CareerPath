@@ -129,7 +129,6 @@ const previousButton = function() {
 	})
 }
 
-
 //RETRIEVE JOB DOCUMENTS, CREATE CONSTANT INSTANCE, APPEND DOCUMENTS
 const getDocuments = function (data) {
     jQuery(data['documents']).each(function(i, document){
@@ -138,7 +137,6 @@ const getDocuments = function (data) {
     })
 }
 
-
 //RETRIEVE JOB CONTACTS, CREATE CONSTANT INSTANCE, APPEND CONTACTS
 const getContacts = function (data) {
     jQuery(data['contacts']).each(function(i, contact){
@@ -146,8 +144,6 @@ const getContacts = function (data) {
         $("#job-contacts").append(c.formatSpan())
     })
 }
-
-
 
 //CHANGE APPLIED STATUS USING TOGGLE
 const toggleApplied = function (job) {
@@ -161,7 +157,6 @@ const toggleApplied = function (job) {
 	})
 }
 
-
 //DISPLAY APPLIED STRING AND TOGGLE STATUS
 const displayAppliedDetails = function (job) {
 	// renders yes/no string to applied status
@@ -170,8 +165,6 @@ const displayAppliedDetails = function (job) {
 	let tog = document.getElementById("switch")
 	tog.checked = job.applied;
 }
-
-
 
 
 
@@ -202,10 +195,6 @@ const linkContact = function() {
 }
 
 
-
-
-
-
 //BUTTON LISTENER, SEND PATCH W DOCUMENT TO CONTROLLER, 
 const linkDocument = function() {
 
@@ -228,14 +217,6 @@ const linkDocument = function() {
         })
 	})
 }
-
-
-
-
-
-
-
-
 
 
 
@@ -264,9 +245,6 @@ const unlinkContact = function() {
 	})
 }
 
-
-
-
 // BUTTON LISTENER, REMOVE JOB DOCUMENT 
 const unlinkDocument = function() {
 
@@ -279,7 +257,6 @@ const unlinkDocument = function() {
 			data: {authenticity_token: AUTH_TOKEN},
 			dataType: 'json',
 	        success: function (data) {
-	        	console.log(data)
 				let id = data['id']
 		    	$("#documentItem-" + id).remove()
 		    	$("#" + id).remove();
@@ -325,8 +302,6 @@ const contactClick = function() {
 		} 
 	});
 }
-
-
 
 $( document ).on('turbolinks:load', function() {
 	user_id = $(".user-id").data("id")

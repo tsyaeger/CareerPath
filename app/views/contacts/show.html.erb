@@ -93,23 +93,18 @@ const toggleReference = function (contact) {
     })
 }
 
-
 const displayRefStatus = function (contact) {
 	$('#contact_reference').html(contact.referenceString())
 	let tog = document.getElementById("switch")
     tog.checked = contact.reference;
 }
 
-
 $( document ).on('turbolinks:load', function() {
 	user_id = $(".user-id").data("id")
 	contact_id = $(".contact-id").data("id")
 
-	console.log('load')
-
 	$.get(`/contacts/${contact_id}.json`, function(data) {
 		contact = new Contact(data, user_id)
-		console.log("running")
 	    displayRefStatus(contact)
 		toggleReference(contact)
 

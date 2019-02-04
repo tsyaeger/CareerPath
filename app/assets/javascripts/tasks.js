@@ -8,13 +8,11 @@ function Task(task, user_id) {
     this.completed = task.completed
 }
 
-
 // Listed job items (used on user show page)
 Task.prototype.formatIndex = function() {
     let taskHTML = `<h3><a href="/tasks/${this.id}">${this.title} - ${this.formatDate()}</a></h3>`
     return taskHTML
 }
-
 
 Task.prototype.formatDate = function() {
     let date = new Date(this.due)

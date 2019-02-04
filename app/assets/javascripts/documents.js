@@ -1,5 +1,4 @@
 
-
 function Document(document, user_id) {
 	this.user_id = user_id
     this.id = document.id
