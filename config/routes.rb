@@ -4,11 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
   
   resources :users
-
-  # resources :tasks
-
   resources :contacts
-
   resources :documents
 
   resources :jobs do
@@ -43,13 +39,14 @@ Rails.application.routes.draw do
   end
 
   get '/contacts/:contact_id/add_reference', to: 'contacts#add_reference', as: 'add_reference'
-  get '/jobs/:job_id/applied', to: 'jobs#applied', as: 'applied'
-  get '/tasks/:task_id/completed', to: 'tasks#completed', as: 'completed'
+  get '/contacts/sort', to: 'contacts#sort', as: 'contacts_sort'
 
+  get '/jobs/:job_id/applied', to: 'jobs#applied', as: 'applied'
+  get '/jobs/:job_id/archived', to: 'jobs#archived', as: 'archived'
   get '/jobs/:job_id/next', to: 'jobs#next', as: 'user_job_next'
   get '/jobs/:job_id/previous', to: 'jobs#previous', as: 'user_job_previous'
-
-  get '/contacts/sort', to: 'contacts#sort', as: 'contacts_sort'
+  
+  get '/tasks/:task_id/completed', to: 'tasks#completed', as: 'completed'
 
   root 'static_pages#home'
 end

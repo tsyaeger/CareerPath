@@ -1,0 +1,59 @@
+    <% if jobs.length > 0 %>
+
+      <% table_class = jobs[0].archived ? 'archive-table job-table' : 'active-table job-table' %>
+
+      <table class="<%= table_class %>">
+        <tr class='job-index-header-row'>
+          <th>Company</th>
+          <th>Position</th>
+          <th class='mobile-no-show'>Date Posted</th>
+
+          <% if jobs[0].archived == false %>
+            <th class='mobile-no-show mid-no-show'>Upcoming Tasks</th>
+            <th>Next Task Due</th>
+          <% end %>
+
+
+          <th class='mobile-no-show'></th>
+          <th class='mobile-no-show'></th>
+        </tr>
+        <% jobs.each do |job| %>
+
+          <% if job.applied && !job.archived %>
+            <% row_class = "applied active" %>
+          <% elsif !job.applied && !job.archived %>
+            <% row_class = "not-applied active" %>
+          <% elsif job.applied && job.archived %>
+            <% row_class = "applied archived" %>
+          <% elsif !job.applied && job.archived %>
+            <% row_class = "not-applied archived" %>
+          <% end %>
+
+
+          <tr class="<%= row_class %>" >
+
+      	    <td class='company-td'><%= link_to job.company, job_path(job) %></td>
+      	    <td class='position-td'><%= link_to job.position, job_path(job) %></td>
+      	    <td class='date-posted-td mobile-no-show'><%= format_date(job.date_posted) %></td>
+
+
+            <% if jobs[0].archived == false %>
+              <td class='job-tasks-td mobile-no-show mid-no-show'><%= job.tasks.completed_false.length %> todos</td> 
+
+              <% if job.tasks.length > 0 %> 
+                <% next_task = job.tasks.first %>
+                <td><%= link_to format_date(next_task.due_date), task_path(next_task) %></td>
+              <% else %>
+                <td>---</td>
+              <% end %>
+            <% end %>
+
+
+
+
+      	    <td class='edit-td mobile-no-show'><%= link_to "Edit", edit_job_path(job) %></td>
+      	    <td class='delete-td mobile-no-show'><%= link_to "Delete", job_path(job), :method => :delete %></td>
+      	  </tr>
+        <% end %>
+      </table> <!-- close table -->
+    <% end %>

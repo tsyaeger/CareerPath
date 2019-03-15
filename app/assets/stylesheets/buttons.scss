@@ -31,7 +31,19 @@ button:hover {
     font-size: 20px;
 }
 
-input[type=checkbox]{
+
+
+input#show-archive-check {
+    width: 15px;
+    height: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+input[type=checkbox]#switch, input[type=checkbox]#switch-archived {
     height: 0;
     width: 10px;
     visibility: hidden;

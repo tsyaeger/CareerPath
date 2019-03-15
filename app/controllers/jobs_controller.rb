@@ -45,6 +45,17 @@ class JobsController < ApplicationController
     end
   end
 
+  def archived
+    appStr = params[:q]
+    appBool = appStr === 'true'
+    @job.archived = appBool
+    flash[:notice] = 'Archive status changed'
+    @job.save
+    respond_to do |format|
+      format.json { render json: @job }
+    end
+  end
+
 
 
 
@@ -81,6 +92,7 @@ class JobsController < ApplicationController
   def create
     @job = Job.create(job_params)
     @job.user = current_user
+    @job.archived = false
     @job.save
     redirect_to jobs_path
   end
@@ -104,7 +116,7 @@ class JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:company, :position, :date_posted, :closing_date, :job_desc, :co_desc, :url, :applied, :requirements, :notes)
+    params.require(:job).permit(:company, :position, :date_posted, :closing_date, :job_desc, :co_desc, :url, :applied, :requirements, :notes, :archived)
   end  
 
   def set_job

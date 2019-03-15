@@ -24,8 +24,20 @@
 
 	<div id='applied-container'>
 		<section id='applied-section'>
+
 			<div id='job-applied'></div>
-			<div id='applied-toggle'><input type="checkbox" id="switch"><label id='switch-label' for="switch">Toggle</label></div>
+			<div id='applied-toggle'>
+				<input type="checkbox" id="switch">
+				<label id='switch-label' for="switch">Toggle</label>
+			</div>
+
+			<div id='job-archived'></div>
+			<div id='archived-toggle'>
+				<input type="checkbox" id="switch-archived">
+				<label id='switch-label' for="switch-archived">Toggle</label>
+			</div>
+
+
 		</section>
 	</div> <!-- close container -->
 
@@ -145,6 +157,10 @@ const getContacts = function (data) {
     })
 }
 
+
+
+
+
 //CHANGE APPLIED STATUS USING TOGGLE
 const toggleApplied = function (job) {
 	// place click listener on toggle
@@ -165,6 +181,33 @@ const displayAppliedDetails = function (job) {
 	let tog = document.getElementById("switch")
 	tog.checked = job.applied;
 }
+
+
+
+
+
+//CHANGE ARCHIVED STATUS USING TOGGLE
+const toggleArchived = function (job) {
+	// place click listener on toggle
+	$('#switch-archived').on('click', function() {
+		// route changing to new status
+	    job.archived = !job.archived;
+	    $.get(`/jobs/${job_id}/archived?q=${job.archived}`, function(data) {
+	    	$('#job-archived').html(job.archivedString(job.archived))
+	    })
+	})
+}
+
+//DISPLAY ARCHIVED STRING AND TOGGLE STATUS
+const displayArchivedDetails = function (job) {
+	// renders yes/no string to archived status
+	$('#job-archived').html(job.archivedString())
+	// identifies toggle element and positions according to status
+	let tog = document.getElementById("switch-archived")
+	tog.checked = job.archived;
+}
+
+
 
 
 
@@ -312,7 +355,10 @@ $( document ).on('turbolinks:load', function() {
 		job = new Job(data, user_id)
 
 	    displayAppliedDetails(job)  //injects string and toggle elements
-		toggleApplied(job) //connects applied click listener
+		toggleApplied(job) //connects applied click listener	    
+
+		displayArchivedDetails(job)  //injects string and toggle elements
+		toggleArchived(job) //connects archived click listener
 
 		getDocuments(data) //
 		getContacts(data)

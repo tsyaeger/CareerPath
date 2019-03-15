@@ -105,7 +105,7 @@ h1#task-title {
 	border-bottom: dotted black 1px;
 }
 
-#switch {
+#switch, #switch-archived {
 	margin: 0;
 	padding: 0;
 }

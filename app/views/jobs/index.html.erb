@@ -1,53 +1,73 @@
 <div id='job-index-container'>
   <% if @jobs.length > 0 %>
+
+    <% @jobs_active = @jobs.select {|job| job.archived == false} %>
+    <% @jobs_archived = @jobs.select {|job| job.archived == true} %>
+
     <h1>POSITIONS</h1>
-    <button><%= link_to "Add New Position", new_job_path %></button><br><br>
-      <table>
-        <tr class='job-index-header-row'>
-          <th>Company</th>
-          <th>Position</th>
-          <th class='mobile-no-show'>Date Posted</th>
-          <th class='mobile-no-show'>Close Date</th>
-          <th class='mobile-no-show mid-no-show'>Upcoming Tasks</th>
-          <th>Next Task Due</th>
-          <th class='mobile-no-show mid-no-show'>Applied</th>
-          <th class='mobile-no-show'></th>
-          <th class='mobile-no-show'></th>
-        </tr>
-        <% @jobs.each do |job| %>
-      	  <tr class="<%= job.applied == true ? "applied" : "not-applied" %>" >
-      	    <td class='company-td'><%= link_to job.company, job_path(job) %></td>
-      	    <td class='position-td'><%= link_to job.position, job_path(job) %></td>
-      	    <td class='date-posted-td mobile-no-show'><%= format_date(job.date_posted) %></td>
+    <button><%= link_to "Add New Position", new_job_path %></button>
 
-            <% if job.closing_date != nil %>
-              <td class='close-date-td mobile-no-show'><%= job.closing_date %></td>
-            <% else %>
-              <td class='close-date-td mobile-no-show'>---</td>
-            <% end %>
+    <% if @jobs_archived.length > 0 %> 
+      <form>
+        <input id='show-archive-check' type="checkbox" name="archive" value="1"> show archive<br><br>
+      </form>
+    <% end %>
 
-            <td class='job-tasks-td mobile-no-show mid-no-show'><%= job.tasks.completed_false.length %> todos</td> 
+    <br><br>
+    <%= render partial: "table", locals: {jobs: @jobs_active} %>
+    <br><br>
 
-            <% if job.tasks.length > 0 %> 
-              <% next_task = job.tasks.first %>
-              <td><%= link_to format_date(next_task.due_date), task_path(next_task) %></td>
-            <% else %>
-              <td>---</td>
-            <% end %>
 
-            <td class='applied-td mobile-no-show mid-no-show applied-<%= job.applied.to_s %>'><%= job.applied.to_s == 'true' %></td>
-      	    <td class='edit-td mobile-no-show'><%= link_to "Edit", edit_job_path(job) %></td>
-      	    <td class='delete-td mobile-no-show'><%= link_to "Delete", job_path(job), :method => :delete %></td>
-      	  </tr>
-        <% end %>
-      </table> <!-- close table -->
+    <div id="archive-wrapper" style="display: none;">
+      <% if @jobs_archived.length > 0 %>
+        <br><br>
+        <h3>Archived Positions</h3>
+        <%= render partial: "table", locals: {jobs: @jobs_archived} %>
+      <% end %>
+    </div>
+
   <% else %>
     <div id='top'>
       <h1>YOU HAVE NO SAVED POSITIONS</h1>
-      <button><%= link_to "Add New Position", new_job_path %></button><br><br>
+      <button><%= link_to "Add New Position", new_job_path %></button>
+      <br><br>
     </div>
   <% end %>
 </div> <!--close page-->
 
+
+
+
+
+
+
+
+<script>
+
+
+const renderArchive = function() {
+
+var checkbox = document.querySelector("#show-archive-check");
+
+  checkbox.addEventListener( 'change', function() {
+    let archiveCheck = document.getElementById('show-archive-check').checked
+      if(archiveCheck) {
+          $('#archive-wrapper').show()
+      } else {
+          $('#archive-wrapper').hide()
+      }
+  });
+    
+}
+
+
+
+
+$( document ).on('turbolinks:load', function() {
+  renderArchive()
+})
+
+
+</script>
 
 

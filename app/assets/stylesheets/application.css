@@ -16,7 +16,7 @@
  *= require contacts
  *= require jobs
  *= require users
- *= require tasks
+
  *= require tables
  *= require show_pages
  *= require errors

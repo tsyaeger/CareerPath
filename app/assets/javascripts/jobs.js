@@ -7,6 +7,7 @@ function Job(job, user_id) {
     this.url = job.url
     this.date_posted = job.date_posted 
     this.applied = job.applied
+    this.archived = job.archived
     this.job_desc = job.job_desc
     this.co_desc = job.co_desc
     this.closing_date = job.closing_date
@@ -23,6 +24,12 @@ Job.prototype.formatIndex = function() {
 Job.prototype.appliedString = function(applied_bool= this.applied) {
     let text = applied_bool ? 'Yes' : 'No'
     return `<h3 id='applied-bool'>Applied: ${text}</h3>`
+}
+
+// Returns archived status string (used in job show page)
+Job.prototype.archivedString = function(archived_bool= this.archived) {
+    let text = archived_bool ? 'Yes' : 'No'
+    return `<h3 id='archived-bool'>Archived: ${text}</h3>`
 }
 
 // Returns job with remove span (used in show pages of linked items)

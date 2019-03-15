@@ -36,7 +36,7 @@ h1#job-company-position {
 	margin: 0 15px;
 }
 
-#applied-bool {
+#applied-bool, #archived-bool {
 	margin-top: 18px;
 }
 
