@@ -23,21 +23,56 @@
     padding: 8px;
 }
 
+
+
+
+#job-index-header {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+  width: 350px;
+}
+
+#job-index-header div {
+  -webkit-flex: 1;  /* Safari 6.1+ */
+  -ms-flex: 1;  /* IE 10 */  
+  flex: 1;
+}
+
+div#job-index-header div form {
+  padding-top: 23px;
+}
+
+
+
+
+
+div#archive-wrapper {
+  width: 75%;
+}
+
+
+/*Headers*/
 tr.job-index-header-row > th {
     background-color: #dddddd;
 }
 
-
-
-
-
-tr.applied td:nth-child(-n+2) {
-  background: #e1f4e8;
+.archive-table tbody tr.job-index-header-row > th {
+    background-color: #efeded;
 }
 
-tr td.company-td a td:nth-child(-n+2) {
-  color: purple;
+#archive-wrapper table tbody tr td a {
+  color: #3a3939;
 }
+
+#archive-wrapper table tbody tr th {
+  color: #3a3939;
+  background-color: white;
+}
+
+
+
+
+
 
 
 

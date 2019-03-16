@@ -6,9 +6,9 @@
         <tr class='job-index-header-row'>
           <th>Company</th>
           <th>Position</th>
-          <th class='mobile-no-show'>Date Posted</th>
 
           <% if jobs[0].archived == false %>
+            <th class='mobile-no-show'>Date Posted</th>
             <th class='mobile-no-show mid-no-show'>Upcoming Tasks</th>
             <th>Next Task Due</th>
           <% end %>
@@ -34,10 +34,10 @@
 
       	    <td class='company-td'><%= link_to job.company, job_path(job) %></td>
       	    <td class='position-td'><%= link_to job.position, job_path(job) %></td>
-      	    <td class='date-posted-td mobile-no-show'><%= format_date(job.date_posted) %></td>
 
 
             <% if jobs[0].archived == false %>
+        	    <td class='date-posted-td mobile-no-show'><%= format_date(job.date_posted) %></td>
               <td class='job-tasks-td mobile-no-show mid-no-show'><%= job.tasks.completed_false.length %> todos</td> 
 
               <% if job.tasks.length > 0 %> 

@@ -2,20 +2,41 @@
   <% if @jobs.length > 0 %>
 
     <% @jobs_active = @jobs.select {|job| job.archived == false} %>
+
     <% @jobs_archived = @jobs.select {|job| job.archived == true} %>
 
     <h1>POSITIONS</h1>
-    <button><%= link_to "Add New Position", new_job_path %></button>
 
-    <% if @jobs_archived.length > 0 %> 
-      <form>
-        <input id='show-archive-check' type="checkbox" name="archive" value="1"> show archive<br><br>
-      </form>
-    <% end %>
 
-    <br><br>
-    <%= render partial: "table", locals: {jobs: @jobs_active} %>
-    <br><br>
+
+
+    <div id='job-index-header'>
+
+
+      <div><button><%= link_to "Add New Position", new_job_path %></button></div>
+
+        <% if @jobs_archived.length > 0 %> 
+          <div>
+            <form>
+              <input id='show-archive-check' type="checkbox" name="archive" value="1"> show archive
+          </form>
+        </div>
+        <% end %>
+
+
+      </div>
+
+    <br>
+    <br>
+
+
+
+
+
+
+    <div id="active-wrapper">
+      <%= render partial: "table", locals: {jobs: @jobs_active} %>
+    </div>
 
 
     <div id="archive-wrapper" style="display: none;">
