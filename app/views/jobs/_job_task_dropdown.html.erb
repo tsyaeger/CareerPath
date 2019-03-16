@@ -1,8 +1,11 @@
 
+
+
+
 <div>
 	<%= form_for @task, url: task_link_job_path(@task), :html => {:id => "add-job", :class => "link-field", :method => :patch} do |f| %>
 
-		<p><%= f.collection_select :job_ids, @task.user.jobs, :id, :position, {:include_blank => 'choose job'} %></p>	
+		<p><%= f.collection_select :job_ids, @task.user.jobs, :id, :company, {:include_blank => 'choose job'} %></p>	
 
 		<%= f.submit "Link job", {id: 'btn-add-job', class: 'btn-add-task-item'} %>
 

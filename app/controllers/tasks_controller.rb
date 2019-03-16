@@ -21,7 +21,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    binding.pry
+    # binding.pry
     @task = Task.create(task_params)
     @task.user = current_user
     @task.save
@@ -30,6 +30,7 @@ class TasksController < ApplicationController
       format.json { render json: @task, status: 200 }
     end
   end
+# redirect_to new_task_path(company: @job.company, position: @job.position)
 
 
   def show
@@ -76,7 +77,7 @@ class TasksController < ApplicationController
   end
     
   def link_job
-    # binding.pry
+    binding.pry
     j_id = params[:task][:job_ids]
     @job = Job.find(j_id)
     @task.jobs << @job unless @task.jobs.include?(@job)
@@ -87,8 +88,6 @@ class TasksController < ApplicationController
     end
       
   end
-
-
 
 
   def edit

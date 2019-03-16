@@ -20,6 +20,11 @@ Job.prototype.formatIndex = function() {
     return `<h3><a href='/jobs/${this.id}'>${this.company} - ${this.position}</a></h3>`
 }
 
+// Listed job items (used on user show page)
+Job.prototype.renderCompanyPosition= function() {
+    return `${this.company} - ${this.position}`
+}
+
 // Returns applied status string (used in job show page)
 Job.prototype.appliedString = function(applied_bool= this.applied) {
     let text = applied_bool ? 'Yes' : 'No'
@@ -38,7 +43,8 @@ Job.prototype.formatSpan = function() {
     `<h3 class="w3-large">
         <i class="material-icons w3-large job" id=${this.id} data-id='${this.id}'>keyboard_arrow_down</i>
         <a href="/jobs/${this.id}">${this.company} - ${this.position}</a>
-    </h3><span id='${this.id}' class='job remove-job ${this.id}' data-id='${this.id}' style="display: none;" ><p class='remove'>Remove</p></span>`
+    </h3><span id='${this.id}' class='job remove-job ${this.id}' data-id='${this.id}' style="display: none;" >
+    <p class='remove'>Remove</p></span>`
     return spanItem
 }
 
