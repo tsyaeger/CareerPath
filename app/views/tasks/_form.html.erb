@@ -3,7 +3,12 @@
 
     <div class="field">
         <%= f.label :title, "Title" %><br>
-        <%= f.text_field :title, id: "title", :value => "apply to #{@company} - #{@position}", :required => true  %>
+
+        <% if @company %>
+            <%= f.text_field :title, id: "title", :value => "apply to #{@company} - #{@position}", :required => true  %>
+        <% else %>
+            <%= f.text_field :title, id: "title", :required => true  %>
+        <% end %>
     </div>
 
     <div class="field">
