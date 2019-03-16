@@ -56,9 +56,6 @@ class JobsController < ApplicationController
     end
   end
 
-
-
-
   def link_contact
     c_id = params[:job][:contact_ids]
     @contact = Contact.find(c_id)
@@ -79,14 +76,9 @@ class JobsController < ApplicationController
     end
   end
 
-
-
-
-
   def new
     @job = Job.new(user: current_user)
     @user = current_user
-    # binding.pry
   end
 
   def create
@@ -94,8 +86,11 @@ class JobsController < ApplicationController
     @job.user = current_user
     @job.archived = false
     @job.save
-    redirect_to jobs_path
+    redirect_to new_task_path(company: @job.company, position: @job.position)
   end
+
+
+
 
 
   def edit 

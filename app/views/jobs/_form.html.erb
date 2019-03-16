@@ -20,7 +20,7 @@
            
             <div class="field posted-date" id="job-posted-date-field">
                 <%= f.label :date_posted %><br>
-                <%= f.date_field :date_posted, id: "date_posted" %>
+                <%= f.date_field :date_posted, id: "date_posted", :value => Time.now.strftime('%m-%d-%Y') %>
             </div>             
 
 
@@ -28,7 +28,6 @@
                 <%= f.label :url, "Link to Posting" %><br>
                 <%= f.text_field :url, id: "url" %>
             </div> 
-
 
 
             <div class="field job-desc">

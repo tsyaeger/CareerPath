@@ -13,8 +13,11 @@ class TasksController < ApplicationController
   end
 
   def new
+    # binding.pry
     @task = Task.new(user: current_user)
     @tasks = current_user.tasks
+    @company = params[:company]
+    @position = params[:position]
   end
 
   def create

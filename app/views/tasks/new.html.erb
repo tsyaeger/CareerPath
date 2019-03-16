@@ -14,7 +14,7 @@
 	
 	<div index='add-task-container' class='cdt-container'>
 		<h1>Add Task</h1>
-		<%= render 'form' %>
+		<%= render partial: "form", locals: {company: @company, position: @position} %>
 	</div> <!-- close column -->
 </div>  <!-- close wrapper -->
 
