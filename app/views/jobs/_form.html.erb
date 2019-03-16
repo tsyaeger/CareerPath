@@ -20,7 +20,13 @@
            
             <div class="field posted-date" id="job-posted-date-field">
                 <%= f.label :date_posted %><br>
-                <%= f.date_field :date_posted, id: "date_posted", :value => Time.now.strftime('%m-%d-%Y') %>
+
+                <% if defined?(@job.date_posted) %>
+                    <%= f.date_field :date_posted, id: "date_posted" %>
+                <% else %>
+                    <%= f.date_field :date_posted, id: "date_posted", :value => Time.now.strftime('%m-%d-%Y') %>
+                <% end %>
+                
             </div>             
 
 
