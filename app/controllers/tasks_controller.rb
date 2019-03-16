@@ -21,6 +21,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    binding.pry
     @task = Task.create(task_params)
     @task.user = current_user
     @task.save
