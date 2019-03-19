@@ -73,8 +73,19 @@
 
         </section>
 
-
     </div> <!-- close linked items-->
+
+    <div id='job-desc-container' class='job-content-container'>
+        <% if @task.notes != "" %>
+            <h2> Notes </h2>
+            <h3 class='descriptions'><%= @task.notes %></h3>
+        <% else %>
+            <h2>This task has no notes</h2>
+            <p class='create-item'><%= link_to "add notes", edit_task_path(@task) %></p>
+        <% end %>
+    </div> <!-- close container -->
+
+
 </div> <!-- close wrapper -->
 
 
@@ -230,7 +241,6 @@ const unlinkTaskDocument = function() {
             dataType: 'json',
             success: function (data) {
                 let id = data['id']
-                console.log('worked')
                 $("#documentItem-" + documentId).remove()
                 $("#" + id).remove();
             },

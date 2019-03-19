@@ -50,6 +50,18 @@
 		    </div> 
 		</section> <!-- close section -->
 	</div><!-- close linked items -->
+
+	<div id='job-desc-container' class='job-content-container'>
+		<% if @contact.notes != "" %>
+			<h2> Notes </h2>
+			<h3 class='descriptions'><%= @contact.notes %></h3>
+		<% else %>
+			<h2>This contact has no notes</h2>
+			<p class='create-item'><%= link_to "add notes", edit_contact_path(@contact) %></p>
+		<% end %>
+	</div> <!-- close container -->
+
+
 </div> <!-- close wrapper -->
 
 

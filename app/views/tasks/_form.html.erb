@@ -21,6 +21,11 @@
         <%= f.text_area :description, id: "description", rows: 10 %>
     </div>
 
+    <div class="field notes">
+        <%= f.label :notes, "Notes" %><br>
+        <%= f.text_area :notes, {id: "notes", class: "field"} %>
+    </div>  
+
     <div class="actions">
         <%= f.submit "SAVE" %>
     </div>
