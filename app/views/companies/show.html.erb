@@ -1,0 +1,35 @@
+
+<div class='user-id' data-id="<%= @company.user.id %>"></div>
+<div class='company-id' data-id="<%= @company.id %>"></div>
+<div id='company-show-wrapper' class='show-container'>
+	<div class='heading-container'>
+		<div class='edit-delete'>
+			<td><%= link_to "Edit", edit_company_path(@company) %></td>
+		    <td><%= link_to "Delete", company_path(@company), method: :delete %></td>
+		</div>
+	    <span class="headline pg-btn btn-previous"><i class="fa fa-long-arrow-left"></i></span>
+	    <h1 id='job-company-name' class='headline'><%= @company.name %></h1>
+		<span class="headline pg-btn btn-next"><i class="fa fa-long-arrow-right"></i></span>
+	</div> <!-- close container -->
+
+
+	<div id='job-notes-container' class='job-content-container'>
+		<% if @company.notes != "" %>
+			<h2> Notes </h2>
+			<h3 class='descriptions'><%= @company.notes %></h3>
+		<% else %>
+			<h2>This company has no notes</h2>
+			<p class='create-item'><%= link_to "add notes", edit_company_path(@company) %></p>
+		<% end %>
+	</div> <!-- close container -->
+
+</div> <!-- close wrapper -->
+
+
+
+
+
+
+
+
+

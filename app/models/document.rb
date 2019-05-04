@@ -3,6 +3,9 @@
 class Document < ApplicationRecord
   belongs_to :user
 
+  has_many :company_documents	
+  has_many :companies, through: :company_documents	
+
   has_many :job_documents
   has_many :jobs, through: :job_documents
 

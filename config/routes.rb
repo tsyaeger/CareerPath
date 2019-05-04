@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :users
   resources :contacts
   resources :documents
+  resources :companies
 
   resources :jobs do
     patch :link_contact
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
     patch :link_contact
     patch :link_document
     patch :link_job
+    patch :link_company
 
     resources :contacts, module: 'tasks', only: [] do
       delete :unlink
@@ -34,6 +36,10 @@ Rails.application.routes.draw do
     end    
 
     resources :jobs, module: 'tasks', only: [] do
+      delete :unlink
+    end
+
+    resources :companies, module: 'tasks', only: [] do
       delete :unlink
     end
   end

@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :documents
   has_many :jobs
   has_many :tasks
+  has_many :companies
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable

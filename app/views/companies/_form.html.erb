@@ -1,0 +1,28 @@
+
+<div id='new-job-form'>
+
+    <%= form_for [@company] do |f| %>
+
+            <div class="actions field">
+                <%= f.button "SAVE COMPANY" %>
+            </div>
+
+            <div class="field co-name">
+                <%= f.label :name, "Company Name" %><br>
+                <%= f.text_field :name, id: "name", :required => true  %>
+            </div>
+
+            <div class="field position">
+                <%= f.label :website %><br>
+                <%= f.text_field :website, id: "website", :required => true  %>
+            </div>
+
+            <div class="field notes">
+                <%= f.label :notes, "Notes" %><br>
+                <%= f.text_area :notes, {id: "notes", class: "field"} %>
+            </div> 
+           
+
+    <% end %> <!-- close form -->
+
+</div> 

@@ -54,7 +54,7 @@ class ContactsController < ApplicationController
     @contact = Contact.create(contact_params)
     @contact.user = current_user
     @contact.save
-
+    
     respond_to do |format|
       format.json { render json: { html: render_to_string('contacts/_contact.html.erb', layout: false, locals: { contact: @contact }) } }
     end

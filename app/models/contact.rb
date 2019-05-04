@@ -2,8 +2,12 @@
 
 class Contact < ApplicationRecord
   belongs_to :user
+  
   has_many :job_contacts
   has_many :jobs, through: :job_contacts
+
+  has_many :company_contacts
+  has_many :companies, through: :company_contacts
 
   has_many :task_contacts
   has_many :tasks, through: :task_contacts

@@ -2,6 +2,9 @@
 
 class Job < ApplicationRecord
   belongs_to :user
+
+  has_many :company_jobs
+  has_many :companies, through: :company_jobs
   
   has_many :job_contacts
   has_many :contacts, through: :job_contacts
