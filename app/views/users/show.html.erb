@@ -77,7 +77,9 @@ const renderJobs = function () {
 
 const getFilteredJobs = function (jobs, substring) {
     return jobs.filter(function (j) {
-        return j.company.includes(substring.toLowerCase()) || j.position.includes(substring.toLowerCase())
+        co = j.company.toLowerCase()
+        po = j.position.toLowerCase()
+        return co.includes(substring.toLowerCase()) || po.includes(substring.toLowerCase())
     })
 }
 
@@ -106,7 +108,8 @@ const renderTasks = function () {
 
 const getFilteredTasks = function (tasks, substring) {
     return tasks.filter(function (t) {
-        return t.title.includes(substring.toLowerCase())
+        title = t.title.toLowerCase()
+        return title.includes(substring.toLowerCase())
     })
 }
 
@@ -141,7 +144,8 @@ const renderContacts = function () {
 
 const getFilteredContacts = function (contacts, substring) {
     return contacts.filter(function (c) {
-        return c.first_name.includes(substring.toLowerCase()) || c.last_name.includes(substring.toLowerCase())
+        contact = c.first_name.toLowerCase()
+        return contact.includes(substring.toLowerCase()) || c.last_name.includes(substring.toLowerCase())
     })
 }
 
@@ -175,7 +179,8 @@ const renderDocuments = function () {
 
 const getFilteredDocuments = function (documents, substring) {
     return documents.filter(function (d) {
-        return d.title.includes(substring.toLowerCase()) 
+        doc = d.title.toLowerCase()
+        return doc.includes(substring.toLowerCase()) 
     })
 }
 
@@ -201,8 +206,6 @@ $( document ).on('turbolinks:load', function(){
 
     $.get(`/users/${id}.json`, function(data) {
         items = data
-        // if(initialized) {return; /*stop here*/}
-        // initialized = true;
 
         renderJobs()
         jobSearchListener()
