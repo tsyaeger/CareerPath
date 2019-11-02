@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 
-gem 'devise', '~> 4.5'
+gem 'devise', '~> 4.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
